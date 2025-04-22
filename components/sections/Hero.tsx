@@ -1,0 +1,136 @@
+import React from "react";
+
+const Hero: React.FC = () => {
+  return (
+    <div className="relative " style={{ height: "calc(100vh - 80px)" }}>
+      {/* Hero Background Image */}
+      <div
+        className="absolute inset-0 bg-center bg-cover"
+        style={{
+          backgroundImage:
+            "url('https://images.pexels.com/photos/247786/pexels-photo-247786.jpeg?auto=compress&cs=tinysrgb&w=1260')",
+          backgroundPosition: "center 25%",
+        }}
+      >
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-800/60"></div>
+      </div>
+
+      {/* Hero Content */}
+      <div className="relative h-full flex items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
+          <div className="max-w-xl ">
+            <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white leading-tight animate-fade-in text-center">
+              Your Health Is Our Priority
+            </h1>
+            <p className="mt-4 text-xl text-center text-blue-100 animate-fade-in-delay">
+              Delivering compassionate care and medical excellence to our
+              community for over 35 years.
+            </p>
+            <div className="mt-8 flex flex-col justify-center sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
+              <a
+                href="#appointment"
+                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
+              >
+                Book an Appointment
+              </a>
+              <a
+                href="#services"
+                className="inline-flex items-center justify-center px-6 py-3 border border-white text-base font-medium rounded-full text-white hover:bg-white/10 transition-colors duration-300"
+              >
+                Explore Our Services
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Quick Info Bar */}
+      <div className="absolute bottom-0 left-0 right-0 bg-white shadow-lg transform translate-y-1/2">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 py-4">
+            {/* Emergency Contact */}
+            <div className="flex items-center p-3 border-b md:border-b-0 md:border-r border-gray-200">
+              <div className="bg-blue-100 rounded-full p-3 mr-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-blue-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-medium text-gray-900">Emergency</h3>
+                <p className="text-blue-600 font-bold">(123) 456-7890</p>
+              </div>
+            </div>
+
+            {/* Working Hours */}
+            <div className="flex items-center p-3 border-b md:border-b-0 md:border-r border-gray-200">
+              <div className="bg-blue-100 rounded-full p-3 mr-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-blue-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-medium text-gray-900">Working Hours</h3>
+                <p className="text-gray-600">Mon-Fri: 8AM-6PM</p>
+              </div>
+            </div>
+
+            {/* Location */}
+            <div className="flex items-center p-3">
+              <div className="bg-blue-100 rounded-full p-3 mr-4">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-6 w-6 text-blue-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                  />
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                  />
+                </svg>
+              </div>
+              <div>
+                <h3 className="font-medium text-gray-900">Location</h3>
+                <p className="text-gray-600">123 Medical Center Drive</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Hero;
