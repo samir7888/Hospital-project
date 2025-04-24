@@ -1,2 +1,13 @@
 @import "tailwindcss";
 
+#google_translate_element {
+    display: none !important;
+  }
+  .goog-te-banner-frame.skiptranslate,
+  body > .skiptranslate {
+    display: none !important;
+  }
+  body {
+    top: 0px !important;
+  }
+  

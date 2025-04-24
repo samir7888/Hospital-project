@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 
 const Navbar: React.FC = () => {
   const pathname = usePathname();
@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [servicesDropdown, setServicesDropdown] = useState(false);
   const [doctorsDropdown, setDoctorsDropdown] = useState(false);
-  
+
   const servicesRef = useRef<HTMLDivElement>(null);
   const doctorsRef = useRef<HTMLDivElement>(null);
 
@@ -23,17 +23,23 @@ const Navbar: React.FC = () => {
     };
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (servicesRef.current && !servicesRef.current.contains(event.target as Node)) {
+      if (
+        servicesRef.current &&
+        !servicesRef.current.contains(event.target as Node)
+      ) {
         setServicesDropdown(false);
       }
-      if (doctorsRef.current && !doctorsRef.current.contains(event.target as Node)) {
+      if (
+        doctorsRef.current &&
+        !doctorsRef.current.contains(event.target as Node)
+      ) {
         setDoctorsDropdown(false);
       }
     };
 
     window.addEventListener("scroll", handleScroll);
     document.addEventListener("mousedown", handleClickOutside);
-    
+
     return () => {
       window.removeEventListener("scroll", handleScroll);
       document.removeEventListener("mousedown", handleClickOutside);
@@ -41,13 +47,13 @@ const Navbar: React.FC = () => {
   }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  
+
   const toggleServicesDropdown = (e: React.MouseEvent) => {
     e.preventDefault(); // Prevent navigation when toggling dropdown
     setServicesDropdown(!servicesDropdown);
     setDoctorsDropdown(false);
   };
-  
+
   const toggleDoctorsDropdown = (e: React.MouseEvent) => {
     e.preventDefault(); // Prevent navigation when toggling dropdown
     setDoctorsDropdown(!doctorsDropdown);
@@ -63,12 +69,14 @@ const Navbar: React.FC = () => {
   const textColor = isHomePage && !isScrolled ? "text-white" : "text-gray-800";
 
   return (
-    <nav className={`fixed top-0 w-full z-50 transition-all h-20 duration-300 ${navBg}`}>
+    <nav
+      className={`fixed top-0 w-full z-50 transition-all h-20 duration-300 ${navBg}`}
+    >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-20">
           <div className="flex items-center">
             <Link href="/" className={`text-2xl font-bold ${textColor}`}>
-              MedCare Hospital
+              GastroCare Hospital
             </Link>
           </div>
           <div className="hidden md:flex items-center space-x-8">
@@ -77,7 +85,7 @@ const Navbar: React.FC = () => {
             </Link>
 
             <div className="relative " ref={servicesRef}>
-              <button 
+              <button
                 onClick={toggleServicesDropdown}
                 className={`flex items-center cursor-pointer ${textColor} transition-colors duration-300`}
               >
@@ -118,7 +126,7 @@ const Navbar: React.FC = () => {
             </div>
 
             <div className="relative" ref={doctorsRef}>
-              <button 
+              <button
                 onClick={toggleDoctorsDropdown}
                 className={`flex items-center cursor-pointer ${textColor} transition-colors duration-300`}
               >
@@ -168,6 +176,7 @@ const Navbar: React.FC = () => {
               Book Appointment
             </Link>
           </div>
+
           <div className="md:hidden flex items-center">
             <button onClick={toggleMenu} className={textColor}>
               {isMenuOpen ? (

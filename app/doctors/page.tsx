@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { Search } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 interface Doctor {
   id: number;
@@ -86,6 +87,7 @@ const doctorsData: Doctor[] = [
 const Doctors: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedSpecialty, setSelectedSpecialty] = useState('');
+  const router = useRouter();
 
   const specialties = Array.from(new Set(doctorsData.map(doctor => doctor.specialty)));
 
@@ -178,7 +180,7 @@ const Doctors: React.FC = () => {
                     </div>
                   </div>
                   <div className="mt-6 flex justify-between items-center">
-                    <button className="text-blue-600 font-medium hover:text-blue-800 transition-colors duration-300">
+                    <button onClick={()=> router.push(`doctors/${doctor.id}`)} className="text-blue-600 font-medium hover:text-blue-800 transition-colors duration-300">
                       View Profile
                     </button>
                     <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300">
