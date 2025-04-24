@@ -120,7 +120,7 @@ const Services: React.FC = () => {
             </p>
             <div className="flex flex-col sm:flex-row justify-center gap-4">
               <a 
-                href="/appointment" 
+                href="/#appointment" 
                 className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
               >
                 Book an Appointment

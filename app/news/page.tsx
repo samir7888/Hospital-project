@@ -95,19 +95,19 @@ const Page = () => {
           <div className="flex bg-gray-100 rounded-lg p-1">
             <button 
               onClick={() => setActiveTab('all')}
-              className={`px-4 py-2 rounded-md text-sm font-medium ${activeTab === 'all' ? 'bg-white shadow-sm text-blue-700' : 'text-gray-700 hover:text-blue-700'}`}
+              className={`px-4 py-2 rounded-md text-sm font-medium cursor-pointer ${activeTab === 'all' ? 'bg-white shadow-sm text-blue-700' : 'text-gray-700 hover:text-blue-700'}`}
             >
               All
             </button>
             <button 
               onClick={() => setActiveTab('news')}
-              className={`px-4 py-2 rounded-md text-sm font-medium ${activeTab === 'news' ? 'bg-white shadow-sm text-blue-700' : 'text-gray-700 hover:text-blue-700'}`}
+              className={`px-4 py-2 rounded-md text-sm font-medium  cursor-pointer ${activeTab === 'news' ? 'bg-white shadow-sm text-blue-700' : 'text-gray-700 hover:text-blue-700'}`}
             >
               News
             </button>
             <button 
               onClick={() => setActiveTab('event')}
-              className={`px-4 py-2 rounded-md text-sm font-medium ${activeTab === 'event' ? 'bg-white shadow-sm text-blue-700' : 'text-gray-700 hover:text-blue-700'}`}
+              className={`px-4 py-2 rounded-md text-sm font-medium  cursor-pointer ${activeTab === 'event' ? 'bg-white shadow-sm text-blue-700' : 'text-gray-700 hover:text-blue-700'}`}
             >
               Events
             </button>
