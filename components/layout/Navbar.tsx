@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 import Link from "next/link";
@@ -7,27 +7,49 @@ import { useRouter } from 'next/navigation';
 
 const Navbar: React.FC = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const isHomePage = pathname === "/";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [servicesDropdown, setServicesDropdown] = useState(false);
   const [doctorsDropdown, setDoctorsDropdown] = useState(false);
-  const router = useRouter()
+  
+  const servicesRef = useRef<HTMLDivElement>(null);
+  const doctorsRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
 
+    const handleClickOutside = (event: MouseEvent) => {
+      if (servicesRef.current && !servicesRef.current.contains(event.target as Node)) {
+        setServicesDropdown(false);
+      }
+      if (doctorsRef.current && !doctorsRef.current.contains(event.target as Node)) {
+        setDoctorsDropdown(false);
+      }
+    };
+
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+    document.addEventListener("mousedown", handleClickOutside);
+    
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-  const toggleServicesDropdown = () => {
+  
+  const toggleServicesDropdown = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent navigation when toggling dropdown
     setServicesDropdown(!servicesDropdown);
     setDoctorsDropdown(false);
   };
-  const toggleDoctorsDropdown = () => {
+  
+  const toggleDoctorsDropdown = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent navigation when toggling dropdown
     setDoctorsDropdown(!doctorsDropdown);
     setServicesDropdown(false);
   };
@@ -50,14 +72,14 @@ const Navbar: React.FC = () => {
             </Link>
           </div>
           <div className="hidden md:flex items-center space-x-8">
-            <Link href="/about" className={`${textColor} `}>
+            <Link href="/about" className={`${textColor}`}>
               About Us
             </Link>
 
-            <div className="relative">
-              <button onClick={()=> router.push('/services')}
-                onMouseEnter={toggleServicesDropdown}
-                className={`flex items-center ${textColor}  transition-colors duration-300`}
+            <div className="relative " ref={servicesRef}>
+              <button 
+                onClick={toggleServicesDropdown}
+                className={`flex items-center cursor-pointer ${textColor} transition-colors duration-300`}
               >
                 Services <ChevronDown className="ml-1 h-4 w-4" />
               </button>
@@ -66,24 +88,28 @@ const Navbar: React.FC = () => {
                   <Link
                     href="/services#emergency"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50"
+                    onClick={() => setServicesDropdown(false)}
                   >
                     Emergency Care
                   </Link>
                   <Link
                     href="/services#surgery"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50"
+                    onClick={() => setServicesDropdown(false)}
                   >
                     Specialized Surgery
                   </Link>
                   <Link
                     href="/services#lab"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50"
+                    onClick={() => setServicesDropdown(false)}
                   >
                     Laboratory Services
                   </Link>
                   <Link
                     href="/services"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50"
+                    onClick={() => setServicesDropdown(false)}
                   >
                     View All Services
                   </Link>
@@ -91,38 +117,40 @@ const Navbar: React.FC = () => {
               )}
             </div>
 
-            <div
-             className="relative">
-              <button onClick={()=> router.push('/doctors')}
-                 onMouseEnter={toggleDoctorsDropdown}
-                className={`flex items-center ${textColor}  transition-colors duration-300`}
+            <div className="relative" ref={doctorsRef}>
+              <button 
+                onClick={toggleDoctorsDropdown}
+                className={`flex items-center cursor-pointer ${textColor} transition-colors duration-300`}
               >
                 Find a Doctor <ChevronDown className="ml-1 h-4 w-4" />
               </button>
               {doctorsDropdown && (
                 <div className="absolute mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-10">
                   <Link
-                    href="/hfeuhfes"
-                   
+                    href="/doctors?specialty=cardiology"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50"
+                    onClick={() => setDoctorsDropdown(false)}
                   >
                     Cardiology
                   </Link>
                   <Link
                     href="/doctors?specialty=neurology"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50"
+                    onClick={() => setDoctorsDropdown(false)}
                   >
                     Neurology
                   </Link>
                   <Link
                     href="/doctors?specialty=pediatrics"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50"
+                    onClick={() => setDoctorsDropdown(false)}
                   >
                     Pediatrics
                   </Link>
                   <Link
                     href="/doctors"
                     className="block px-4 py-2 text-sm text-gray-700 hover:bg-blue-50"
+                    onClick={() => setDoctorsDropdown(false)}
                   >
                     All Specialists
                   </Link>
@@ -130,7 +158,7 @@ const Navbar: React.FC = () => {
               )}
             </div>
 
-            <Link href="/#news" className={`${textColor} `}>
+            <Link href="/news" className={`${textColor}`}>
               News & Events
             </Link>
             <Link
@@ -159,30 +187,35 @@ const Navbar: React.FC = () => {
             <Link
               href="/about"
               className="block px-3 py-2 text-gray-800 hover:bg-blue-50 rounded-md"
+              onClick={() => setIsMenuOpen(false)}
             >
               About Us
             </Link>
             <Link
               href="/services"
               className="block px-3 py-2 text-gray-800 hover:bg-blue-50 rounded-md"
+              onClick={() => setIsMenuOpen(false)}
             >
               Services
             </Link>
             <Link
               href="/doctors"
               className="block px-3 py-2 text-gray-800 hover:bg-blue-50 rounded-md"
+              onClick={() => setIsMenuOpen(false)}
             >
               Find a Doctor
             </Link>
             <Link
-              href="/#news"
+              href="/news"
               className="block px-3 py-2 text-gray-800 hover:bg-blue-50 rounded-md"
+              onClick={() => setIsMenuOpen(false)}
             >
               News & Events
             </Link>
             <Link
               href="/#appointment"
               className="block px-3 py-2 bg-blue-600 text-white rounded-md text-center"
+              onClick={() => setIsMenuOpen(false)}
             >
               Book Appointment
             </Link>

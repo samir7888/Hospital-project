@@ -120,14 +120,7 @@ const Testimonials: React.FC = () => {
           </div>
         </div>
 
-        <div className="mt-12 text-center">
-          <a 
-            href="#" 
-            className="inline-flex items-center justify-center px-6 py-3 border border-blue-600 text-base font-medium rounded-md text-blue-600 hover:bg-blue-50 transition-colors duration-300"
-          >
-            Read More Testimonials
-          </a>
-        </div>
+       
       </div>
     </section>
   );

@@ -1,5 +1,4 @@
-import Footer from "@/components/layout/Footer";
-import Navbar from "@/components/layout/Navbar";
+
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {

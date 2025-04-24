@@ -25,6 +25,7 @@ const Appointment: React.FC = () => {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -36,100 +37,128 @@ const Appointment: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
     // Here you would typically send the data to a server
     console.log(formData);
-    // Show success message
-    setIsSubmitted(true);
-    // Reset form after delay
+    
+    // Simulate API call with timeout
     setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({
-        firstName: '',
-        lastName: '',
-        email: '',
-        phone: '',
-        date: '',
-        time: '',
-        department: '',
-        message: ''
-      });
-    }, 5000);
+      setIsLoading(false);
+      setIsSubmitted(true);
+      
+      // Reset form after delay
+      setTimeout(() => {
+        setIsSubmitted(false);
+        setFormData({
+          firstName: '',
+          lastName: '',
+          email: '',
+          phone: '',
+          date: '',
+          time: '',
+          department: '',
+          message: ''
+        });
+      }, 5000);
+    }, 1000);
   };
 
   return (
-    <section id="appointment" className="py-20">
+    <section id="appointment" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="lg:flex lg:items-center lg:space-x-12">
+        <div className="lg:flex lg:items-stretch lg:space-x-12">
           {/* Left Column - Image and Info */}
           <div className="lg:w-1/2 mb-12 lg:mb-0">
             <div className="text-left mb-8">
               <h2 className="text-3xl md:text-4xl font-bold text-gray-900">Book an Appointment</h2>
-              <p className="mt-4 text-xl text-gray-600">
+              <div className="h-1 w-20 bg-blue-600 mt-4 mb-6"></div>
+              <p className="text-xl text-gray-600">
                 Schedule your visit with our specialists and receive the care you deserve.
               </p>
             </div>
             
-            <div className="bg-blue-600 rounded-xl p-8 text-white">
-              <h3 className="text-xl font-semibold mb-4">Why Book Online?</h3>
-              <ul className="space-y-3">
+            <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-8 text-white shadow-lg">
+              <h3 className="text-xl font-semibold mb-6 flex items-center">
+                <svg className="h-6 w-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                </svg>
+                Why Book Online?
+              </h3>
+              <ul className="space-y-4">
                 <li className="flex items-start">
-                  <svg className="h-6 w-6 mr-2 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="h-6 w-6 mr-3 text-blue-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                   </svg>
                   <span>Quick and easy scheduling</span>
                 </li>
                 <li className="flex items-start">
-                  <svg className="h-6 w-6 mr-2 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="h-6 w-6 mr-3 text-blue-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                   </svg>
                   <span>No waiting on hold</span>
                 </li>
                 <li className="flex items-start">
-                  <svg className="h-6 w-6 mr-2 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="h-6 w-6 mr-3 text-blue-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                   </svg>
                   <span>24/7 booking availability</span>
                 </li>
                 <li className="flex items-start">
-                  <svg className="h-6 w-6 mr-2 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="h-6 w-6 mr-3 text-blue-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                   </svg>
                   <span>Automatic confirmation</span>
                 </li>
                 <li className="flex items-start">
-                  <svg className="h-6 w-6 mr-2 text-blue-200" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <svg className="h-6 w-6 mr-3 text-blue-200 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                   </svg>
                   <span>Easy rescheduling if needed</span>
                 </li>
               </ul>
               
-              <div className="mt-6 p-4 bg-blue-500 rounded-lg">
-                <p className="font-medium">Need urgent care?</p>
-                <p className="mt-1">Call our 24/7 emergency line:</p>
-                <p className="text-xl font-bold mt-1">(123) 456-7890</p>
+              <div className="mt-8 p-5 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 shadow-inner">
+                <div className="flex items-center">
+                  <div className="bg-red-500 p-3 rounded-full mr-4">
+                    <svg className="h-6 w-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"></path>
+                    </svg>
+                  </div>
+                  <div>
+                    <p className="font-medium text-lg">Need urgent care?</p>
+                    <p className="mt-1 text-blue-100">Call our 24/7 emergency line:</p>
+                    <p className="text-xl font-bold mt-1">(123) 456-7890</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           
           {/* Right Column - Form */}
           <div className="lg:w-1/2">
-            <div className="bg-white rounded-xl shadow-md p-6 md:p-8">
+            <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-100">
               {isSubmitted ? (
-                <div className="text-center py-8">
-                  <svg className="h-16 w-16 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                  </svg>
-                  <h3 className="text-2xl font-semibold text-gray-900 mt-4">Appointment Request Submitted!</h3>
-                  <p className="text-gray-600 mt-2">
+                <div className="text-center py-16">
+                  <div className="h-20 w-20 bg-green-100 rounded-full flex items-center justify-center mx-auto">
+                    <svg className="h-12 w-12 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-semibold text-gray-900 mt-6">Appointment Request Submitted!</h3>
+                  <p className="text-gray-600 mt-3 max-w-md mx-auto">
                     Thank you for choosing MedCare Hospital. We'll contact you shortly to confirm your appointment.
                   </p>
                 </div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-6">
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="mb-4">
+                    <h3 className="text-lg font-medium text-gray-900">Personal Information</h3>
+                    <div className="h-px bg-gray-200 w-full mt-2"></div>
+                  </div>
+                
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="firstName" className="block text-sm font-medium text-gray-700">First Name *</label>
+                      <label htmlFor="firstName" className="block text-sm font-medium text-gray-700 mb-1">First Name *</label>
                       <input
                         type="text"
                         id="firstName"
@@ -137,11 +166,12 @@ const Appointment: React.FC = () => {
                         value={formData.firstName}
                         onChange={handleChange}
                         required
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400"
+                        placeholder="Enter your first name"
                       />
                     </div>
                     <div>
-                      <label htmlFor="lastName" className="block text-sm font-medium text-gray-700">Last Name *</label>
+                      <label htmlFor="lastName" className="block text-sm font-medium text-gray-700 mb-1">Last Name *</label>
                       <input
                         type="text"
                         id="lastName"
@@ -149,14 +179,15 @@ const Appointment: React.FC = () => {
                         value={formData.lastName}
                         onChange={handleChange}
                         required
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400"
+                        placeholder="Enter your last name"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="email" className="block text-sm font-medium text-gray-700">Email *</label>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
                       <input
                         type="email"
                         id="email"
@@ -164,11 +195,12 @@ const Appointment: React.FC = () => {
                         value={formData.email}
                         onChange={handleChange}
                         required
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400"
+                        placeholder="your@email.com"
                       />
                     </div>
                     <div>
-                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700">Phone Number *</label>
+                      <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-1">Phone Number *</label>
                       <input
                         type="tel"
                         id="phone"
@@ -176,14 +208,20 @@ const Appointment: React.FC = () => {
                         value={formData.phone}
                         onChange={handleChange}
                         required
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400"
+                        placeholder="(123) 456-7890"
                       />
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="mb-4 mt-8">
+                    <h3 className="text-lg font-medium text-gray-900">Appointment Details</h3>
+                    <div className="h-px bg-gray-200 w-full mt-2"></div>
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     <div>
-                      <label htmlFor="date" className="block text-sm font-medium text-gray-700">Preferred Date *</label>
+                      <label htmlFor="date" className="block text-sm font-medium text-gray-700 mb-1">Preferred Date *</label>
                       <input
                         type="date"
                         id="date"
@@ -191,11 +229,11 @@ const Appointment: React.FC = () => {
                         value={formData.date}
                         onChange={handleChange}
                         required
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50"
                       />
                     </div>
                     <div>
-                      <label htmlFor="time" className="block text-sm font-medium text-gray-700">Preferred Time *</label>
+                      <label htmlFor="time" className="block text-sm font-medium text-gray-700 mb-1">Preferred Time *</label>
                       <input
                         type="time"
                         id="time"
@@ -203,53 +241,75 @@ const Appointment: React.FC = () => {
                         value={formData.time}
                         onChange={handleChange}
                         required
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50"
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label htmlFor="department" className="block text-sm font-medium text-gray-700">Department/Specialty *</label>
-                    <select
-                      id="department"
-                      name="department"
-                      value={formData.department}
-                      onChange={handleChange}
-                      required
-                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                    >
-                      <option value="">Select Department</option>
-                      <option value="cardiology">Cardiology</option>
-                      <option value="neurology">Neurology</option>
-                      <option value="pediatrics">Pediatrics</option>
-                      <option value="orthopedics">Orthopedics</option>
-                      <option value="gynecology">Gynecology</option>
-                      <option value="dermatology">Dermatology</option>
-                      <option value="general">General Medicine</option>
-                    </select>
+                    <label htmlFor="department" className="block text-sm font-medium text-gray-700 mb-1">Department/Specialty *</label>
+                    <div className="relative">
+                      <select
+                        id="department"
+                        name="department"
+                        value={formData.department}
+                        onChange={handleChange}
+                        required
+                        className="appearance-none w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50"
+                      >
+                        <option value="">Select Department</option>
+                        <option value="cardiology">Cardiology</option>
+                        <option value="neurology">Neurology</option>
+                        <option value="pediatrics">Pediatrics</option>
+                        <option value="orthopedics">Orthopedics</option>
+                        <option value="gynecology">Gynecology</option>
+                        <option value="dermatology">Dermatology</option>
+                        <option value="general">General Medicine</option>
+                      </select>
+                      <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-700">
+                        <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
+                        </svg>
+                      </div>
+                    </div>
                   </div>
 
                   <div>
-                    <label htmlFor="message" className="block text-sm font-medium text-gray-700">Additional Information</label>
+                    <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-1">Additional Information</label>
                     <textarea
                       id="message"
                       name="message"
                       rows={4}
                       value={formData.message}
                       onChange={handleChange}
-                      className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                      className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400"
                       placeholder="Please share any symptoms or concerns..."
                     ></textarea>
                   </div>
 
-                  <div>
+                  <div className="pt-2">
                     <button
                       type="submit"
-                      className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-300"
+                      disabled={isLoading}
+                      className="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-base font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-all duration-300"
                     >
-                      Book Appointment
+                      {isLoading ? (
+                        <>
+                          <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                          </svg>
+                          Processing...
+                        </>
+                      ) : (
+                        'Book Appointment'
+                      )}
                     </button>
                   </div>
+                  
+                  <p className="text-xs text-center text-gray-500 mt-4">
+                    By submitting this form, you agree to our privacy policy and terms of service.
+                  </p>
                 </form>
               )}
             </div>

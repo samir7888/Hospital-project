@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Stethoscope, Scissors, TestTube, Baby, Shield, Activity } from 'lucide-react';
 import { servicesData } from '@/data/services';
+import Link from 'next/link';
 
 const Services: React.FC = () => {
   // Map icon names to actual Lucide React components
@@ -54,12 +55,12 @@ const Services: React.FC = () => {
         </div>
 
         <div className="mt-12 text-center">
-          <a 
-            href="#" 
+          <Link 
+            href="services" 
             className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
           >
             View All Services
-          </a>
+          </Link>
         </div>
       </div>
     </section>
