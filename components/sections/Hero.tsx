@@ -4,7 +4,7 @@ const Hero: React.FC = () => {
   return (
     <div className="relative flex flex-col">
       {/* Main Hero Section */}
-      <div className="relative" style={{ height: "calc(100vh - 80px)" }}>
+      <div className="relative" style={{ minHeight: "calc(100vh - 80px)" }}>
         {/* Hero Background Image */}
         <div
           className="absolute inset-0 bg-center bg-cover"
@@ -21,7 +21,7 @@ const Hero: React.FC = () => {
         {/* Hero Content */}
         <div className="relative h-full flex items-center">
           <div className="max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8 pt-20 w-full">
-            <div className="max-w-4xl mx-auto md:mb-24">
+            <div className="container mx-auto mt-24 text-center">
               <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white leading-tight animate-fade-in text-center">
                 Your Health Is Our Priority
               </h1>

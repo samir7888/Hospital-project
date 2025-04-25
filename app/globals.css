@@ -1,13 +1,14 @@
 @import "tailwindcss";
 
-#google_translate_element {
-    display: none !important;
-  }
-  .goog-te-banner-frame.skiptranslate,
-  body > .skiptranslate {
-    display: none !important;
-  }
-  body {
-    top: 0px !important;
-  }
+@theme {
+  --color-orange: #FF5722;
+  --color-orange-darkest: #E64A19;
+  --color-orange-light: #FFCCBC;
+}
+
+
+.skiptranslate {
+
+  display: none !important;
   
+}
