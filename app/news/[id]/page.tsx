@@ -13,9 +13,10 @@ export function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }): Promise<Metadata> {
-  const newsId = parseInt(params.id);
+  const { id } = await params;
+  const newsId = parseInt(id);
   const newsItem = newsEventsData.find((item) => item.id === newsId);
 
   if (!newsItem) {
@@ -26,22 +27,26 @@ export async function generateMetadata({
   }
 
   return {
-    title: `${newsItem.title} - Hospital News`,
+    title: ` ${newsItem.title} - Hospital News`,
     description: `${newsItem.excerpt}`,
     openGraph: {
       title: newsItem.title,
       description: newsItem.excerpt,
       images: [newsItem.image],
-      type: 'article',
+      type: "article",
       publishedTime: newsItem.date,
     },
   };
 }
 
-export default function NewsDetail({ params }: { params: { id: string } }) {
-  const newsItem = newsEventsData.find(
-    (item) => item.id === parseInt(params.id)
-  );
+export default async function Page({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const newsId = parseInt(id);
+  const newsItem = newsEventsData.find((item) => item.id === newsId);
 
   if (!newsItem) {
     notFound();
@@ -55,7 +60,7 @@ export default function NewsDetail({ params }: { params: { id: string } }) {
         <section className="lg:col-span-2">
           <Link
             href="/news"
-            className="hidden text-blue-500 text-lg md:text-2xl hover:underline mb-6 md:inline-block"
+            className="text-blue-500 text-lg md:text-2xl hover:underline mb-6 inline-block"
           >
             &larr; Back to all news
           </Link>
@@ -76,7 +81,9 @@ export default function NewsDetail({ params }: { params: { id: string } }) {
 
             <div className="p-4 md:p-6 lg:p-8">
               <p className="text-gray-500 mb-2">{newsItem.date}</p>
-              <h1 className="text-2xl md:text-3xl font-bold mb-4">{newsItem.title}</h1>
+              <h1 className="text-2xl md:text-3xl font-bold mb-4">
+                {newsItem.title}
+              </h1>
               <div className="prose max-w-none">
                 <p className="text-lg text-gray-700">{newsItem.excerpt}</p>
 
@@ -84,22 +91,24 @@ export default function NewsDetail({ params }: { params: { id: string } }) {
                 <div className="mt-6">
                   <p>
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Nullam auctor, nisl eget ultricies lacinia, nisl nisl aliquet
-                    nisl, eget aliquet nisl nisl eget nisl. Nullam auctor, nisl
-                    eget ultricies lacinia, nisl nisl aliquet nisl, eget aliquet
-                    nisl nisl eget nisl.
+                    Nullam auctor, nisl eget ultricies lacinia, nisl nisl
+                    aliquet nisl, eget aliquet nisl nisl eget nisl. Nullam
+                    auctor, nisl eget ultricies lacinia, nisl nisl aliquet nisl,
+                    eget aliquet nisl nisl eget nisl.
                   </p>
                   <p className="mt-4">
-                    Nullam auctor, nisl eget ultricies lacinia, nisl nisl aliquet
-                    nisl, eget aliquet nisl nisl eget nisl. Nullam auctor, nisl
-                    eget ultricies lacinia, nisl nisl aliquet nisl, eget aliquet
-                    nisl nisl eget nisl.
+                    Nullam auctor, nisl eget ultricies lacinia, nisl nisl
+                    aliquet nisl, eget aliquet nisl nisl eget nisl. Nullam
+                    auctor, nisl eget ultricies lacinia, nisl nisl aliquet nisl,
+                    eget aliquet nisl nisl eget nisl.
                   </p>
                 </div>
               </div>
 
               <div className="mt-8 pt-6 border-t border-gray-200">
-                <h3 className="text-lg font-semibold mb-4">Share this article</h3>
+                <h3 className="text-lg font-semibold mb-4">
+                  Share this article
+                </h3>
                 <div className="flex flex-wrap gap-3">
                   <button className="bg-blue-600 text-white px-4 py-2 rounded">
                     Facebook
@@ -118,7 +127,9 @@ export default function NewsDetail({ params }: { params: { id: string } }) {
 
         {/* Right column - Takes up 1/3 of the space on large screens */}
         <div className="lg:col-span-1">
-          <h2 className="text-xl md:text-2xl font-bold mb-6">Related Articles</h2>
+          <h2 className="text-xl md:text-2xl font-bold mb-6">
+            Related Articles
+          </h2>
           <div className="grid grid-cols-1 gap-6">
             {newsEventsData
               .filter((item) => item.id !== newsItem.id)

@@ -158,7 +158,7 @@ const doctorsData: Doctor[] = [
 ];
 
 export async function generateMetadata({
-  params,
+  params
 }: {
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
