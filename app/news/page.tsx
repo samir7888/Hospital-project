@@ -1,90 +1,22 @@
 "use client";
 import React, { useState } from "react";
 import { Calendar, Clock, ChevronRight, Search } from "lucide-react";
+import Link from "next/link";
+import { newsEventsData } from "@/data/newsEvents";
 
 const Page = () => {
   const [activeTab, setActiveTab] = useState("all");
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Sample data - in a real implementation, this would come from an API or CMS
-  const items = [
-    {
-      id: 1,
-      type: "news",
-      title: "GastroCare Hospital Receives National Excellence Award",
-      date: "April 15, 2025",
-      image:
-        "https://images.pexels.com/photos/236380/pexels-photo-236380.jpeg?auto=compress&cs=tinysrgb&w=600",
-      excerpt:
-        "GastroCare Hospital has been recognized for its outstanding patient care and medical innovation with the prestigious National Healthcare Excellence Award.",
-      category: "Awards",
-    },
-    {
-      id: 2,
-      type: "event",
-      title: "Free Community Health Screening Day",
-      date: "May 10, 2025",
-      time: "9:00 AM - 3:00 PM",
-      image:
-        "https://images.pexels.com/photos/4225920/pexels-photo-4225920.jpeg?auto=compress&cs=tinysrgb&w=600",
-      excerpt:
-        "Join us for a day of free health screenings including blood pressure, diabetes, and cholesterol checks. Our medical professionals will be available to answer your health questions.",
-      category: "Community",
-    },
-    {
-      id: 3,
-      type: "news",
-      title: "New Cardiology Center Opening Next Month",
-      date: "April 3, 2025",
-      image: "/api/placeholder/600/400",
-      excerpt:
-        "GastroCare Hospital is proud to announce the opening of our state-of-the-art Cardiology Center, featuring the latest diagnostic and treatment technologies.",
-      category: "Facilities",
-    },
-    {
-      id: 4,
-      type: "event",
-      title: "Blood Donation Drive",
-      date: "April 28, 2025",
-      time: "10:00 AM - 4:00 PM",
-      image:
-        "https://images.pexels.com/photos/4225880/pexels-photo-4225880.jpeg?auto=compress&cs=tinysrgb&w=600",
-      excerpt:
-        "Help save lives by donating blood at our upcoming blood drive. Each donation can save up to three lives!",
-      category: "Community",
-    },
-    {
-      id: 5,
-      type: "news",
-      title: "Dr. Sarah Johnson Joins Oncology Department",
-      date: "March 30, 2025",
-      image: "/api/placeholder/600/400",
-      excerpt:
-        "We are pleased to welcome Dr. Sarah Johnson, a renowned oncologist, to our medical team. Dr. Johnson brings over 15 years of experience in cancer treatment and research.",
-      category: "Staff",
-    },
-    {
-      id: 6,
-      type: "event",
-      title: "Diabetes Management Workshop",
-      date: "May 15, 2025",
-      time: "2:00 PM - 4:00 PM",
-      image: "/api/placeholder/600/400",
-      excerpt:
-        "Learn practical strategies for managing diabetes with our expert nutritionists and endocrinologists. Registration required.",
-      category: "Education",
-    },
-  ];
 
   // Filter items based on active tab and search term
-  const filteredItems = items.filter((item) => {
+  const filteredItems = newsEventsData.filter((item) => {
     const matchesTab = activeTab === "all" || item.type === activeTab;
     const matchesSearch =
       item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       item.excerpt.toLowerCase().includes(searchTerm.toLowerCase());
     return matchesTab && matchesSearch;
   });
-
   return (
     <div className="py-10">
       <div className="bg-blue-900 text-white py-20">
@@ -184,9 +116,12 @@ const Page = () => {
                   </h3>
                   <p className="text-gray-600 mb-4">{item.excerpt}</p>
 
-                  <button className="text-blue-700 font-medium flex items-center hover:text-blue-900 transition-colors">
+                  <Link
+                    href={`/news/${item.id}`}
+                    className="text-blue-700 font-medium flex items-center hover:text-blue-900 transition-colors"
+                  >
                     Read more <ChevronRight size={16} className="ml-1" />
-                  </button>
+                  </Link>
                 </div>
               </div>
             ))}

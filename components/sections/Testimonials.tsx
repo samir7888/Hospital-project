@@ -100,14 +100,12 @@ const Testimonials: React.FC = () => {
             <button
               onClick={handlePrev}
               className="bg-white rounded-full p-2 shadow-md hover:bg-gray-100 focus:outline-none"
-              aria-label="Previous testimonial"
             >
               <ArrowLeft className="h-6 w-6 text-blue-600" />
             </button>
             <button
               onClick={handleNext}
               className="bg-white rounded-full p-2 shadow-md hover:bg-gray-100 focus:outline-none"
-              aria-label="Next testimonial"
             >
               <ArrowRight className="h-6 w-6 text-blue-600" />
             </button>
@@ -122,7 +120,6 @@ const Testimonials: React.FC = () => {
                 className={`h-3 w-3 mx-1 rounded-full ${
                   index === activeIndex ? "bg-blue-600" : "bg-gray-300"
                 }`}
-                aria-label={`Go to testimonial ${index + 1}`}
               />
             ))}
           </div>

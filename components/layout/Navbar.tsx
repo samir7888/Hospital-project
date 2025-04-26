@@ -14,8 +14,6 @@ const Navbar: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
 
-  const servicesRef = useRef<HTMLDivElement>(null);
-  const doctorsRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -57,29 +55,36 @@ const Navbar: React.FC = () => {
               About Us
             </Link>
 
-            <div className="relative " ref={servicesRef}>
-              <button
-                onClick={()=> router.push("/services")}
+            <div  >
+              <Link
+                href="/services"
                 className={`flex items-center cursor-pointer ${textColor} transition-colors duration-300`}
               >
                 Services 
-              </button>
+              </Link>
               
             </div>
 
-            <div className="relative" ref={doctorsRef}>
-              <button
-                onClick={()=> router.push("/doctors")}
+            <div >
+              <Link
+                href="/doctors"
                 className={`flex items-center cursor-pointer ${textColor} transition-colors duration-300`}
               >
                 Find a Doctor 
-              </button>
+              </Link>
+             
+            </div>
+            <div >
+              <Link
+                href="/news"
+                className={`flex items-center cursor-pointer ${textColor} transition-colors duration-300`}
+              >
+               News and Events
+              </Link>
              
             </div>
 
-            <Link href="/news" className={`${textColor}`}>
-              News & Events
-            </Link>
+            
             <Link
               href="/#appointment"
               className="bg-orange-darkest text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors duration-300"

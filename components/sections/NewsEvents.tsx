@@ -9,7 +9,7 @@ const NewsEvents: React.FC = () => {
   const filteredItems =
     activeTab === "all"
       ? newsEventsData
-      : newsEventsData.filter((item) => item.category === activeTab);
+      : newsEventsData.filter((item) => item.type === activeTab);
 
   return (
     <section id="news" className="py-20">
@@ -76,21 +76,21 @@ const NewsEvents: React.FC = () => {
                 <div className="flex justify-between items-center mb-3">
                   <span
                     className={`px-2 py-1 text-xs font-semibold rounded ${
-                      item.category === "news"
+                      item.type === "news"
                         ? "bg-blue-100 text-blue-800"
                         : "bg-green-100 text-green-800"
                     }`}
                   >
-                    {item.category === "news" ? "News" : "Event"}
+                    {item.type === "news" ? "News" : "Event"}
                   </span>
                   <span className="text-sm text-gray-500">{item.date}</span>
                 </div>
                 <h3 className="text-xl font-semibold text-gray-900 mb-2">
                   {item.title}
                 </h3>
-                <p className="text-gray-600 mb-4">{item.summary}</p>
-                <a
-                  href="#"
+                <p className="text-gray-600 mb-4">{item.excerpt}</p>
+                <Link
+                  href={`/news/${item.id}`}
                   className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
                 >
                   Read More
@@ -106,7 +106,7 @@ const NewsEvents: React.FC = () => {
                       clipRule="evenodd"
                     />
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
           ))}

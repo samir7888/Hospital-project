@@ -1,4 +1,5 @@
 "use client";
+import { Check, Clipboard, PhoneCall } from "lucide-react";
 import React, { useState } from "react";
 
 interface FormData {
@@ -89,106 +90,29 @@ const Appointment: React.FC = () => {
 
             <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-xl p-8 text-white shadow-lg">
               <h3 className="text-xl font-semibold mb-6 flex items-center">
-                <svg
-                  className="h-6 w-6 mr-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"
-                  ></path>
-                </svg>
+                <Clipboard className="h-6 w-6 mr-2" />
                 Why Book Online?
               </h3>
               <ul className="space-y-4">
                 <li className="flex items-start">
-                  <svg
-                    className="h-6 w-6 mr-3 text-blue-200 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
+                  <Check className="h-6 w-6 mr-3" />
+
                   <span>Quick and easy scheduling</span>
                 </li>
                 <li className="flex items-start">
-                  <svg
-                    className="h-6 w-6 mr-3 text-blue-200 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
+                <Check className="h-6 w-6 mr-3" />
                   <span>No waiting on hold</span>
                 </li>
                 <li className="flex items-start">
-                  <svg
-                    className="h-6 w-6 mr-3 text-blue-200 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
+                <Check className="h-6 w-6 mr-3" />
                   <span>24/7 booking availability</span>
                 </li>
                 <li className="flex items-start">
-                  <svg
-                    className="h-6 w-6 mr-3 text-blue-200 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
+                <Check className="h-6 w-6 mr-3" />
                   <span>Automatic confirmation</span>
                 </li>
                 <li className="flex items-start">
-                  <svg
-                    className="h-6 w-6 mr-3 text-blue-200 flex-shrink-0"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
-                      d="M5 13l4 4L19 7"
-                    ></path>
-                  </svg>
+                <Check className="h-6 w-6 mr-3" />
                   <span>Easy rescheduling if needed</span>
                 </li>
               </ul>
@@ -196,20 +120,8 @@ const Appointment: React.FC = () => {
               <div className="mt-8 p-5 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 shadow-inner">
                 <div className="flex items-center">
                   <div className="bg-red-500 p-3 rounded-full mr-4">
-                    <svg
-                      className="h-6 w-6 text-white"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636"
-                      ></path>
-                    </svg>
+                  <PhoneCall />
+                    
                   </div>
                   <div>
                     <p className="font-medium text-lg">Need urgent care?</p>

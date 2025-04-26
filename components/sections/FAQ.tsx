@@ -163,8 +163,8 @@ const FAQ = () => {
         </div>
 
         {/* Category Filter */}
-        <div className="mb-10 overflow-x-auto">
-          <div className="flex space-x-2 min-w-max pb-2">
+        <div className="container mx-auto mb-10 overflow-x-auto">
+          <div className="flex justify-around min-w-max pb-2">
             {categories.map((category) => (
               <button
                 key={category.id}
