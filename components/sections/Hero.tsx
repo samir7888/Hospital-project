@@ -19,10 +19,10 @@ const Hero: React.FC = () => {
         </div>
 
         {/* Hero Content */}
-        <div className="relative h-full flex items-center">
+        <div className="relative h-full">
           <div className="max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8 pt-20 w-full">
             <div className="container mx-auto mt-24 text-center">
-              <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-white leading-tight animate-fade-in text-center">
+              <h1 className="text-4xl xl:text-5xl 2xl:text-8xl font-extrabold text-white  animate-fade-in text-center leading-[6rem] text-shadow-2xs">
                 Your Health Is Our Priority
               </h1>
               <p className="mt-4 text-xl text-center text-blue-100 animate-fade-in-delay">
