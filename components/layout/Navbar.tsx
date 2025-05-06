@@ -50,7 +50,7 @@ const Navbar: React.FC = () => {
               GastroCare Hospital
             </Link>
           </div>
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-8">
             <Link href="/about" className={`${textColor}`}>
               About Us
             </Link>
@@ -97,7 +97,7 @@ const Navbar: React.FC = () => {
             className={`absolute right-5 top-16 ${isScrolled ? "hidden" : ""}`}
           ></div>
 
-          <div className="md:hidden flex items-center">
+          <div className="lg:hidden flex items-center">
             <button onClick={toggleMenu} className={textColor}>
               {isMenuOpen ? (
                 <X className="h-6 w-6" />
