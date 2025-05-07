@@ -41,7 +41,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed top-0 w-full z-50 transition-all h-20 duration-300 ${navBg}`}
+      className={`fixed top-0 px-3  w-full z-50 transition-all h-20 duration-300 ${navBg}`}
     >
       <section className="container mx-auto ">
         <div className="flex justify-between h-20">

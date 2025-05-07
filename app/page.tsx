@@ -9,16 +9,16 @@ import Testimonials from "../components/sections/Testimonials";
 import Appointment from "@/components/sections/Appoinment";
 import FAQ from "@/components/sections/FAQ";
 
-import Head from 'next/head';
+
 const Home: React.FC = () => {
 
   return (
     <>
 
       <Hero />
+      <Specialists />
       <Features />
       <Services />
-      <Specialists />
       <NewsEvents />
       <Testimonials />
       <Appointment />
