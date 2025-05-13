@@ -42,7 +42,10 @@ export default function RootLayout({
       >
         <GoogleTranslate />
         <Navbar />
+        <div className="">
+
         {children}
+        </div>
         <Footer />
       </body>
     </html>

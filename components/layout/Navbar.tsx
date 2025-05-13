@@ -3,12 +3,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import { Menu, X, ChevronDown } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { LanguageSwitcher } from "../language-switcher";
 
 const Navbar: React.FC = () => {
   const pathname = usePathname();
-  const router = useRouter();
   const isHomePage = pathname === "/";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -41,7 +39,7 @@ const Navbar: React.FC = () => {
 
   return (
     <nav
-      className={`fixed top-0 px-3  w-full z-50 transition-all h-20 duration-300 ${navBg}`}
+      className={`fixed top-0 px-3  w-full !z-50 transition-all h-20 duration-300 ${navBg}`}
     >
       <section className="container mx-auto ">
         <div className="flex justify-between h-20">

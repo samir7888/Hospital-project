@@ -67,23 +67,30 @@ const LanguageSwitcher = () => {
   };
 
   return (
-    <div className="text-center notranslate">
-      {languageConfig.languages.map((ld: LanguageDescriptor, i: number) => (
-        <React.Fragment key={`l_s_${ld.name}`}>
-          {currentLanguage === ld.name ||
+    <div className="text-center notranslate flex flex-wrap justify-center items-center gap-2 py-2">
+      {languageConfig.languages.map((ld: LanguageDescriptor, i: number) => {
+        const isActive =
+          currentLanguage === ld.name ||
           (currentLanguage === "auto" &&
-            languageConfig.defaultLanguage === ld.name) ? (
-            <span className="mx-3 text-orange-300">{ld.title}</span>
-          ) : (
-            <a
-              onClick={switchLanguage(ld.name)}
-              className="mx-3 text-blue-300 cursor-pointer hover:underline"
-            >
-              {ld.title}
-            </a>
-          )}
-        </React.Fragment>
-      ))}
+            languageConfig.defaultLanguage === ld.name);
+
+        return (
+          <React.Fragment key={`l_s_${ld.name}`}>
+            {isActive ? (
+              <span className="px-4 py-2 rounded-full bg-white text-blue-600 font-medium shadow-sm border border-blue-100">
+                {ld.title}
+              </span>
+            ) : (
+              <a
+                onClick={switchLanguage(ld.name)}
+                className="px-4 py-2 rounded-full text-sm font-medium text-gray-700 hover:text-white hover:bg-blue-600 transition shadow-sm border border-gray-300 hover:border-blue-600 bg-white"
+              >
+                {ld.title}
+              </a>
+            )}
+          </React.Fragment>
+        );
+      })}
     </div>
   );
 };

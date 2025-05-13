@@ -1,6 +1,7 @@
 "use client";
 import { Check, Clipboard, PhoneCall } from "lucide-react";
 import React, { useState } from "react";
+import { appointmentSchema } from "../validation/AdmissionFormValidation";
 
 interface FormData {
   firstName: string;
@@ -29,6 +30,7 @@ const Appointment: React.FC = () => {
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string[]>>({});
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -44,6 +46,16 @@ const Appointment: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const validation = appointmentSchema.safeParse(formData);
+
+    if (!validation.success) {
+      const fieldErrors = validation.error.flatten().fieldErrors;
+      setErrors(fieldErrors);
+      console.error("Validation errors:", fieldErrors);
+      return;
+    } else {
+      setErrors({});
+    }
     setIsLoading(true);
     // Here you would typically send the data to a server
     console.log(formData);
@@ -72,7 +84,7 @@ const Appointment: React.FC = () => {
   };
 
   return (
-    <section id="appointment" className="py-20 bg-gray-50">
+    <section id="appointment" className="py-20 bg-gray-50 z-0 ">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="lg:flex lg:items-stretch lg:space-x-12">
           {/* Left Column - Image and Info */}
@@ -96,23 +108,22 @@ const Appointment: React.FC = () => {
               <ul className="space-y-4">
                 <li className="flex items-start">
                   <Check className="h-6 w-6 mr-3" />
-
                   <span>Quick and easy scheduling</span>
                 </li>
                 <li className="flex items-start">
-                <Check className="h-6 w-6 mr-3" />
+                  <Check className="h-6 w-6 mr-3" />
                   <span>No waiting on hold</span>
                 </li>
                 <li className="flex items-start">
-                <Check className="h-6 w-6 mr-3" />
+                  <Check className="h-6 w-6 mr-3" />
                   <span>24/7 booking availability</span>
                 </li>
                 <li className="flex items-start">
-                <Check className="h-6 w-6 mr-3" />
+                  <Check className="h-6 w-6 mr-3" />
                   <span>Automatic confirmation</span>
                 </li>
                 <li className="flex items-start">
-                <Check className="h-6 w-6 mr-3" />
+                  <Check className="h-6 w-6 mr-3" />
                   <span>Easy rescheduling if needed</span>
                 </li>
               </ul>
@@ -120,8 +131,7 @@ const Appointment: React.FC = () => {
               <div className="mt-8 p-5 bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 shadow-inner">
                 <div className="flex items-center">
                   <div className="bg-red-500 p-3 rounded-full mr-4">
-                  <PhoneCall />
-                    
+                    <PhoneCall />
                   </div>
                   <div>
                     <p className="font-medium text-lg">Need urgent care?</p>
@@ -136,7 +146,7 @@ const Appointment: React.FC = () => {
           </div>
 
           {/* Right Column - Form */}
-          <div className="lg:w-1/2">
+          <div className="lg:w-1/2 ">
             <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-100">
               {isSubmitted ? (
                 <div className="text-center py-16">
@@ -187,11 +197,17 @@ const Appointment: React.FC = () => {
                         name="firstName"
                         value={formData.firstName}
                         onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400"
+                         
+                        className={`w-full px-4 py-2.5 rounded-lg border ${
+                          errors.firstName ? "border-red-500" : "border-gray-300"
+                        } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400`}
                         placeholder="Enter your first name"
                       />
+                      {errors.firstName && (
+                        <p className="text-red-500 text-sm mt-1">{errors.firstName[0]}</p>
+                      )}
                     </div>
+
                     <div>
                       <label
                         htmlFor="lastName"
@@ -205,10 +221,15 @@ const Appointment: React.FC = () => {
                         name="lastName"
                         value={formData.lastName}
                         onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400"
+                         
+                        className={`w-full px-4 py-2.5 rounded-lg border ${
+                          errors.lastName ? "border-red-500" : "border-gray-300"
+                        } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400`}
                         placeholder="Enter your last name"
                       />
+                      {errors.lastName && (
+                        <p className="text-red-500 text-sm mt-1">{errors.lastName[0]}</p>
+                      )}
                     </div>
                   </div>
 
@@ -226,11 +247,17 @@ const Appointment: React.FC = () => {
                         name="email"
                         value={formData.email}
                         onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400"
+                         
+                        className={`w-full px-4 py-2.5 rounded-lg border ${
+                          errors.email ? "border-red-500" : "border-gray-300"
+                        } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400`}
                         placeholder="your@email.com"
                       />
+                      {errors.email && (
+                        <p className="text-red-500 text-sm mt-1">{errors.email[0]}</p>
+                      )}
                     </div>
+                    
                     <div>
                       <label
                         htmlFor="phone"
@@ -244,29 +271,40 @@ const Appointment: React.FC = () => {
                         name="phone"
                         value={formData.phone}
                         onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400"
+                         
+                        className={`w-full px-4 py-2.5 rounded-lg border ${
+                          errors.phone ? "border-red-500" : "border-gray-300"
+                        } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400`}
                         placeholder="(123) 456-7890"
                       />
+                      {errors.phone && (
+                        <p className="text-red-500 text-sm mt-1">{errors.phone[0]}</p>
+                      )}
                     </div>
-                    <div>
-                      <label
-                        htmlFor="address"
-                        className="block text-sm font-medium text-gray-700 mb-1"
-                      >
-                        Address *
-                      </label>
-                      <input
-                        type="text"
-                        id="address"
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400"
-                        placeholder="Enter your address"
-                      />
-                    </div>
+                  </div>
+
+                  <div>
+                    <label
+                      htmlFor="address"
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      Address *
+                    </label>
+                    <input
+                      type="text"
+                      id="address"
+                      name="address"
+                      value={formData.address}
+                      onChange={handleChange}
+                       
+                      className={`w-full px-4 py-2.5 rounded-lg border ${
+                        errors.address ? "border-red-500" : "border-gray-300"
+                      } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400`}
+                      placeholder="Enter your address"
+                    />
+                    {errors.address && (
+                      <p className="text-red-500 text-sm mt-1">{errors.address[0]}</p>
+                    )}
                   </div>
 
                   <div className="mb-4 mt-8">
@@ -290,9 +328,14 @@ const Appointment: React.FC = () => {
                         name="date"
                         value={formData.date}
                         onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50"
+                         
+                        className={`w-full px-4 py-2.5 rounded-lg border ${
+                          errors.date ? "border-red-500" : "border-gray-300"
+                        } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50`}
                       />
+                      {errors.date && (
+                        <p className="text-red-500 text-sm mt-1">{errors.date[0]}</p>
+                      )}
                     </div>
                     <div>
                       <label
@@ -307,9 +350,14 @@ const Appointment: React.FC = () => {
                         name="time"
                         value={formData.time}
                         onChange={handleChange}
-                        required
-                        className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50"
+                         
+                        className={`w-full px-4 py-2.5 rounded-lg border ${
+                          errors.time ? "border-red-500" : "border-gray-300"
+                        } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50`}
                       />
+                      {errors.time && (
+                        <p className="text-red-500 text-sm mt-1">{errors.time[0]}</p>
+                      )}
                     </div>
                   </div>
 
@@ -326,8 +374,10 @@ const Appointment: React.FC = () => {
                         name="department"
                         value={formData.department}
                         onChange={handleChange}
-                        required
-                        className="appearance-none w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50"
+                         
+                        className={`appearance-none w-full px-4 py-2.5 rounded-lg border ${
+                          errors.department ? "border-red-500" : "border-gray-300"
+                        } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50`}
                       >
                         <option value="">Select Department</option>
                         <option value="cardiology">Cardiology</option>
@@ -355,6 +405,9 @@ const Appointment: React.FC = () => {
                         </svg>
                       </div>
                     </div>
+                    {errors.department && (
+                      <p className="text-red-500 text-sm mt-1">{errors.department[0]}</p>
+                    )}
                   </div>
 
                   <div>
@@ -370,9 +423,14 @@ const Appointment: React.FC = () => {
                       rows={4}
                       value={formData.message}
                       onChange={handleChange}
-                      className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400"
+                      className={`w-full px-4 py-2.5 rounded-lg border ${
+                        errors.message ? "border-red-500" : "border-gray-300"
+                      } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50 placeholder-gray-400`}
                       placeholder="Please share any symptoms or concerns..."
                     ></textarea>
+                    {errors.message && (
+                      <p className="text-red-500 text-sm mt-1">{errors.message[0]}</p>
+                    )}
                   </div>
 
                   <div className="pt-2">

@@ -13,7 +13,7 @@ import FAQ from "@/components/sections/FAQ";
 const Home: React.FC = () => {
 
   return (
-    <>
+    <div className="">
 
       <Hero />
       <Specialists />
@@ -23,7 +23,7 @@ const Home: React.FC = () => {
       <Testimonials />
       <Appointment />
       <FAQ />
-    </>
+    </div>
   );
 };
 

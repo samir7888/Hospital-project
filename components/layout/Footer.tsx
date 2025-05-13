@@ -10,6 +10,7 @@ import {
   Instagram,
   Linkedin,
 } from "lucide-react";
+import Link from "next/link";
 
 const Footer: React.FC = () => {
   return (
@@ -25,30 +26,30 @@ const Footer: React.FC = () => {
               serve.
             </p>
             <div className="flex space-x-4 mt-4">
-              <a
+              < Link
                 href="#"
                 className="text-blue-200 hover:text-white transition-colors"
               >
                 <Facebook size={20} />
-              </a>
-              <a
+              </ Link>
+              < Link
                 href="#"
                 className="text-blue-200 hover:text-white transition-colors"
               >
                 <Twitter size={20} />
-              </a>
-              <a
+              </ Link>
+              < Link
                 href="#"
                 className="text-blue-200 hover:text-white transition-colors"
               >
                 <Instagram size={20} />
-              </a>
-              <a
+              </ Link>
+              < Link
                 href="#"
                 className="text-blue-200 hover:text-white transition-colors"
               >
                 <Linkedin size={20} />
-              </a>
+              </ Link>
             </div>
           </div>
 
@@ -57,53 +58,38 @@ const Footer: React.FC = () => {
             <h3 className="text-xl font-bold mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#about"
+                <Link
+                  href="/about"
                   className="text-blue-100 hover:text-white transition-colors"
                 >
                   About Us
-                </a>
+                </ Link>
               </li>
               <li>
-                <a
-                  href="#services"
+                < Link
+                  href="/services"
                   className="text-blue-100 hover:text-white transition-colors"
                 >
                   Our Services
-                </a>
+                </ Link>
               </li>
               <li>
-                <a
-                  href="#doctors"
+                < Link
+                  href="/doctors"
                   className="text-blue-100 hover:text-white transition-colors"
                 >
                   Our Doctors
-                </a>
+                </ Link>
               </li>
               <li>
-                <a
-                  href="#appointment"
+                < Link
+                  href="/#appointment"
                   className="text-blue-100 hover:text-white transition-colors"
                 >
                   Book Appointment
-                </a>
+                </ Link>
               </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-blue-100 hover:text-white transition-colors"
-                >
-                  Patient Portal
-                </a>
-              </li>
-              <li>
-                <a
-                  href="#"
-                  className="text-blue-100 hover:text-white transition-colors"
-                >
-                  Careers
-                </a>
-              </li>
+             
             </ul>
           </div>
 
@@ -138,7 +124,7 @@ const Footer: React.FC = () => {
                 <Clock className="mr-2 h-5 w-5 text-blue-300 mt-0.5" />
                 <div>
                   <p className="font-semibold">Emergency Care</p>
-                  <p>24 hours / 7 days a week</p>
+                  <p>24 hours / 7 days  Link week</p>
                 </div>
               </li>
               <li className="mt-3">
