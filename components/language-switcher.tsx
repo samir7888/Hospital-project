@@ -77,13 +77,13 @@ const LanguageSwitcher = () => {
         return (
           <React.Fragment key={`l_s_${ld.name}`}>
             {isActive ? (
-              <span className="px-4 py-2 rounded-full bg-white text-blue-600 font-medium shadow-sm border border-blue-100">
+              <span className="px-4 py-2 rounded-full bg-white text-sm text-blue-600 font-medium shadow-sm border border-blue-100 ">
                 {ld.title}
               </span>
             ) : (
               <a
                 onClick={switchLanguage(ld.name)}
-                className="px-4 py-2 rounded-full text-sm font-medium text-gray-700 hover:text-white hover:bg-blue-600 transition shadow-sm border border-gray-300 hover:border-blue-600 bg-white"
+                className="px-4 py-2 rounded-full cursor-pointer text-sm font-medium text-gray-500 hover:text-white hover:bg-blue-600 transition shadow-sm border border-gray-300 hover:border-blue-600 bg-white"
               >
                 {ld.title}
               </a>
