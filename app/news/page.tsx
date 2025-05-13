@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { Calendar, Clock, ChevronRight, Search } from "lucide-react";
 import Link from "next/link";
 import { newsEventsData } from "@/data/newsEvents";
+import SubscribeForm from "./components/SubscribeForm";
 
 const Page = () => {
   const [activeTab, setActiveTab] = useState("all");
@@ -69,6 +70,7 @@ const Page = () => {
           <div className="relative w-full md:w-auto">
             <input
               type="text"
+              required
               placeholder="Search news and events..."
               className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg w-full md:w-64 focus:outline-none focus:ring-2 focus:ring-blue-500"
               value={searchTerm}
@@ -145,16 +147,7 @@ const Page = () => {
             </p>
           </div>
 
-          <div className="flex flex-col md:flex-row gap-4 max-w-lg mx-auto">
-            <input
-              type="email"
-              placeholder="Your email address"
-              className="flex-grow px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-            <button className="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-lg font-medium transition-colors whitespace-nowrap">
-              Subscribe
-            </button>
-          </div>
+          <SubscribeForm />
         </div>
       </div>
     </div>

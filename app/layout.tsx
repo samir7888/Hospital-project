@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import Script from "next/script";
-import GoogleTranslate from "@/components/GoogleTranslate";
+import GoogleTranslate from "@/components/google-translator";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,24 +28,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <Script src="/assets/lang-config.js" strategy="beforeInteractive" />
-        <Script src="/assets/translation.js" strategy="beforeInteractive" />
-        <Script
-          style={{ display: "none" }}
-          src="//translate.google.com/translate_a/element.js?cb=TranslateInit"
-          strategy="afterInteractive"
-        />
-      </head>
+      <head></head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <GoogleTranslate />
         <Navbar />
-        <div className="">
-
-        {children}
-        </div>
+        <div className="">{children}</div>
         <Footer />
       </body>
     </html>
