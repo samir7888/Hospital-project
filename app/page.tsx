@@ -6,15 +6,12 @@ import Services from "../components/sections/Services";
 import Specialists from "../components/sections/Specialists";
 import NewsEvents from "../components/sections/NewsEvents";
 import Testimonials from "../components/sections/Testimonials";
-import Appointment from "@/components/sections/Appoinment";
+import Appointment from "@/components/sections/Appointment";
 import FAQ from "@/components/sections/FAQ";
 
-
 const Home: React.FC = () => {
-
   return (
-    <div className="">
-
+    <div>
       <Hero />
       <Specialists />
       <Features />
@@ -26,10 +23,5 @@ const Home: React.FC = () => {
     </div>
   );
 };
-
-
-
-
-
 
 export default Home;
