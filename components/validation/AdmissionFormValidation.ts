@@ -1,8 +1,10 @@
+
 import { z } from "zod";
 
 // Define the valid departments as an enum
 const DepartmentEnum = z.enum([
   "cardiology",
+  "gastroenterology",
   "neurology",
   "pediatrics",
   "orthopedics",
@@ -73,3 +75,5 @@ export const appointmentSchema = z.object({
     .min(50, "Please provide more details (at least 50 characters)")
     .max(1000, "Message is too long (maximum 1000 characters)"),
 });
+
+export type zodFormDataSchema = z.infer<typeof appointmentSchema>

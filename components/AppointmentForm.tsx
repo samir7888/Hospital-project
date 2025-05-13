@@ -1,19 +1,9 @@
 'use client'
 import React, { useState } from 'react'
-import { appointmentSchema } from './validation/AdmissionFormValidation';
-interface FormData {
-  firstName: string;
-  lastName: string;
-  email: string;
-  phone: string;
-  date: string;
-  time: string;
-  address: string;
-  department: string;
-  message: string;
-}
+import { appointmentSchema, zodFormDataSchema } from './validation/AdmissionFormValidation';
+
 const AppointmentForm = () => {
-     const [formData, setFormData] = useState<FormData>({
+     const [formData, setFormData] = useState<zodFormDataSchema>({
         firstName: "",
         lastName: "",
         email: "",
@@ -21,7 +11,7 @@ const AppointmentForm = () => {
         address: "",
         date: "",
         time: "",
-        department: "",
+        department: "gastroenterology",
         message: "",
       });
     
@@ -73,7 +63,7 @@ const AppointmentForm = () => {
               date: "",
               address: "",
               time: "",
-              department: "",
+              department: "gastroenterology",
               message: "",
             });
           }, 5000);
@@ -315,6 +305,7 @@ const AppointmentForm = () => {
                         } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50`}
                       >
                         <option value="">Select Department</option>
+                        <option value="gastroenterology">Gastroenterology</option>
                         <option value="cardiology">Cardiology</option>
                         <option value="neurology">Neurology</option>
                         <option value="pediatrics">Pediatrics</option>
