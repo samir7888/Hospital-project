@@ -3,10 +3,12 @@ import { serverFetch } from "@/lib/server-fetch";
 import { DoctorsResponse } from "../types/doctor-type";
 import SearchInput from "@/components/searchInput";
 import Link from "next/link";
+import PaginationComponent from "@/components/PaginationComponent"; // Adjust path as needed
 
 export type DoctorsPageProps = {
   searchParams: {
     search?: string;
+    page?: string;
   };
 };
 
@@ -54,6 +56,7 @@ export default Doctors;
 async function DoctorsGrid({ queryString }: { queryString: string }) {
   const url = `doctors${queryString ? `?${queryString}` : ""}`;
   const filteredDoctors = await serverFetch<DoctorsResponse>(url);
+  
   if (!filteredDoctors || filteredDoctors?.data?.length === 0) {
     return (
       <div className="text-center flex flex-col justify-center items-center py-12">
@@ -66,6 +69,7 @@ async function DoctorsGrid({ queryString }: { queryString: string }) {
       </div>
     );
   }
+
   return (
     <div className="py-16">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -133,6 +137,13 @@ async function DoctorsGrid({ queryString }: { queryString: string }) {
             </div>
           ))}
         </div>
+
+        {/* Pagination Component */}
+        {filteredDoctors.meta && (
+          <div className="mt-8">
+            <PaginationComponent meta={filteredDoctors.meta} />
+          </div>
+        )}
       </div>
     </div>
   );

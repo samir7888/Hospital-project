@@ -6,6 +6,7 @@ import SubscribeForm from "./components/SubscribeForm";
 import SearchInput from "@/components/searchInput";
 import CategoryTabs from "@/components/category-tabs";
 import { NewsAndEventsResponse } from "../types/blogs-type";
+import PaginationComponent from "@/components/PaginationComponent";
 
 export type NewsEventsPageProps = {
   searchParams: {
@@ -83,47 +84,56 @@ async function NewsEventsGrid({ queryString }: { queryString: string }) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {filteredItems.data.map((item) => (
-        <div
-          key={item.id}
-          className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
-        >
-          <div className="relative">
-            <img
-              src={item.coverImage?.url ?? ""}
-              alt={item.title}
-              className="w-full h-48 object-cover"
-            />
-            {/* <div className="absolute top-4 right-4 bg-blue-700 text-white text-xs font-bold px-3 py-1 rounded-full">
+    <div>
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredItems.data.map((item) => (
+          <div
+            key={item.id}
+            className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
+          >
+            <div className="relative">
+              <img
+                src={item.coverImage?.url ?? ""}
+                alt={item.title}
+                className="w-full h-48 object-cover"
+              />
+              {/* <div className="absolute top-4 right-4 bg-blue-700 text-white text-xs font-bold px-3 py-1 rounded-full">
               {item.category}
-            </div> */}
-          </div>
+              </div> */}
+            </div>
 
-          <div className="p-6">
-            <div className="flex items-center text-gray-500 text-sm mb-2">
-              <Calendar size={16} className="mr-2" />
-               <span className="text-gray-500">
+            <div className="p-6">
+              <div className="flex items-center text-gray-500 text-sm mb-2">
+                <Calendar size={16} className="mr-2" />
+                <span className="text-gray-500">
                   {item.createdAt
                     ? new Date(item.createdAt).toLocaleDateString()
                     : "Date not available"}
                 </span>
+              </div>
+
+              <h3 className="text-xl font-bold text-gray-900 mb-2">
+                {item.title}
+              </h3>
+              <p className="text-gray-600 mb-4">{item.summary}</p>
+
+              <Link
+                href={`/news/${item.slug}`}
+                className="text-blue-700 font-medium flex items-center hover:text-blue-900 transition-colors"
+              >
+                Read more <ChevronRight size={16} className="ml-1" />
+              </Link>
             </div>
-
-            <h3 className="text-xl font-bold text-gray-900 mb-2">
-              {item.title}
-            </h3>
-            <p className="text-gray-600 mb-4">{item.summary}</p>
-
-            <Link
-              href={`/news/${item.slug}`}
-              className="text-blue-700 font-medium flex items-center hover:text-blue-900 transition-colors"
-            >
-              Read more <ChevronRight size={16} className="ml-1" />
-            </Link>
           </div>
-        </div>
-      ))}
+        ))}
+
+      </div>
+          {/* Pagination Component */}
+          {filteredItems.meta && (
+            <div className="mt-8">
+              <PaginationComponent meta={filteredItems.meta} />
+            </div>
+          )}
     </div>
   );
 }
