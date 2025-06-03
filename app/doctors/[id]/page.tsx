@@ -22,7 +22,7 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
-  
+
   try {
     const doctor = await serverFetch<Doctor>(`doctors/${id}`);
 
@@ -55,7 +55,7 @@ export default async function DoctorProfile({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  
+
   try {
     // Remove the leading slash - it should be consistent with your API endpoint
     const doctor = await serverFetch<Doctor>(`doctors/${id}`);
@@ -68,9 +68,7 @@ export default async function DoctorProfile({
       <div className="pt-20 bg-gray-50 min-h-screen">
         <section className="container mx-auto">
           {/* Back button */}
-          <div className="py-6">
-           
-          </div>
+          <div className="py-6"></div>
 
           {/* Doctor Profile Header */}
           <div className="bg-white shadow">
@@ -155,7 +153,9 @@ export default async function DoctorProfile({
                 {/* right side */}
                 <div className="w-full md:w-1/3 space-y-6">
                   <div className="bg-white rounded-lg shadow-md p-6">
-                    <h2 className="text-2xl font-semibold mb-4">Availability</h2>
+                    <h2 className="text-2xl font-semibold mb-4">
+                      Availability
+                    </h2>
                     <ul className="space-y-2">
                       {doctor.availability?.map((day, index) => (
                         <li key={index} className="flex items-center">
@@ -192,17 +192,24 @@ export default async function DoctorProfile({
                   </h2>
 
                   <h3 className="text-xl font-semibold mb-3">Education</h3>
-                  <p className="text-gray-700 mb-6 uppercase">{doctor.degree}</p>
+                  <p className="text-gray-700 mb-6 uppercase">
+                    {doctor.degree}
+                  </p>
 
-                  <h3 className="text-xl font-semibold mb-3">Certifications</h3>
-                  <ul className="list-disc list-inside text-gray-700 mb-6">
-                    {doctor.certifications?.map((cert, index) => (
-                      <li key={index} className="mb-2 flex items-start">
-                        <Award className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-0.5" />
-                        <span>{cert}</span>
-                      </li>
-                    ))}
-                  </ul>
+                  {doctor.certifications.length > 0 && (
+                    <>
+                      <h1 className="text-xl font-semibold mb-3">
+                        Certifications</h1>
+                      <ul className="list-disc list-inside text-gray-700 mb-6">
+                        {doctor.certifications?.map((cert, index) => (
+                          <li key={index} className="mb-2 flex items-start">
+                            <Award className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-0.5" />
+                            <span>{cert}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
                 </div>
               </div>
 
@@ -228,7 +235,7 @@ export default async function DoctorProfile({
       </div>
     );
   } catch (error) {
-    console.error('Error fetching doctor:', error);
+    console.error("Error fetching doctor:", error);
     notFound();
   }
 }
@@ -236,16 +243,16 @@ export default async function DoctorProfile({
 export async function generateStaticParams() {
   try {
     const doctors = await serverFetch<DoctorsResponse>(`doctors`);
-    
+
     if (!doctors || !doctors.data) {
       return [];
     }
-    
+
     return doctors.data.map((doctor) => ({
       id: doctor.id,
     }));
   } catch (error) {
-    console.error('Error generating static params:', error);
+    console.error("Error generating static params:", error);
     return [];
   }
 }

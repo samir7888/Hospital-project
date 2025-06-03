@@ -1,4 +1,4 @@
-import { ImageResponse } from "./global-types";
+
 
 
 export interface ITestimonial {
@@ -7,7 +7,6 @@ export interface ITestimonial {
   personCompany: string;
   personRating: number;
   personMessage: string;    
- personImage: ImageResponse | null;
 }
 
 export type TestimonialResponse = ITestimonial[];
