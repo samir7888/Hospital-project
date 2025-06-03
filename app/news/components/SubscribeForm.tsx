@@ -1,3 +1,4 @@
+'use client'
 import { validateEmail } from '@/components/validation/SubscribeValidation';
 import { useState } from 'react';
 // import { validateEmail } from '';
