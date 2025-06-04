@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import { Building, Users, Trophy, Globe } from "lucide-react";
-import FAQ from "@/components/sections/FAQ";
+import FAQ from "@/components/sections/ServerFaqs";
+// import FAQ from "@/components/sections/FAQ";
 
 const About: React.FC = () => {
   const stats = [

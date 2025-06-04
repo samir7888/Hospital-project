@@ -1,261 +1,220 @@
-"use client";
+'use client';
 
 import React, { useState } from "react";
-import { ChevronDown, ChevronUp, Search } from "lucide-react";
+import { Search, HelpCircle, Phone, Mail, Clock } from "lucide-react";
+import { FaqResponse, FaqItem } from "@/app/types/faqs-type";
+import { EFaqType } from "@/app/types/enums";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import SanitizeBody from "../html-sanitize";
 
-const FAQ = () => {
-  const [openQuestion, setOpenQuestion] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [activeCategory, setActiveCategory] = useState("all");
+interface FAQClientProps {
+  faqData: FaqResponse;
+}
 
-  // FAQ data grouped by categories
-  const faqData = {
-    admissions: [
-      {
-        id: 1,
-        question: "What should I bring for hospital admission?",
-        answer:
-          "Please bring your government-issued ID, insurance card, list of current medications, advance directives (if applicable), and personal care items. Leave valuables at home. For planned admissions, follow any pre-admission instructions provided by your doctor.",
-      },
-      {
-        id: 2,
-        question:
-          "How do I pre-register for an upcoming appointment or procedure?",
-        answer:
-          "You can pre-register online through our patient portal, by phone at (555) 123-4567, or in person at our admissions office. Pre-registration is recommended at least 48 hours before your scheduled appointment to reduce wait times.",
-      },
-      {
-        id: 3,
-        question: "Do I need a referral to see a specialist?",
-        answer:
-          "This depends on your insurance plan. Many insurance providers require a referral from your primary care physician before seeing a specialist. We recommend checking with your insurance provider regarding their referral requirements before scheduling an appointment with a specialist.",
-      },
-    ],
-    insurance: [
-      {
-        id: 4,
-        question: "What insurance plans do you accept?",
-        answer:
-          "GastroCare Hospital accepts most major insurance plans including Medicare, Medicaid, Blue Cross Blue Shield, Aetna, Cigna, UnitedHealthcare, and Humana. For specific questions about your insurance coverage, please contact our billing department at (555) 123-4570.",
-      },
-      {
-        id: 5,
-        question: "What if I don't have insurance?",
-        answer:
-          "We offer financial assistance programs for uninsured and underinsured patients. Our financial counselors can help determine eligibility for various programs and develop payment plans. Please contact our financial services office at (555) 123-4575 to discuss your options.",
-      },
-    ],
-    visitation: [
-      {
-        id: 6,
-        question: "What are the visiting hours?",
-        answer:
-          "General visiting hours are from 9:00 AM to 8:00 PM daily. Specialized units like ICU, pediatrics, and maternity may have different visiting policies. Please check with the specific department or nursing station for their current visiting guidelines.",
-      },
-      {
-        id: 7,
-        question: "How many visitors can a patient have at once?",
-        answer:
-          "We generally allow two visitors per patient at a time. In special circumstances, exceptions may be made at the discretion of the nursing staff. For the ICU and other specialized care units, visitation may be more limited.",
-      },
-    ],
-    medical: [
-      {
-        id: 8,
-        question: "How do I access my medical records?",
-        answer:
-          "You can access your medical records through our secure patient portal. For records not available online or if you prefer paper copies, submit a medical records request form to our Health Information Management department. Please allow 7-10 business days for processing.",
-      },
-      {
-        id: 9,
-        question: "How do I refill my prescription?",
-        answer:
-          "The easiest way to refill prescriptions is through your pharmacy. They will contact your doctor if necessary. You can also request refills through our patient portal or by calling your doctor's office directly at least 3 business days before you need the refill.",
-      },
-    ],
-    facilities: [
-      {
-        id: 10,
-        question: "Where can I park when visiting the hospital?",
-        answer:
-          "We offer both self-parking in our main garage and valet parking at the main entrance. Parking fees apply, with discounted weekly passes available for frequent visitors. Handicap parking spaces are located near all entrances.",
-      },
-      {
-        id: 11,
-        question: "Is there a cafeteria or food options in the hospital?",
-        answer:
-          "Yes, our main cafeteria is located on the first floor and is open from 6:30 AM to 8:00 PM. We also have a coffee shop in the main lobby (open 7:00 AM to 7:00 PM) and vending machines throughout the facility. Visitors are welcome at all dining locations.",
-      },
-    ],
-    emergency: [
-      {
-        id: 12,
-        question: "When should I go to the Emergency Room vs. Urgent Care?",
-        answer:
-          "Go to the Emergency Room for potentially life-threatening conditions such as chest pain, severe bleeding, difficulty breathing, or serious injuries. Choose Urgent Care for non-life-threatening issues that require same-day care, such as sprains, minor infections, or fever.",
-      },
-      {
-        id: 13,
-        question: "How does the ER prioritize patients?",
-        answer:
-          "The ER uses a triage system to assess patients based on the severity of their condition, not arrival time. Patients with life-threatening conditions are seen first. This means those with less severe symptoms may experience longer wait times, even if they arrived earlier.",
-      },
-    ],
-  };
+export const FAQClient: React.FC<FAQClientProps> = ({ faqData }) => {
+  const [activeCategory, setActiveCategory] = useState<string>("all");
 
-  // All categories for the filter
+  // All categories for the filter with icons
   const categories = [
-    { id: "all", name: "All Questions" },
-    { id: "admissions", name: "Admissions & Registration" },
-    { id: "insurance", name: "Insurance & Billing" },
-    { id: "visitation", name: "Visitation" },
-    { id: "medical", name: "Medical Records & Prescriptions" },
-    { id: "facilities", name: "Facilities & Amenities" },
-    { id: "emergency", name: "Emergency Care" },
+    { id: "all", name: "All Questions", icon: "📋" },
+    { id: EFaqType.General, name: "General", icon: "ℹ️" },
+    { id: EFaqType.Doctor, name: "Doctor", icon: "👨‍⚕️" },
+    { id: EFaqType.Patient, name: "Patient", icon: "🏥" },
+    { id: EFaqType.Insurance, name: "Insurance", icon: "🛡️" },
+    { id: EFaqType.Billing, name: "Billing", icon: "💳" },
+    { id: EFaqType.Facility, name: "Facility", icon: "🏢" },
+    { id: EFaqType.EmergencyCare, name: "Emergency Care", icon: "🚨" },
   ];
 
-  // Flatten the faq data for searching and filtering
-  const allFaqs = Object.entries(faqData).flatMap(([category, questions]) =>
-    questions.map((q) => ({ ...q, category }))
-  );
+  // Filter FAQs based on active category
+  const filteredFaqs = activeCategory === "all" 
+    ? faqData.data 
+    : faqData.data.filter(faq => faq.category === activeCategory);
 
-  // Filter based on search and category
-  const filteredFaqs = allFaqs.filter((faq) => {
-    const matchesSearch =
-      faq.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      faq.answer.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesCategory =
-      activeCategory === "all" || faq.category === activeCategory;
-    return matchesSearch && matchesCategory;
+  // Get available categories (only show tabs for categories that have FAQs)
+  const availableCategories = categories.filter(category => {
+    if (category.id === "all") return true;
+    return faqData.data.some(faq => faq.category === category.id);
   });
 
-  const toggleQuestion = (id: any) => {
-    setOpenQuestion(openQuestion === id ? null : id);
-  };
-
   return (
-    <div className="bg-gray-50 py-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Find answers to commonly asked questions about our services,
-            policies, and procedures.
-          </p>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-indigo-50">
+      {/* Hero Section */}
+      <div className="bg-gradient-to-r from-blue-600 via-blue-700 to-indigo-700 text-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="flex justify-center mb-6">
+              <div className="bg-white/10 backdrop-blur-sm rounded-full p-4">
+                <HelpCircle className="w-12 h-12 text-white" />
+              </div>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-100 bg-clip-text text-transparent">
+              Frequently Asked Questions
+            </h1>
+            <p className="text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+              Find answers to commonly asked questions about our services, policies, and procedures. 
+              We're here to help make your experience seamless.
+            </p>
+          </div>
         </div>
+      </div>
 
-        {/* Search Bar */}
-        <div className="max-w-xl mx-auto mb-10">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search for questions..."
-              className="w-full pl-12 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-            <div className="absolute left-4 top-3.5 text-gray-400">
-              <Search size={20} />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-10 relative z-10">
+        {/* Category Tabs */}
+        <div className="bg-white rounded-2xl shadow-xl border border-gray-100 mb-8 overflow-hidden">
+          <div className="p-6 border-b border-gray-100">
+            <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+              <span className="mr-2">🔍</span>
+              Browse by Category
+            </h3>
+            <div className="overflow-x-auto">
+              <nav className="flex space-x-2" aria-label="Tabs">
+                {availableCategories.map((category) => (
+                  <button
+                    key={category.id}
+                    onClick={() => setActiveCategory(category.id)}
+                    className={`group flex items-center px-4 py-3 rounded-xl font-medium text-sm whitespace-nowrap transition-all duration-200 transform hover:scale-105 ${
+                      activeCategory === category.id
+                        ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-lg shadow-blue-500/25"
+                        : "bg-gray-50 text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+                    }`}
+                  >
+                    <span className="text-lg mr-2">{category.icon}</span>
+                    <span className="font-semibold">{category.name}</span>
+                    <span className={`ml-3 inline-flex items-center justify-center px-2.5 py-1 text-xs font-bold leading-none rounded-full transition-colors ${
+                      activeCategory === category.id
+                        ? "bg-white/20 text-white"
+                        : "bg-blue-100 text-blue-600 group-hover:bg-blue-200"
+                    }`}>
+                      {category.id === "all" 
+                        ? faqData.data.length 
+                        : faqData.data.filter(faq => faq.category === category.id).length
+                      }
+                    </span>
+                  </button>
+                ))}
+              </nav>
             </div>
           </div>
         </div>
 
-        {/* Category Filter */}
-        <div className="container mx-auto mb-10 overflow-x-auto">
-          <div className="flex justify-around min-w-max pb-2">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setActiveCategory(category.id)}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors whitespace-nowrap
-                  ${
-                    activeCategory === category.id
-                      ? "bg-blue-700 text-white"
-                      : "bg-white text-gray-700 hover:bg-gray-100"
-                  }`}
-              >
-                {category.name}
-              </button>
-            ))}
-          </div>
-        </div>
-
         {/* FAQ Accordion */}
-        <div className="max-w-3xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           {filteredFaqs.length > 0 ? (
-            filteredFaqs.map((faq) => (
-              <div
-                key={faq.id}
-                className="mb-4 bg-white rounded-lg shadow overflow-hidden"
-              >
-                <button
-                  className="w-full text-left p-5 flex justify-between items-center focus:outline-none"
-                  onClick={() => toggleQuestion(faq.id)}
-                >
-                  <h3 className="text-lg font-semibold text-gray-900">
-                    {faq.question}
-                  </h3>
-                  {openQuestion === faq.id ? (
-                    <ChevronUp
-                      className="flex-shrink-0 text-blue-700"
-                      size={20}
-                    />
-                  ) : (
-                    <ChevronDown
-                      className="flex-shrink-0 text-gray-500"
-                      size={20}
-                    />
-                  )}
-                </button>
-
-                {openQuestion === faq.id && (
-                  <div className="p-5 pt-0 border-t border-gray-100">
-                    <p className="text-gray-700">{faq.answer}</p>
-                  </div>
-                )}
+            <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+              <div className="bg-gradient-to-r from-gray-50 to-blue-50 px-6 py-4 border-b border-gray-100">
+                <h3 className="text-xl font-bold text-gray-900 flex items-center">
+                  <span className="mr-3 text-2xl">
+                    {availableCategories.find(cat => cat.id === activeCategory)?.icon || "📋"}
+                  </span>
+                  {availableCategories.find(cat => cat.id === activeCategory)?.name} 
+                  <span className="ml-3 text-sm font-normal text-gray-600">
+                    ({filteredFaqs.length} questions)
+                  </span>
+                </h3>
               </div>
-            ))
+              
+              <div className="p-6">
+                <Accordion type="single" collapsible className="w-full space-y-4">
+                  {filteredFaqs.map((faq, index) => (
+                    <AccordionItem 
+                      key={faq.id} 
+                      value={faq.id} 
+                      className="border border-gray-200 rounded-xl overflow-hidden shadow-sm hover:shadow-md transition-shadow duration-200"
+                    >
+                      <AccordionTrigger className="text-left hover:no-underline transition-all duration-200 px-6 py-5 hover:bg-gradient-to-r hover:from-blue-50 hover:to-indigo-50 group">
+                        <div className="flex items-start space-x-4 w-full">
+                          <div className="flex-shrink-0 w-8 h-8 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-sm">
+                            {index + 1}
+                          </div>
+                          <div className="flex-1">
+                            <h4 className="font-bold text-lg text-gray-900 group-hover:text-blue-700 transition-colors duration-200 leading-tight">
+                              {faq.title}
+                            </h4>
+                          </div>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className="px-6 pb-6">
+                        <div className="mx-auto p-3 prose prose-lg max-w-none">
+                          <div className="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-6 border-l-4 border-blue-500">
+                            <SanitizeBody description={faq.description} />
+                            {/* <p className="text-gray-700 leading-relaxed text-base">
+                              {faq.description}
+                            </p> */}
+                          </div>
+                        </div>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            </div>
           ) : (
-            <div className="text-center py-10">
-              <p className="text-gray-500">
-                No questions found matching your criteria.
+            <div className="text-center py-16 bg-white rounded-2xl shadow-xl border border-gray-100">
+              <div className="text-6xl mb-4">🔍</div>
+              <h3 className="text-xl font-bold text-gray-900 mb-2">No questions found</h3>
+              <p className="text-gray-500 mb-6">
+                No questions found in this category.
               </p>
               <button
-                onClick={() => {
-                  setSearchTerm("");
-                  setActiveCategory("all");
-                }}
-                className="mt-4 text-blue-700 hover:text-blue-900 font-medium"
+                onClick={() => setActiveCategory("all")}
+                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-semibold rounded-xl hover:from-blue-600 hover:to-indigo-700 transition-all duration-200 transform hover:scale-105 shadow-lg hover:shadow-xl"
               >
-                Clear filters
+                <span className="mr-2">📋</span>
+                View all questions
               </button>
             </div>
           )}
         </div>
 
         {/* Contact Info */}
-        <div className="mt-12 bg-white rounded-lg shadow-md p-8 max-w-3xl mx-auto">
-          <h3 className="text-xl font-bold text-center mb-4">
-            Still have questions?
-          </h3>
-          <p className="text-gray-600 text-center mb-6">
-            Our patient support team is available to help you with any questions
-            not answered here.
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="text-center bg-blue-50 p-6 rounded-lg">
-              <h4 className="font-bold mb-2">Call Us</h4>
-              <p className="text-gray-700">Monday to Friday, 8am - 6pm</p>
-              <p className="text-blue-700 font-semibold mt-2">(555) 123-4567</p>
-            </div>
-            <div className="text-center bg-blue-50 p-6 rounded-lg">
-              <h4 className="font-bold mb-2">Email Us</h4>
-              <p className="text-gray-700">We'll respond within 24 hours</p>
-              <p className="text-blue-700 font-semibold mt-2">
-                support@medcarehospital.com
+        <div className="mt-16 mb-12">
+          <div className="bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden">
+            <div className="bg-gradient-to-r from-blue-600 to-indigo-700 px-8 py-6">
+              <h3 className="text-2xl font-bold text-white text-center flex items-center justify-center">
+                <span className="mr-3 text-3xl">💬</span>
+                Still have questions?
+              </h3>
+              <p className="text-blue-100 text-center mt-2 text-lg">
+                Our patient support team is available to help you with any questions not answered here.
               </p>
+            </div>
+            
+            <div className="p-8">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div className="group bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-2xl border border-blue-100 hover:shadow-lg transition-all duration-200 transform hover:scale-105">
+                  <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl mb-6 mx-auto group-hover:scale-110 transition-transform duration-200">
+                    <Phone className="w-8 h-8 text-white" />
+                  </div>
+                  <h4 className="font-bold text-xl text-gray-900 text-center mb-3">Call Us</h4>
+                  <div className="flex items-center justify-center text-gray-600 mb-3">
+                    <Clock className="w-4 h-4 mr-2" />
+                    <span>Monday to Friday, 8am - 6pm</span>
+                  </div>
+                  <p className="text-2xl font-bold text-blue-600 text-center">
+                    (555) 123-4567
+                  </p>
+                </div>
+                
+                <div className="group bg-gradient-to-br from-indigo-50 to-purple-50 p-8 rounded-2xl border border-indigo-100 hover:shadow-lg transition-all duration-200 transform hover:scale-105">
+                  <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl mb-6 mx-auto group-hover:scale-110 transition-transform duration-200">
+                    <Mail className="w-8 h-8 text-white" />
+                  </div>
+                  <h4 className="font-bold text-xl text-gray-900 text-center mb-3">Email Us</h4>
+                  <div className="flex items-center justify-center text-gray-600 mb-3">
+                    <Clock className="w-4 h-4 mr-2" />
+                    <span>We'll respond within 24 hours</span>
+                  </div>
+                  <p className="text-lg font-bold text-indigo-600 text-center break-all">
+                    support@medcarehospital.com
+                  </p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -263,5 +222,3 @@ const FAQ = () => {
     </div>
   );
 };
-
-export default FAQ;

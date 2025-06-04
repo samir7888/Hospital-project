@@ -13,7 +13,6 @@ export async function serverFetch<T>(path: string): Promise<T | null> {
       method: "GET",
       // next: { revalidate: 60 * 60 * 24 * 7 },
     });
-    console.log("response", response);
     if (!response.ok) {
       console.error(`Fetch failed: ${response.status} ${response.statusText}`);
       return null;
