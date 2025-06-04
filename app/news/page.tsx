@@ -7,6 +7,7 @@ import SearchInput from "@/components/searchInput";
 import CategoryTabs from "@/components/category-tabs";
 import { NewsAndEventsResponse } from "../types/blogs-type";
 import PaginationComponent from "@/components/PaginationComponent";
+import { HomePageData } from "../types/heropage-type";
 
 export type NewsEventsPageProps = {
   searchParams: {
@@ -21,15 +22,14 @@ const Page = async (props: {
   const searchParams = await props.searchParams;
   const queryParams = new URLSearchParams(searchParams);
   const queryString = queryParams.toString();
-
+ const newsEventsHomePageData = await serverFetch<HomePageData>("blogs-page");
   return (
     <div className="py-10">
       <div className="bg-blue-900 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">News & Events</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">{newsEventsHomePageData?.heroSection?.title || "News & Events"}</h1>
           <p className="text-xl text-blue-100 max-w-3xl">
-            Stay updated with the latest news, events, and announcements from
-            GastroCare Hospital.
+            {newsEventsHomePageData?.heroSection?.subtitle || "Stay updated with the latest news, events, and announcements from GastroCare Hospital."}
           </p>
         </div>
       </div>

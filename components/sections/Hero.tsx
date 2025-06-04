@@ -1,6 +1,9 @@
+import { HomePageData } from "@/app/types/heropage-type";
+import { serverFetch } from "@/lib/server-fetch";
 import React from "react";
 
-const Hero: React.FC = () => {
+const Hero: React.FC = async () => {
+  const homePageData = await serverFetch<HomePageData>("home-page");
   return (
     <div className="relative flex flex-col">
       {/* Main Hero Section */}
@@ -9,8 +12,10 @@ const Hero: React.FC = () => {
         <div
           className="absolute inset-0 bg-center bg-cover"
           style={{
-            backgroundImage:
-              "url('https://images.pexels.com/photos/247786/pexels-photo-247786.jpeg?auto=compress&cs=tinysrgb&w=1260')",
+            backgroundImage: `url(${
+              homePageData?.heroSection?.image?.url ||
+              "https://images.pexels.com/photos/247786/pexels-photo-247786.jpeg?auto=compress&cs=tinysrgb&w=1260"
+            })`,
             backgroundPosition: "center 25%",
           }}
         >
@@ -23,24 +28,27 @@ const Hero: React.FC = () => {
           <div className="max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8 pt-20 w-full">
             <div className="container mx-auto mt-24 text-center">
               <h1 className="text-4xl xl:text-5xl 2xl:text-8xl font-extrabold text-white  animate-fade-in text-center leading-[6rem] text-shadow-2xs">
-                Your Health Is Our Priority
+                {homePageData?.heroSection?.title ||
+                  "Your Health Is Our Priority"}
               </h1>
               <p className="mt-4 text-xl text-center text-blue-100 animate-fade-in-delay">
-                Delivering compassionate care and medical excellence to our
-                community for over 35 years.
+                {homePageData?.heroSection?.subtitle ||
+                  "Delivering compassionate care and medical excellence to our community for over 35 years."}
               </p>
               <div className="mt-8 flex flex-col justify-center sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
                 <a
                   href="#appointment"
                   className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-full text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
                 >
-                  Book an Appointment
+                  {homePageData?.heroSection?.cta[0]?.text ??
+                    "Book an Appointment"}
                 </a>
                 <a
                   href="#services"
                   className="inline-flex items-center justify-center px-6 py-3 border border-white text-base font-medium rounded-full text-white hover:bg-white/10 transition-colors duration-300"
                 >
-                  Explore Our Services
+                  {homePageData?.heroSection?.cta[1]?.text ??
+                    "Explore Our Services"}
                 </a>
               </div>
             </div>

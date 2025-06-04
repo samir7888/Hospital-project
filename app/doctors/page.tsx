@@ -4,6 +4,7 @@ import { DoctorsResponse } from "../types/doctor-type";
 import SearchInput from "@/components/searchInput";
 import Link from "next/link";
 import PaginationComponent from "@/components/PaginationComponent"; // Adjust path as needed
+import { HomePageData } from "../types/heropage-type";
 
 export type DoctorsPageProps = {
   searchParams: {
@@ -18,20 +19,19 @@ const Doctors = async (props: {
   const searchParams = await props.searchParams;
   const queryParams = new URLSearchParams(searchParams);
   const queryString = queryParams.toString();
-
+ const doctorHomePageData = await serverFetch<HomePageData>("doctors-page");
   return (
     <div className="pt-20">
       {/* Hero Section */}
       <div className="bg-blue-900 text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            Our Medical Team
+            {doctorHomePageData?.heroSection?.title || "Our Medical Team"}
           </h1>
           <p className="text-xl text-blue-100 max-w-3xl">
-            Meet our team of experienced healthcare professionals dedicated to
-            providing exceptional care and treatment.
+           {doctorHomePageData?.heroSection?.subtitle || "Meet our team of experienced healthcare professionals dedicated to providing exceptional care and treatment."}
           </p>
-        </div>
+        </div>  
       </div>
 
       {/* Search and Filter Section */}

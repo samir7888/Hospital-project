@@ -72,7 +72,39 @@ export default async function Page({
     const newsData = newsItem.value;
     const blogsData = blogs.status === "fulfilled" ? blogs.value : null;
 
-    const hasRelatedArticles = blogsData?.data && blogsData.data.length > 1;
+    // Get related articles logic
+    let relatedArticles: BaseNewsAndEvents[] = [];
+    
+    if (blogsData?.data && blogsData.data.length > 1) {
+      const allOtherArticles = blogsData.data.filter(item => item.slug !== newsData.slug);
+      
+      // First, get articles from the same category
+      const sameCategoryArticles = allOtherArticles.filter(
+        item => item.category.name === newsData.category.name
+      );
+      
+      // If we have articles from the same category, use them
+      if (sameCategoryArticles.length > 0) {
+        relatedArticles = sameCategoryArticles.slice(0, 3);
+        
+        // If we don't have enough articles from the same category, fill with others
+        if (sameCategoryArticles.length < 3) {
+          const otherArticles = allOtherArticles.filter(
+            item => item.category.name !== newsData.category.name
+          );
+          const remainingSlots = 3 - sameCategoryArticles.length;
+          relatedArticles = [
+            ...sameCategoryArticles,
+            ...otherArticles.slice(0, remainingSlots)
+          ];
+        }
+      } else {
+        // If no articles from same category, show other articles
+        relatedArticles = allOtherArticles.slice(0, 3);
+      }
+    }
+
+    const hasRelatedArticles = relatedArticles.length > 0;
 
     return (
       <div className="container mx-auto px-4 mt-16 md:mt-24">
@@ -140,38 +172,41 @@ export default async function Page({
                 Related Articles
               </h2>
               <div className="grid grid-cols-1 gap-6">
-                {blogsData.data
-                  .filter((item) => item.slug !== newsData.slug)
-                  .slice(0, 3)
-                  .map((item) => (
-                    <Link
-                      href={`/news/${item.slug}`}
-                      key={item.slug}
-                      className="block"
-                    >
-                      <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                        <div className="relative h-40 w-full">
-                          <Image
-                            src={
-                              item.featuredImage?.url ||
-                              "/placeholder-image.jpg"
-                            }
-                            alt={item.title || "Related article"}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                        <div className="p-4">
-                          <p className="text-gray-500 text-sm mb-1">
-                            {item.createdAt
-                              ? new Date(item.createdAt).toLocaleDateString()
-                              : "Date not available"}
-                          </p>
-                          <h3 className="font-semibold mb-2">{item.title}</h3>
-                        </div>
+                {relatedArticles.map((item) => (
+                  <Link
+                    href={`/news/${item.slug}`}
+                    key={item.slug}
+                    className="block"
+                  >
+                    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+                      <div className="relative h-40 w-full">
+                        <Image
+                          src={
+                            item.featuredImage?.url ||
+                            "/placeholder-image.jpg"
+                          }
+                          alt={item.title || "Related article"}
+                          fill
+                          className="object-cover"
+                        />
                       </div>
-                    </Link>
-                  ))}
+                      <div className="p-4">
+                        <p className="text-gray-500 text-sm mb-1">
+                          {item.createdAt
+                            ? new Date(item.createdAt).toLocaleDateString()
+                            : "Date not available"}
+                        </p>
+                        <h3 className="font-semibold mb-2">{item.title}</h3>
+                        {/* Optional: Show category badge to indicate if it's same category */}
+                        {item.category.name === newsData.category.name && (
+                          <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
+                            {item.category.name}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </Link>
+                ))}
               </div>
             </div>
           )}
@@ -194,7 +229,7 @@ export async function generateStaticParams() {
     }
 
     return blogs.data.map((blog) => ({
-      slug: String(blog.slug), // Changed from 'slug' to 'slug' to match params
+      slug: String(blog.slug),
     }));
   } catch (error) {
     console.error("Error generating static params:", error);

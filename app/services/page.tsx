@@ -1,8 +1,10 @@
 import React from 'react';
 import { Heart, Brain, Baby, Bone, Eye, Bluetooth as Tooth, Stethoscope, FlaskRound as Flask, Activity, Scissors } from 'lucide-react';
+import { HomePageData } from '../types/heropage-type';
+import { serverFetch } from '@/lib/server-fetch';
 
-const Services: React.FC = () => {
-  const services = [
+const Services: React.FC = async() => {
+   const servicesMockDAta = [
     {
       icon: <Heart className="h-12 w-12 text-blue-600" />,
       title: "Cardiology",
@@ -64,17 +66,16 @@ const Services: React.FC = () => {
       treatments: ["Minimally Invasive Surgery", "Robotic Surgery", "General Surgery", "Plastic Surgery"]
     }
   ];
-
+const services = await serverFetch<HomePageData>("services-page");
   return (
     <div className="pt-20 relative"> 
      
       {/* Hero Section */}
       <div className="bg-blue-900  text-white py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Medical Services</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">{services?.heroSection?.title || "Our Medical Services"}</h1>
           <p className="text-xl text-blue-100 max-w-3xl">
-            Comprehensive healthcare services delivered by expert professionals using 
-            state-of-the-art technology.
+           {services?.heroSection?.subtitle || "Comprehensive healthcare services delivered by expert professionals using state-of-the-art technology."}
           </p>
         </div>
        
@@ -84,7 +85,7 @@ const Services: React.FC = () => {
       <div className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {services.map((service, index) => (
+            {servicesMockDAta.map((service, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
                 <div className="flex items-center mb-4">
                   <div className="bg-blue-100 p-3 rounded-lg mr-4">
