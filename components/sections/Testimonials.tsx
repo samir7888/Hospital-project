@@ -7,6 +7,7 @@ import {
 } from "@/app/types/testimonial-type";
 import { serverFetch } from "@/lib/server-fetch";
 import { set } from "zod";
+import Image from "next/image";
 // import { ITestimonial, TestimonialResponse } from "@/types/testimonial-type"; // Adjust path as needed
 
 const Testimonials: React.FC = () => {
@@ -160,9 +161,19 @@ const Testimonials: React.FC = () => {
                   <div className="bg-white rounded-xl shadow-lg p-8 md:p-10">
                     <div className="flex flex-col items-center text-center">
                       <div className="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center mb-4">
-                        <span className="text-2xl font-bold text-blue-600">
-                          {testimonial.personName.charAt(0).toUpperCase()}
-                        </span>
+                        {testimonial.personImage ? (
+                          <Image
+                            width={220}
+                            height={250}
+                            src={testimonial.personImage.url}
+                            alt={testimonial.personName}
+                            className="rounded-full"
+                          />
+                        ) : (
+                          <span className="text-2xl font-bold text-blue-600">
+                            {testimonial.personName.charAt(0).toUpperCase()}
+                          </span>
+                        )}
                       </div>
                       <h3 className="text-xl font-semibold text-gray-900">
                         {testimonial.personName}

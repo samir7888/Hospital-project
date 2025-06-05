@@ -1,143 +1,170 @@
 import React from 'react';
-import { Heart, Brain, Baby, Bone, Eye, Bluetooth as Tooth, Stethoscope, FlaskRound as Flask, Activity, Scissors } from 'lucide-react';
 import { HomePageData } from '../types/heropage-type';
 import { serverFetch } from '@/lib/server-fetch';
+import { ServicesResponse } from '../types/services-type';
+import Link from 'next/link';
 
-const Services: React.FC = async() => {
-   const servicesMockDAta = [
-    {
-      icon: <Heart className="h-12 w-12 text-blue-600" />,
-      title: "Cardiology",
-      description: "Comprehensive heart care including diagnostics, treatment, and rehabilitation for cardiac conditions.",
-      treatments: ["Cardiac Surgery", "Angioplasty", "Pacemaker Implementation", "Heart Disease Management"]
-    },
-    {
-      icon: <Brain className="h-12 w-12 text-blue-600" />,
-      title: "Neurology",
-      description: "Expert care for disorders of the nervous system, brain, and spine.",
-      treatments: ["Brain Surgery", "Stroke Treatment", "Epilepsy Management", "Neurological Rehabilitation"]
-    },
-    {
-      icon: <Baby className="h-12 w-12 text-blue-600" />,
-      title: "Pediatrics",
-      description: "Specialized healthcare for infants, children, and adolescents.",
-      treatments: ["Vaccination", "Growth Monitoring", "Pediatric Surgery", "Development Assessment"]
-    },
-    {
-      icon: <Bone className="h-12 w-12 text-blue-600" />,
-      title: "Orthopedics",
-      description: "Treatment for bone, joint, and muscle conditions.",
-      treatments: ["Joint Replacement", "Sports Medicine", "Fracture Care", "Spine Surgery"]
-    },
-    {
-      icon: <Eye className="h-12 w-12 text-blue-600" />,
-      title: "Ophthalmology",
-      description: "Complete eye care services from routine exams to complex surgeries.",
-      treatments: ["Cataract Surgery", "LASIK", "Glaucoma Treatment", "Retinal Disorders"]
-    },
-    {
-      icon: <Tooth className="h-12 w-12 text-blue-600" />,
-      title: "Dental Care",
-      description: "Comprehensive dental services for all ages.",
-      treatments: ["Dental Surgery", "Orthodontics", "Periodontics", "Cosmetic Dentistry"]
-    },
-    {
-      icon: <Stethoscope className="h-12 w-12 text-blue-600" />,
-      title: "Internal Medicine",
-      description: "Diagnosis and treatment of adult diseases and conditions.",
-      treatments: ["Preventive Care", "Chronic Disease Management", "Health Screenings", "Wellness Programs"]
-    },
-    {
-      icon: <Flask className="h-12 w-12 text-blue-600" />,
-      title: "Laboratory Services",
-      description: "Advanced diagnostic testing and analysis.",
-      treatments: ["Blood Tests", "Pathology", "Microbiology", "Genetic Testing"]
-    },
-    {
-      icon: <Activity className="h-12 w-12 text-blue-600" />,
-      title: "Emergency Care",
-      description: "24/7 emergency medical services with rapid response.",
-      treatments: ["Trauma Care", "Critical Care", "Emergency Surgery", "Acute Care"]
-    },
-    {
-      icon: <Scissors className="h-12 w-12 text-blue-600" />,
-      title: "Surgery",
-      description: "State-of-the-art surgical procedures across multiple specialties.",
-      treatments: ["Minimally Invasive Surgery", "Robotic Surgery", "General Surgery", "Plastic Surgery"]
-    }
-  ];
-const services = await serverFetch<HomePageData>("services-page");
-  return (
-    <div className="pt-20 relative"> 
-     
-      {/* Hero Section */}
-      <div className="bg-blue-900  text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">{services?.heroSection?.title || "Our Medical Services"}</h1>
-          <p className="text-xl text-blue-100 max-w-3xl">
-           {services?.heroSection?.subtitle || "Comprehensive healthcare services delivered by expert professionals using state-of-the-art technology."}
-          </p>
-        </div>
-       
-      </div>
+const Services: React.FC = async () => {
+  try {
+    const [servicesResult, servicesDataResult] = await Promise.allSettled([
+      serverFetch<HomePageData>("services-page"),
+      serverFetch<ServicesResponse>("services"),
+    ]);
 
-      {/* Services Grid */}
-      <div className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {servicesMockDAta.map((service, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
-                <div className="flex items-center mb-4">
-                  <div className="bg-blue-100 p-3 rounded-lg mr-4">
-                    {service.icon}
-                  </div>
-                  <h3 className="text-xl font-semibold text-gray-900">{service.title}</h3>
-                </div>
-                <p className="text-gray-600 mb-4">{service.description}</p>
-                <div className="space-y-2">
-                  {service.treatments.map((treatment, idx) => (
-                    <div key={idx} className="flex items-center text-gray-700">
-                      <span className="w-2 h-2 bg-blue-600 rounded-full mr-2"></span>
-                      <span>{treatment}</span>
-                    </div>
-                  ))}
-                </div>
-                <button className="mt-6 text-blue-600 font-medium hover:text-blue-800 transition-colors duration-300">
-                  Learn More →
-                </button>
-              </div>
-            ))}
+    const services = servicesResult.status === 'fulfilled' ? servicesResult.value : null;
+    const servicesResponse = servicesDataResult.status === 'fulfilled' ? servicesDataResult.value : null;
+    
+    const servicesData = servicesResponse?.data || [];
+    const hasServices = servicesData.length > 0;
+
+    return (
+      <div className="pt-20 relative"> 
+        {/* Hero Section */}
+        <div className="bg-blue-900 text-white py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+              {services?.heroSection?.title || "Our Medical Services"}
+            </h1>
+            <p className="text-xl text-blue-100 max-w-3xl">
+              {services?.heroSection?.subtitle || "Comprehensive healthcare services delivered by expert professionals using state-of-the-art technology."}
+            </p>
           </div>
         </div>
-      </div>
 
-      {/* CTA Section */}
-      <div className="bg-gray-50 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Need Medical Assistance?</h2>
-            <p className="text-xl text-gray-600 mb-8">
-              Our team of medical professionals is here to help you 24/7.
+        {/* Services Grid or No Services Message */}
+        <div className="py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            {hasServices ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {servicesData.map((service) => (
+                  <div key={service.id} className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+                    <div className="mb-4">
+                      {service.coverImage && (
+                        <img 
+                          src={service.coverImage.url} 
+                          alt={service.title}
+                          className="w-full h-48 object-cover rounded-lg mb-4"
+                        />
+                      )}
+                      <h3 className="text-xl font-semibold text-gray-900 mb-2">{service.title}</h3>
+                    </div>
+                    <p className="text-gray-600 mb-4">{service.summary}</p>
+                    <div className="text-sm text-gray-500 mb-4">
+                      Created: {new Date(service.createdAt).toLocaleDateString()}
+                    </div>
+                    <Link 
+                      href={`/services/${service.id}`}
+                      className="mt-4 inline-block text-blue-600 font-medium hover:text-blue-800 transition-colors duration-300"
+                    >
+                      Learn More →
+                    </Link>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-16">
+                <div className="max-w-md mx-auto">
+                  <div className="bg-gray-100 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
+                    <svg className="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-semibold text-gray-900 mb-4">No Services Available</h3>
+                  <p className="text-gray-600 mb-8">
+                    We're currently updating our services. Please check back later or contact us for more information.
+                  </p>
+                  <a 
+                    href="/contact" 
+                    className="inline-flex items-center justify-center px-6 py-3 border border-blue-600 text-base font-medium rounded-md text-blue-600 hover:bg-blue-50 transition-colors duration-300"
+                  >
+                    Contact Us
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        {/* CTA Section - Only show if services exist */}
+        {hasServices && (
+          <div className="bg-gray-50 py-16">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center">
+                <h2 className="text-3xl font-bold text-gray-900 mb-4">Need Medical Assistance?</h2>
+                <p className="text-xl text-gray-600 mb-8">
+                  Our team of medical professionals is here to help you 24/7.
+                </p>
+                <div className="flex flex-col sm:flex-row justify-center gap-4">
+                  <a 
+                    href="/#appointment" 
+                    className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
+                  >
+                    Book an Appointment
+                  </a>
+                  <a 
+                    href="/contact" 
+                    className="inline-flex items-center justify-center px-6 py-3 border border-blue-600 text-base font-medium rounded-md text-blue-600 hover:bg-blue-50 transition-colors duration-300"
+                  >
+                    Contact Us
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    );
+  } catch (error) {
+    console.error('Error fetching services data:', error);
+    
+    // Show error state
+    return (
+      <div className="pt-20 relative"> 
+        {/* Hero Section */}
+        <div className="bg-blue-900 text-white py-20">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6">Our Medical Services</h1>
+            <p className="text-xl text-blue-100 max-w-3xl">
+              Comprehensive healthcare services delivered by expert professionals using state-of-the-art technology.
             </p>
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a 
-                href="/#appointment" 
-                className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
-              >
-                Book an Appointment
-              </a>
-              <a 
-                href="/contact" 
-                className="inline-flex items-center justify-center px-6 py-3 border border-blue-600 text-base font-medium rounded-md text-blue-600 hover:bg-blue-50 transition-colors duration-300"
-              >
-                Contact Us
-              </a>
+          </div>
+        </div>
+
+        {/* Error State */}
+        <div className="py-16">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="text-center py-16">
+              <div className="max-w-md mx-auto">
+                <div className="bg-red-100 rounded-full w-24 h-24 flex items-center justify-center mx-auto mb-6">
+                  <svg className="w-12 h-12 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.964-.833-2.732 0L3.732 16.5c-.77.833.192 2.5 1.732 2.5z" />
+                  </svg>
+                </div>
+                <h3 className="text-2xl font-semibold text-gray-900 mb-4">Unable to Load Services</h3>
+                <p className="text-gray-600 mb-8">
+                  We're experiencing technical difficulties. Please try again later or contact us directly.
+                </p>
+                <div className="flex flex-col sm:flex-row justify-center gap-4">
+                  <button 
+                    onClick={() => window.location.reload()}
+                    className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
+                  >
+                    Try Again
+                  </button>
+                  <a 
+                    href="/contact" 
+                    className="inline-flex items-center justify-center px-6 py-3 border border-blue-600 text-base font-medium rounded-md text-blue-600 hover:bg-blue-50 transition-colors duration-300"
+                  >
+                    Contact Us
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 export default Services;

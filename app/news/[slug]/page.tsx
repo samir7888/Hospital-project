@@ -74,30 +74,20 @@ export default async function Page({
 
     // Get related articles logic
     let relatedArticles: BaseNewsAndEvents[] = [];
-    
+
     if (blogsData?.data && blogsData.data.length > 1) {
-      const allOtherArticles = blogsData.data.filter(item => item.slug !== newsData.slug);
-      
+      const allOtherArticles = blogsData.data.filter(
+        (item) => item.slug !== newsData.slug
+      );
+
       // First, get articles from the same category
       const sameCategoryArticles = allOtherArticles.filter(
-        item => item.category.name === newsData.category.name
+        (item) => item.category.name === newsData.category.name
       );
-      
+
       // If we have articles from the same category, use them
       if (sameCategoryArticles.length > 0) {
         relatedArticles = sameCategoryArticles.slice(0, 3);
-        
-        // If we don't have enough articles from the same category, fill with others
-        if (sameCategoryArticles.length < 3) {
-          const otherArticles = allOtherArticles.filter(
-            item => item.category.name !== newsData.category.name
-          );
-          const remainingSlots = 3 - sameCategoryArticles.length;
-          relatedArticles = [
-            ...sameCategoryArticles,
-            ...otherArticles.slice(0, remainingSlots)
-          ];
-        }
       } else {
         // If no articles from same category, show other articles
         relatedArticles = allOtherArticles.slice(0, 3);
@@ -166,49 +156,44 @@ export default async function Page({
           </section>
 
           {/* Right column - Only show if there are related articles */}
-          {hasRelatedArticles && (
-            <div className="lg:col-span-1">
-              <h2 className="text-xl md:text-2xl font-bold mb-6">
-                Related Articles
+          {relatedArticles.length > 0 && (
+            <aside className="mt-16 lg:mt-0">
+              <h2 className="text-xl font-bold mb-6">
+                {relatedArticles.some(
+                  (item) => item.category.name === newsData.category.name
+                )
+                  ? "Related Articles"
+                  : "Other Articles"}
               </h2>
-              <div className="grid grid-cols-1 gap-6">
-                {relatedArticles.map((item) => (
+              <div className="grid gap-6">
+                {relatedArticles.map((article) => (
                   <Link
-                    href={`/news/${item.slug}`}
-                    key={item.slug}
-                    className="block"
+                    key={article.slug}
+                    href={`/news/${article.slug}`}
+                    className="block bg-white rounded-lg shadow hover:shadow-md transition overflow-hidden"
                   >
-                    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-                      <div className="relative h-40 w-full">
-                        <Image
-                          src={
-                            item.featuredImage?.url ||
-                            "/placeholder-image.jpg"
-                          }
-                          alt={item.title || "Related article"}
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                      <div className="p-4">
-                        <p className="text-gray-500 text-sm mb-1">
-                          {item.createdAt
-                            ? new Date(item.createdAt).toLocaleDateString()
-                            : "Date not available"}
-                        </p>
-                        <h3 className="font-semibold mb-2">{item.title}</h3>
-                        {/* Optional: Show category badge to indicate if it's same category */}
-                        {item.category.name === newsData.category.name && (
-                          <span className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded">
-                            {item.category.name}
-                          </span>
-                        )}
-                      </div>
+                    <div className="relative h-40">
+                      <Image
+                        src={
+                          article.coverImage?.url || "/placeholder-image.jpg"
+                        }
+                        alt={article.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-semibold text-lg mb-2">
+                        {article.title}
+                      </h3>
+                      <p className="text-sm text-gray-600 line-clamp-2">
+                        {article.summary}
+                      </p>
                     </div>
                   </Link>
                 ))}
               </div>
-            </div>
+            </aside>
           )}
         </div>
       </div>

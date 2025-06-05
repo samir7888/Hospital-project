@@ -7,18 +7,19 @@ import {
 import { submitAppointment } from "../lib/actions/appointment-actions";
 import { toast } from "sonner";
 
+const defaultValues = {
+  firstName: "",
+  lastName: "",
+  email: "",
+  phone: "",
+  preferredDate: "",
+  address: "",
+  message: "",
+};
+
 const AppointmentForm = () => {
-  const [formData, setFormData] = useState<zodFormDataSchema>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    address: "",
-    date: "",
-    time: "",
-    department: "gastroenterology",
-    message: "",
-  });
+  const [formData, setFormData] =
+    useState<Partial<zodFormDataSchema>>(defaultValues);
 
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -46,53 +47,32 @@ const AppointmentForm = () => {
     }
   };
 
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitError("");
 
     // Validate form data
-    const validation = appointmentSchema.safeParse(formData);
+    setErrors({});
+    const { success, data, error } = appointmentSchema.safeParse(formData);
 
-    if (!validation.success) {
-      const fieldErrors = validation.error.flatten().fieldErrors;
+    if (!success) {
+      const fieldErrors = error.flatten().fieldErrors;
       setErrors(fieldErrors);
       console.error("Validation errors:", fieldErrors);
       return;
-    } else {
-      setErrors({});
     }
 
     setIsLoading(true);
 
     try {
       // Submit appointment data using server action
-      const result = await submitAppointment(formData);
-
-      if (!result.success) {
-        throw new Error(result.error || "Failed to submit appointment");
-      }
+      await submitAppointment({
+        ...formData,
+        preferredDate: new Date(data.preferredDate).toISOString(),
+      });
       toast.success("Appointment submitted successfully!");
-      console.log("Appointment submitted successfully:", result.data);
-      setIsSubmitted(true);
-
-      // Reset form after successful submission and delay
-      setTimeout(() => {
-        setIsSubmitted(false);
-        setFormData({
-          firstName: "",
-          lastName: "",
-          email: "",
-          phone: "",
-          date: "",
-          address: "",
-          time: "",
-          department: "gastroenterology",
-          message: "",
-        });
-      }, 5000);
+      setFormData(defaultValues);
     } catch (error) {
-      console.error("Failed to submit appointment:", error);
       setSubmitError(
         error instanceof Error
           ? error.message
@@ -296,16 +276,16 @@ const AppointmentForm = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label
-                  htmlFor="date"
+                  htmlFor="preferredDate"
                   className="block text-sm font-medium text-gray-700 mb-1"
                 >
                   Preferred Date *
                 </label>
                 <input
                   type="date"
-                  id="date"
-                  name="date"
-                  value={formData.date}
+                  id="preferredDate"
+                  name="preferredDate"
+                  value={formData.preferredDate}
                   onChange={handleChange}
                   min={new Date().toISOString().split("T")[0]} // Prevent past dates
                   className={`w-full px-4 py-2.5 rounded-lg border ${
@@ -316,44 +296,23 @@ const AppointmentForm = () => {
                   <p className="text-red-500 text-sm mt-1">{errors.date[0]}</p>
                 )}
               </div>
-              <div>
-                <label
-                  htmlFor="time"
-                  className="block text-sm font-medium text-gray-700 mb-1"
-                >
-                  Preferred Time *
-                </label>
-                <input
-                  type="time"
-                  id="time"
-                  name="time"
-                  value={formData.time}
-                  onChange={handleChange}
-                  className={`w-full px-4 py-2.5 rounded-lg border ${
-                    errors.time ? "border-red-500" : "border-gray-300"
-                  } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50`}
-                />
-                {errors.time && (
-                  <p className="text-red-500 text-sm mt-1">{errors.time[0]}</p>
-                )}
-              </div>
             </div>
 
             <div>
               <label
-                htmlFor="department"
+                htmlFor="specialization"
                 className="block text-sm font-medium text-gray-700 mb-1"
               >
                 Department/Specialty *
               </label>
               <div className="relative">
                 <select
-                  id="department"
-                  name="department"
-                  value={formData.department}
+                  id="specialization"
+                  name="specialization"
+                  value={formData.specialization}
                   onChange={handleChange}
                   className={`appearance-none w-full px-4 py-2.5 rounded-lg border ${
-                    errors.department ? "border-red-500" : "border-gray-300"
+                    errors.specialization ? "border-red-500" : "border-gray-300"
                   } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50`}
                 >
                   <option value="">Select Department</option>
@@ -383,9 +342,9 @@ const AppointmentForm = () => {
                   </svg>
                 </div>
               </div>
-              {errors.department && (
+              {errors.specialization && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.department[0]}
+                  {errors.specialization[0]}
                 </p>
               )}
             </div>
