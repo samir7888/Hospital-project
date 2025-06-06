@@ -47,7 +47,6 @@ const AppointmentForm = () => {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    toast.success("Appointment submitted successfully!");
     e.preventDefault();
     setSubmitError("");
 
