@@ -9,8 +9,12 @@ const DepartmentEnum = z.enum([
   "orthopedics",
   "gynecology",
   "dermatology",
-  "general",
+  "general_medicine",
+  "ophthalmology",
+  "orthodontics",
 ]);
+
+
 
 // Function to validate date is in the future
 const validateFutureDate = (dateStr: string) => {

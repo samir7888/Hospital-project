@@ -86,7 +86,7 @@ const Navbar: React.FC = () => {
             
             <Link
               href="/#appointment"
-              className="bg-orange-darkest text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors duration-300"
+              className="bg-orange-darkest text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors duration-300 hidden xl:flex"  
             >
               Book Appointment
             </Link>
@@ -111,7 +111,7 @@ const Navbar: React.FC = () => {
 
       {/* Mobile Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white shadow-lg">
+        <div className="lg:hidden bg-white shadow-lg">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             <Link
               href="/about"
