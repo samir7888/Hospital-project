@@ -5,6 +5,9 @@ import SearchInput from "@/components/searchInput";
 import Link from "next/link";
 import PaginationComponent from "@/components/PaginationComponent"; // Adjust path as needed
 import { HomePageData } from "../types/heropage-type";
+import { Metadata } from "next";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export type DoctorsPageProps = {
   searchParams: {
@@ -12,6 +15,18 @@ export type DoctorsPageProps = {
     page?: string;
   };
 };
+
+
+export async function generateMetadata(): Promise<Metadata> {
+  const aboutData = await serverFetch<HomePageData>("doctors-page");
+
+  return {
+    title: aboutData?.metadata?.title || " GastroCare Hospital",
+    description: aboutData?.metadata?.description || "Learn more about our hospital and its values.",
+    keywords: aboutData?.metadata?.keywords || ["hospital", "healthcare", "about us"],
+  };
+}
+
 
 const Doctors = async (props: {
   searchParams: Promise<DoctorsPageProps["searchParams"]>;
@@ -23,7 +38,7 @@ const Doctors = async (props: {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <div className="bg-blue-900 text-white py-20">
+      <div className={cn("relative  text-white py-20", !doctorHomePageData?.heroSection.image?.url && "bg-blue-900")}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
             {doctorHomePageData?.heroSection?.title || "Our Medical Team"}
@@ -31,6 +46,35 @@ const Doctors = async (props: {
           <p className="text-xl text-blue-100 max-w-3xl">
            {doctorHomePageData?.heroSection?.subtitle || "Meet our team of experienced healthcare professionals dedicated to providing exceptional care and treatment."}
           </p>
+
+          {/* Buttons */}
+          <div className="mt-8 flex flex-col justify-center sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
+            {doctorHomePageData?.heroSection.cta.map((cta, index) => (
+              <Link key={index} href={cta.link}>
+                <Button
+                  variant={cta.variant}
+                  className="inline-flex items-center justify-center px-6 py-4 border border-transparent text-base font-medium rounded-full transition-colors duration-300 cursor-pointer"
+                >
+                  {cta.text}
+                </Button>
+              </Link>
+            ))}
+          </div>
+
+{/* bg-image */}
+
+ {doctorHomePageData?.heroSection.image?.url && (
+          <div
+            className="absolute inset-0 bg-center bg-cover -z-30"
+            style={{
+              backgroundImage: `url(${doctorHomePageData?.heroSection.image?.url})`,
+              backgroundPosition: "center 25%",
+            }}
+          ></div>
+        )}
+
+
+
         </div>  
       </div>
 

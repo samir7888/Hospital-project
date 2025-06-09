@@ -8,6 +8,8 @@ import CategoryTabs from "@/components/category-tabs";
 import { NewsAndEventsResponse } from "../types/blogs-type";
 import PaginationComponent from "@/components/PaginationComponent";
 import { HomePageData } from "../types/heropage-type";
+import { Metadata } from "next";
+import { Button } from "@/components/ui/button";
 
 export type NewsEventsPageProps = {
   searchParams: {
@@ -15,6 +17,15 @@ export type NewsEventsPageProps = {
     category?: string;
   };
 };
+export async function generateMetadata(): Promise<Metadata> {
+  const aboutData = await serverFetch<HomePageData>("blogs-page");
+
+  return {
+    title: aboutData?.metadata?.title || " GastroCare Hospital",
+    description: aboutData?.metadata?.description || "Learn more about our hospital and its values.",
+    keywords: aboutData?.metadata?.keywords || ["hospital", "healthcare", "about us"],
+  };
+}
 
 const Page = async (props: {
   searchParams: Promise<NewsEventsPageProps["searchParams"]>;
@@ -31,6 +42,20 @@ const Page = async (props: {
           <p className="text-xl text-blue-100 max-w-3xl">
             {newsEventsHomePageData?.heroSection?.subtitle || "Stay updated with the latest news, events, and announcements from GastroCare Hospital."}
           </p>
+
+           {/* Buttons */}
+          <div className="mt-8 flex flex-col justify-center sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
+            {newsEventsHomePageData?.heroSection.cta.map((cta, index) => (
+              <Link key={index} href={cta.link}>
+                <Button
+                  variant={cta.variant}
+                  className="inline-flex items-center justify-center px-6 py-4 border border-transparent text-base font-medium rounded-full transition-colors duration-300 cursor-pointer"
+                >
+                  {cta.text}
+                </Button>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
 

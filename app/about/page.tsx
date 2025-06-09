@@ -4,8 +4,28 @@ import FAQ from "@/components/sections/ServerFaqs";
 import { AboutPageData } from "../types/aboutpage-type";
 import { serverFetch } from "@/lib/server-fetch";
 import SanitizeBody from "@/components/html-sanitize";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Metadata } from "next";
+import { cn } from "@/lib/utils";
 
 const iconMap = [Users, Building, Trophy, Globe];
+
+export async function generateMetadata(): Promise<Metadata> {
+  const aboutData = await serverFetch<AboutPageData>("about-page");
+
+  return {
+    title: aboutData?.metadata?.title || "About GastroCare Hospital",
+    description:
+      aboutData?.metadata?.description ||
+      "Learn more about our hospital and its values.",
+    keywords: aboutData?.metadata?.keywords || [
+      "hospital",
+      "healthcare",
+      "about us",
+    ],
+  };
+}
 
 const About: React.FC = async () => {
   const aboutData = await serverFetch<AboutPageData>("about-page");
@@ -13,7 +33,7 @@ const About: React.FC = async () => {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <div className="bg-blue-900 text-white py-20">
+      <div className={cn("relative  text-white py-20", !aboutData?.heroSection.image?.url && "bg-blue-900")}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
             {aboutData?.heroSection?.title || "About GastroCare Hospital"}
@@ -22,7 +42,31 @@ const About: React.FC = async () => {
             {aboutData?.heroSection?.subtitle ||
               "Leading the way in medical excellence, innovation, and patient care since 1988."}
           </p>
+
+          {/* Buttons */}
+          <div className="mt-8 flex flex-col justify-center sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
+            {aboutData?.heroSection.cta.map((cta, index) => (
+              <Link key={index} href={cta.link}>
+                <Button
+                  variant={cta.variant}
+                  className="inline-flex items-center justify-center px-6 py-4 border border-transparent text-base font-medium rounded-full transition-colors duration-300 cursor-pointer"
+                >
+                  {cta.text}
+                </Button>
+              </Link>
+            ))}
+          </div>
         </div>
+
+        {aboutData?.heroSection.image?.url && (
+          <div
+            className="absolute inset-0 bg-center bg-cover -z-30"
+            style={{
+              backgroundImage: `url(${aboutData?.heroSection.image?.url})`,
+              backgroundPosition: "center 25%",
+            }}
+          ></div>
+        )}
       </div>
 
       {/* Stats Section */}

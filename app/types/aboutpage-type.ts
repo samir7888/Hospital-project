@@ -15,6 +15,13 @@ export type CoreValueItem = {
   description: string;
 };
 
+export type MetadataItem = {
+  id: string;
+  title: string;
+  description: string;
+  keywords: string[]; // Can be an empty array
+};
+
 export type AboutPageData = {
   id: string;
   statistics: StatisticsItem[] | null;
@@ -36,4 +43,5 @@ export type AboutPageData = {
       url: string;
     } | null;
   };
+  metadata: MetadataItem;
 };

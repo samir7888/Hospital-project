@@ -245,29 +245,27 @@ const AppointmentForm = () => {
             <div className="h-px bg-gray-200 w-full mt-2"></div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <label
-                htmlFor="preferredDate"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Preferred Date *
-              </label>
-              <input
-                type="date"
-                id="preferredDate"
-                name="preferredDate"
-                value={formData.preferredDate}
-                onChange={handleChange}
-                min={new Date().toISOString().split("T")[0]} // Prevent past dates
-                className={`w-full px-4 py-2.5 rounded-lg border ${
-                  errors.date ? "border-red-500" : "border-gray-300"
-                } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50`}
-              />
-              {errors.date && (
-                <p className="text-red-500 text-sm mt-1">{errors.date[0]}</p>
-              )}
-            </div>
+          <div className="grid grid-cols-1  ">
+            <label
+              htmlFor="preferredDate"
+              className="block text-sm font-medium text-gray-700 "
+            >
+              Preferred Date *
+            </label>
+            <input
+              type="date"
+              id="preferredDate"
+              name="preferredDate"
+              value={formData.preferredDate}
+              onChange={handleChange}
+              min={new Date().toISOString().split("T")[0]} // Prevent past dates
+              className={`w-full px-4 py-2.5 rounded-lg border  ${
+                errors.date ? "border-red-500" : "border-gray-300"
+              } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50`}
+            />
+            {errors.date && (
+              <p className="text-red-500 text-sm mt-1">{errors.date[0]}</p>
+            )}
           </div>
 
           <div>
@@ -373,7 +371,7 @@ const AppointmentForm = () => {
                       d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
                     ></path>
                   </svg>
-                  Processing...
+                  Submitting...
                 </>
               ) : (
                 "Book Appointment"

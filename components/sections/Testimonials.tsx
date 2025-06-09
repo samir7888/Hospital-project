@@ -8,8 +8,39 @@ import {
 import { serverFetch } from "@/lib/server-fetch";
 import { set } from "zod";
 import Image from "next/image";
-// import { ITestimonial, TestimonialResponse } from "@/types/testimonial-type"; // Adjust path as needed
 
+
+
+// Star Rating Component with half star support
+function StarRating({ rating, maxStars = 5 }: { rating: number; maxStars?: number }) {
+  const stars = [];
+  
+  for (let i = 1; i <= maxStars; i++) {
+    const filled = rating >= i;
+    const halfFilled = rating >= i - 0.5 && rating < i;
+    
+    stars.push(
+      <div key={i} className="relative inline-block">
+        {/* Background star (empty) */}
+        <Star className="h-4 w-4 text-gray-300" />
+        
+        {/* Filled star overlay */}
+        {filled && (
+          <Star className="absolute top-0 left-0 h-4 w-4 text-yellow-400 fill-yellow-400" />
+        )}
+        
+        {/* Half-filled star overlay */}
+        {halfFilled && (
+          <div className="absolute top-0 left-0 overflow-hidden" style={{ width: '50%' }}>
+            <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
+          </div>
+        )}
+      </div>
+    );
+  }
+  
+  return <div className="flex">{stars}</div>;
+}
 const Testimonials: React.FC = () => {
   const [testimonials, setTestimonials] = useState<ITestimonial[]>([]);
   const [activeIndex, setActiveIndex] = useState(0);
@@ -68,16 +99,16 @@ const Testimonials: React.FC = () => {
     setIsPaused(true);
   };
 
-  const renderStars = (rating: number) => {
-    return Array.from({ length: 5 }).map((_, index) => (
-      <Star
-        key={index}
-        className={`h-5 w-5 ${
-          index < rating ? "text-yellow-400 fill-current" : "text-gray-300"
-        }`}
-      />
-    ));
-  };
+  // const renderStars = (rating: number) => {
+  //   return Array.from({ length: 5 }).map((_, index) => (
+  //     <Star
+  //       key={index}
+  //       className={`h-5 w-5 ${
+  //         index < rating ? "text-yellow-400 fill-current" : "text-gray-300"
+  //       }`}
+  //     />
+  //   ));
+  // };
 
   // Loading state
   if (loading) {
@@ -160,14 +191,13 @@ const Testimonials: React.FC = () => {
                 <div key={testimonial.id} className="w-full flex-shrink-0 px-4">
                   <div className="bg-white rounded-xl shadow-lg p-8 md:p-10">
                     <div className="flex flex-col items-center text-center">
-                      <div className="w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center mb-4">
-                        {testimonial.personImage ? (
+                      <div className=" relative w-20 h-20 rounded-full bg-blue-100 flex items-center justify-center mb-4">
+                        {testimonial.personImage?.url ? (
                           <Image
-                            width={220}
-                            height={250}
-                            src={testimonial.personImage.url}
+                            fill
+                            src={testimonial?.personImage?.url}
                             alt={testimonial.personName}
-                            className="rounded-full"
+                            className="rounded-full absolute top-0 left-0"
                           />
                         ) : (
                           <span className="text-2xl font-bold text-blue-600">
@@ -184,7 +214,7 @@ const Testimonials: React.FC = () => {
                         </p>
                       )}
                       <div className="flex mt-2 mb-4">
-                        {renderStars(testimonial.personRating)}
+                        <StarRating rating={testimonial.personRating} />
                       </div>
                       <p className="text-gray-600 italic">
                         "{testimonial.personMessage}"

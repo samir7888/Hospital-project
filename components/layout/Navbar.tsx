@@ -1,27 +1,24 @@
 "use client";
 import React, { useState, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
-import { Menu, X, ChevronDown } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import GoogleTranslate from "../google-translator";
+import { SiteSettings } from "@/app/types/sitesetting-type";
+import Image from "next/image";
 
-
-const Navbar: React.FC = () => {
+const Navbar = ({ siteSetting }: { siteSetting: SiteSettings }) => {
   const pathname = usePathname();
   const isHomePage = pathname === "/";
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-
-
 
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
     };
 
- 
     window.addEventListener("scroll", handleScroll);
-
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
@@ -45,8 +42,20 @@ const Navbar: React.FC = () => {
       <section className="container mx-auto ">
         <div className="flex justify-between h-20">
           <div className="flex items-center">
-            <Link href="/" className={`text-2xl font-bold ${textColor}`}>
-              GastroCare Hospital
+            <Link href="/">
+              {siteSetting?.logo?.url ? (
+                <Image
+                  width={460}
+                  height={160}
+                  src={siteSetting?.logo?.url}
+                  alt={siteSetting?.companyName}
+                  className="w-fit h-16 object-cover object-center"
+                />
+              ) : (
+                <h3 className={`text-2xl font-bold ${textColor}`}>
+                  {siteSetting?.companyName}
+                </h3>
+              )}
             </Link>
           </div>
           <div className="hidden lg:flex items-center space-x-8">
@@ -54,39 +63,35 @@ const Navbar: React.FC = () => {
               About Us
             </Link>
 
-            <div  >
+            <div>
               <Link
                 href="/services"
                 className={`flex items-center cursor-pointer ${textColor} transition-colors duration-300`}
               >
-                Services 
+                Services
               </Link>
-              
             </div>
 
-            <div >
+            <div>
               <Link
                 href="/doctors"
                 className={`flex items-center cursor-pointer ${textColor} transition-colors duration-300`}
               >
-                Find a Doctor 
+                Find a Doctor
               </Link>
-             
             </div>
-            <div >
+            <div>
               <Link
                 href="/news"
                 className={`flex items-center cursor-pointer ${textColor} transition-colors duration-300`}
               >
-               News and Events
+                News and Events
               </Link>
-             
             </div>
 
-            
             <Link
               href="/#appointment"
-              className="bg-orange-darkest text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors duration-300 hidden xl:flex"  
+              className="bg-orange-darkest text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors duration-300 hidden xl:flex"
             >
               Book Appointment
             </Link>

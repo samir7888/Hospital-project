@@ -4,6 +4,9 @@ import "./globals.css";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
 import { Toaster } from "@/components/ui/sonner";
+import { serverFetch } from "@/lib/server-fetch";
+import { AboutPageData } from "./types/aboutpage-type";
+import { SiteSettings } from "./types/sitesetting-type";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,23 +18,35 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: "GastroCare Hospital",
-  description: "Your Health, Our Priority",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const aboutData = await serverFetch<AboutPageData>("home-page");
 
-export default function RootLayout({
+  return {
+    title: aboutData?.metadata?.title || " GastroCare Hospital",
+    description: aboutData?.metadata?.description || "Learn more about our hospital and its values.",
+    keywords: aboutData?.metadata?.keywords || ["hospital", "healthcare", "about us"],
+  };
+}
+
+
+
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+    const SiteSettings = await serverFetch<SiteSettings>("general-setting");
+  if (!SiteSettings) {
+    return <>Error loading site settings</>;
+    
+  }
   return (
     <html lang="en">
       <head></head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Navbar />
+        <Navbar siteSetting={SiteSettings} />
         <div className="">{children}</div>
         <Toaster position="top-center" />
         <Footer />

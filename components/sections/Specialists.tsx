@@ -28,7 +28,7 @@ const Specialists: React.FC = async() => {
           </p>
         </div>
 
-        <div className={`grid grid-cols-1 md:grid-cols-2  ${doctorsData.length > 3 ? "lg:grid-cols-4" : "lg:grid-cols-2"} gap-8`}>
+        <div className={`grid grid-cols-1 md:grid-cols-2  ${doctorsData.length >= 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"} gap-8`}>
           {doctorsData.map((doctor) => (
             <div 
               key={doctor.id}
@@ -42,10 +42,10 @@ const Specialists: React.FC = async() => {
                 />
               </div>
               <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900">{doctor.name}</h3>
-                <p className="text-blue-600 font-medium">{doctor.specialization}</p>
+                <h3 className="text-xl font-semibold text-gray-900 capitalize">{doctor.name}</h3>
+                <p className="text-blue-600 font-medium capitalize">{doctor.specialization}</p>
                 <div className="mt-2 text-gray-600 text-sm">
-                  <p>{doctor.degree}</p>
+                  <p className='uppercase'>{doctor.degree}</p>  
                   <p className="mt-1">{doctor.experience} Years Experience</p>
                 </div>
                 <div className="mt-4 flex justify-between items-center">

@@ -1,5 +1,8 @@
 "use client";
-import { CategoryResponse, NewsAndEventsResponse } from "@/app/types/blogs-type";
+import {
+  CategoryResponse,
+  NewsAndEventsResponse,
+} from "@/app/types/blogs-type";
 import Link from "next/link";
 import React, { useState } from "react";
 
@@ -8,13 +11,19 @@ interface NewsEventProps {
   categoriesData: CategoryResponse[];
 }
 
-const NewsEvents: React.FC<NewsEventProps> = ({ blogsData, categoriesData }) => {
+const NewsEvents: React.FC<NewsEventProps> = ({
+  blogsData,
+  categoriesData,
+}) => {
   const [activeTab, setActiveTab] = useState<string>("all");
 
   // Fixed filtering logic
-  const filteredItems = activeTab === "all" 
-    ? blogsData.data 
-    : blogsData.data.filter((item) => item.category.name.toLowerCase() === activeTab.toLowerCase());
+  const filteredItems =
+    activeTab === "all"
+      ? blogsData.data
+      : blogsData.data.filter(
+          (item) => item.category.name.toLowerCase() === activeTab.toLowerCase()
+        );
 
   return (
     <section id="news" className="py-20">
@@ -42,7 +51,7 @@ const NewsEvents: React.FC<NewsEventProps> = ({ blogsData, categoriesData }) => 
             >
               All
             </button>
-            
+
             {/* Dynamic category tabs */}
             {categoriesData.map((category, index) => (
               <button
@@ -62,7 +71,13 @@ const NewsEvents: React.FC<NewsEventProps> = ({ blogsData, categoriesData }) => 
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div
+          className={`grid gap-8 grid-cols-1 sm:grid-cols-2 md:grid-cols-${
+            filteredItems.length >= 3 ? 3 : 2
+          } lg:grid-cols-${
+            filteredItems.length >= 4 ? 4 : filteredItems.length
+          }`}
+        >
           {filteredItems.length > 0 ? (
             filteredItems.map((item) => (
               <div
@@ -112,7 +127,9 @@ const NewsEvents: React.FC<NewsEventProps> = ({ blogsData, categoriesData }) => 
             ))
           ) : (
             <div className="col-span-3 text-center py-12">
-              <p className="text-gray-500 text-lg">No items found for the selected category.</p>
+              <p className="text-gray-500 text-lg">
+                No items found for the selected category.
+              </p>
             </div>
           )}
         </div>

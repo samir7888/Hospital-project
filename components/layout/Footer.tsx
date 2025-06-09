@@ -33,14 +33,14 @@ const Footer: React.FC = async () => {
                 height={160}
                 src={SiteSettings?.logo?.url}
                 alt={SiteSettings?.companyName || "GastroCare Hospital"}
-                className="w-16 h-16 object-cover object-center"
+                className="w-fit h-16 object-cover object-center"
               />
             ) : (
               <h3 className="text-xl font-bold mb-4">
                 {SiteSettings?.companyName || "GastroCare Hospital"}
               </h3>
             )}
-            <p className="text-blue-100 mb-4">
+            <p className="text-blue-100 mt-4">
               {SiteSettings?.siteDescription || footerDescription}
             </p>
 
