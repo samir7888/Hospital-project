@@ -33,7 +33,12 @@ const About: React.FC = async () => {
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <div className={cn("relative  text-white py-20", !aboutData?.heroSection.image?.url && "bg-blue-900")}>
+      <div
+        className={cn(
+          "relative  text-white py-20",
+          !aboutData?.heroSection.image?.url && "bg-blue-900"
+        )}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
             {aboutData?.heroSection?.title || "About GastroCare Hospital"}
@@ -44,12 +49,12 @@ const About: React.FC = async () => {
           </p>
 
           {/* Buttons */}
-          <div className="mt-8 flex flex-col justify-center sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
+          <div className="mt-8 flex flex-col  sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
             {aboutData?.heroSection.cta.map((cta, index) => (
               <Link key={index} href={cta.link}>
                 <Button
                   variant={cta.variant}
-                  className="inline-flex items-center justify-center px-6 py-4 border border-transparent text-base font-medium rounded-full transition-colors duration-300 cursor-pointer"
+                  className="inline-flex capitalize items-center justify-center px-6 py-4 border border-transparent text-base font-medium rounded-full transition-colors duration-300 cursor-pointer"
                 >
                   {cta.text}
                 </Button>
@@ -65,18 +70,21 @@ const About: React.FC = async () => {
               backgroundImage: `url(${aboutData?.heroSection.image?.url})`,
               backgroundPosition: "center 25%",
             }}
-          ></div>
+          >
+            {/* Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-800/60"></div>
+          </div>
         )}
       </div>
 
       {/* Stats Section */}
       <div className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="flex justify-center items-center gap-24 flex-wrap">
             {aboutData?.statistics?.map((stat, index) => {
               const Icon = iconMap[index % iconMap.length];
               return (
-                <div key={index} className="text-center">
+                <div key={index} className="text-center flex-col">
                   <div className="flex justify-center mb-4">
                     <Icon className="w-10 h-10 text-blue-600" />
                   </div>
@@ -150,7 +158,7 @@ const About: React.FC = async () => {
           <h2 className="text-3xl font-bold text-gray-900 mb-12 text-center">
             Our Core Values
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="flex justify-center gap-24 flex-wrap">
             {aboutData?.coreValues?.map((value, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-md">
                 <h3 className="text-xl font-semibold text-gray-900 mb-4">

@@ -10,6 +10,7 @@ import PaginationComponent from "@/components/PaginationComponent";
 import { HomePageData } from "../types/heropage-type";
 import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 export type NewsEventsPageProps = {
   searchParams: {
@@ -22,8 +23,14 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: aboutData?.metadata?.title || " GastroCare Hospital",
-    description: aboutData?.metadata?.description || "Learn more about our hospital and its values.",
-    keywords: aboutData?.metadata?.keywords || ["hospital", "healthcare", "about us"],
+    description:
+      aboutData?.metadata?.description ||
+      "Learn more about our hospital and its values.",
+    keywords: aboutData?.metadata?.keywords || [
+      "hospital",
+      "healthcare",
+      "about us",
+    ],
   };
 }
 
@@ -33,29 +40,53 @@ const Page = async (props: {
   const searchParams = await props.searchParams;
   const queryParams = new URLSearchParams(searchParams);
   const queryString = queryParams.toString();
- const newsEventsHomePageData = await serverFetch<HomePageData>("blogs-page");
+  const newsEventsHomePageData = await serverFetch<HomePageData>("blogs-page");
   return (
     <div className="py-10">
-      <div className="bg-blue-900 text-white py-20">
+      {/* Hero section */}
+      <div
+        className={cn(
+          "relative  text-white py-20",
+          !newsEventsHomePageData?.heroSection.image?.url && "bg-blue-900"
+        )}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">{newsEventsHomePageData?.heroSection?.title || "News & Events"}</h1>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            {newsEventsHomePageData?.heroSection?.title || "News & Events"}
+          </h1>
           <p className="text-xl text-blue-100 max-w-3xl">
-            {newsEventsHomePageData?.heroSection?.subtitle || "Stay updated with the latest news, events, and announcements from GastroCare Hospital."}
+            {newsEventsHomePageData?.heroSection?.subtitle ||
+              "Stay updated with the latest news, events, and announcements from GastroCare Hospital."}
           </p>
 
-           {/* Buttons */}
-          <div className="mt-8 flex flex-col justify-center sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
+          {/* Buttons */}
+          <div className="mt-8 flex flex-col  sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
             {newsEventsHomePageData?.heroSection.cta.map((cta, index) => (
               <Link key={index} href={cta.link}>
                 <Button
                   variant={cta.variant}
-                  className="inline-flex items-center justify-center px-6 py-4 border border-transparent text-base font-medium rounded-full transition-colors duration-300 cursor-pointer"
+                  className="inline-flex capitalize items-center justify-center px-6 py-4 border border-transparent text-base font-medium rounded-full transition-colors duration-300 cursor-pointer"
                 >
                   {cta.text}
                 </Button>
               </Link>
             ))}
           </div>
+
+          {/* bg-image */}
+
+          {newsEventsHomePageData?.heroSection.image?.url && (
+            <div
+              className="absolute inset-0 bg-center bg-cover -z-30"
+              style={{
+                backgroundImage: `url(${newsEventsHomePageData?.heroSection.image?.url})`,
+                backgroundPosition: "center 25%",
+              }}
+            >
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-800/60"></div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -71,8 +102,8 @@ const Page = async (props: {
         {/* News and Events Grid */}
         <NewsEventsGrid queryString={queryString} />
 
-        {/* Newsletter Signup */}
-        <div className="mt-20 bg-blue-50 rounded-lg p-8">
+        {/*todo: Newsletter Signup */}
+        {/* <div className="mt-20 bg-blue-50 rounded-lg p-8">
           <div className="text-center mb-6">
             <h3 className="text-2xl font-bold text-gray-900 mb-2">
               Stay Updated
@@ -83,7 +114,10 @@ const Page = async (props: {
           </div>
 
           <SubscribeForm />
-        </div>
+        </div> */}
+
+
+
       </div>
     </div>
   );
@@ -151,14 +185,13 @@ async function NewsEventsGrid({ queryString }: { queryString: string }) {
             </div>
           </div>
         ))}
-
       </div>
-          {/* Pagination Component */}
-          {filteredItems.meta && (
-            <div className="mt-8">
-              <PaginationComponent meta={filteredItems.meta} />
-            </div>
-          )}
+      {/* Pagination Component */}
+      {filteredItems.meta && (
+        <div className="mt-8">
+          <PaginationComponent meta={filteredItems.meta} />
+        </div>
+      )}
     </div>
   );
 }

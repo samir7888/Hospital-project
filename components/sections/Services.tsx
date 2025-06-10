@@ -42,7 +42,7 @@ const Services: React.FC = async () => {
               <div className="flex flex-col items-center text-center">
                 <div className="mb-4 bg-blue-50 p-4 rounded-full">
                   <img
-                    src={service.coverImage?.url ?? ""}
+                    src={service.coverImage?.url}
                     alt={service.title}
                     className="h-12 w-12 text-blue-600"
                   />

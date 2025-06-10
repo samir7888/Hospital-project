@@ -1,7 +1,10 @@
+import { CompanyInfoResponse } from '@/app/types/company-type';
+import { serverFetch } from '@/lib/server-fetch';
 import { Check, Clipboard, PhoneCall } from 'lucide-react'
 import React from 'react'
 
-const AppointmentCard = () => {
+const AppointmentCard = async() => {
+  const companyInfo = await serverFetch<CompanyInfoResponse>("company-info");
   return (
     <div className="lg:w-1/2 mb-12 lg:mb-0">
             <div className="text-left mb-8">
@@ -53,7 +56,7 @@ const AppointmentCard = () => {
                     <p className="mt-1 text-blue-100">
                       Call our 24/7 emergency line:
                     </p>
-                    <p className="text-xl font-bold mt-1">(123) 456-7890</p>
+                    <p className="text-xl font-bold mt-1">{companyInfo?.emergencyPhone}</p>
                   </div>
                 </div>
               </div>

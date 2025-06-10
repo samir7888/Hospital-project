@@ -16,17 +16,21 @@ export type DoctorsPageProps = {
   };
 };
 
-
 export async function generateMetadata(): Promise<Metadata> {
   const aboutData = await serverFetch<HomePageData>("doctors-page");
 
   return {
     title: aboutData?.metadata?.title || " GastroCare Hospital",
-    description: aboutData?.metadata?.description || "Learn more about our hospital and its values.",
-    keywords: aboutData?.metadata?.keywords || ["hospital", "healthcare", "about us"],
+    description:
+      aboutData?.metadata?.description ||
+      "Learn more about our hospital and its values.",
+    keywords: aboutData?.metadata?.keywords || [
+      "hospital",
+      "healthcare",
+      "about us",
+    ],
   };
 }
-
 
 const Doctors = async (props: {
   searchParams: Promise<DoctorsPageProps["searchParams"]>;
@@ -34,21 +38,27 @@ const Doctors = async (props: {
   const searchParams = await props.searchParams;
   const queryParams = new URLSearchParams(searchParams);
   const queryString = queryParams.toString();
- const doctorHomePageData = await serverFetch<HomePageData>("doctors-page");
+  const doctorHomePageData = await serverFetch<HomePageData>("doctors-page");
   return (
     <div className="pt-20">
       {/* Hero Section */}
-      <div className={cn("relative  text-white py-20", !doctorHomePageData?.heroSection.image?.url && "bg-blue-900")}>
+      <div
+        className={cn(
+          "relative  text-white py-20",
+          !doctorHomePageData?.heroSection.image?.url && "bg-blue-900"
+        )}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
             {doctorHomePageData?.heroSection?.title || "Our Medical Team"}
           </h1>
           <p className="text-xl text-blue-100 max-w-3xl">
-           {doctorHomePageData?.heroSection?.subtitle || "Meet our team of experienced healthcare professionals dedicated to providing exceptional care and treatment."}
+            {doctorHomePageData?.heroSection?.subtitle ||
+              "Meet our team of experienced healthcare professionals dedicated to providing exceptional care and treatment."}
           </p>
 
           {/* Buttons */}
-          <div className="mt-8 flex flex-col justify-center sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
+          <div className="mt-8 flex flex-col  sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
             {doctorHomePageData?.heroSection.cta.map((cta, index) => (
               <Link key={index} href={cta.link}>
                 <Button
@@ -61,21 +71,21 @@ const Doctors = async (props: {
             ))}
           </div>
 
-{/* bg-image */}
+          {/* bg-image */}
 
- {doctorHomePageData?.heroSection.image?.url && (
-          <div
-            className="absolute inset-0 bg-center bg-cover -z-30"
-            style={{
-              backgroundImage: `url(${doctorHomePageData?.heroSection.image?.url})`,
-              backgroundPosition: "center 25%",
-            }}
-          ></div>
-        )}
-
-
-
-        </div>  
+          {doctorHomePageData?.heroSection.image?.url && (
+            <div
+              className="absolute inset-0 bg-center bg-cover -z-30"
+              style={{
+                backgroundImage: `url(${doctorHomePageData?.heroSection.image?.url})`,
+                backgroundPosition: "center 25%",
+              }}
+            >
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-800/60"></div>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Search and Filter Section */}
@@ -100,7 +110,7 @@ export default Doctors;
 async function DoctorsGrid({ queryString }: { queryString: string }) {
   const url = `doctors${queryString ? `?${queryString}` : ""}`;
   const filteredDoctors = await serverFetch<DoctorsResponse>(url);
-  
+
   if (!filteredDoctors || filteredDoctors?.data?.length === 0) {
     return (
       <div className="text-center flex flex-col justify-center items-center py-12">

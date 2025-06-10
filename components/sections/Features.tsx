@@ -7,49 +7,61 @@ import {
   ActivitySquare,
   HeartPulse,
 } from "lucide-react";
+import { serverFetch } from "@/lib/server-fetch";
+import { FeatureResponse } from "@/app/types/feature-type";
 
-const Features: React.FC = () => {
-  const features = [
-    {
-      icon: <Shield className="h-10 w-10 text-blue-600" />,
-      title: "Advanced Technology",
-      description:
-        "State-of-the-art diagnostic and treatment equipment for accurate and efficient care.",
-    },
-    {
-      icon: <Award className="h-10 w-10 text-blue-600" />,
-      title: "Expert Specialists",
-      description:
-        "Highly qualified doctors with extensive training and experience in their fields.",
-    },
-    {
-      icon: <Clock className="h-10 w-10 text-blue-600" />,
-      title: "24/7 Emergency Care",
-      description:
-        "Round-the-clock emergency services with immediate response capabilities.",
-    },
-    {
-      icon: <Users className="h-10 w-10 text-blue-600" />,
-      title: "Patient-Centered Approach",
-      description:
-        "Personalized care plans focused on individual patient needs and preferences.",
-    },
-    {
-      icon: <ActivitySquare className="h-10 w-10 text-blue-600" />,
-      title: "Comprehensive Services",
-      description:
-        "Full range of medical services from preventive care to complex treatments.",
-    },
-    {
-      icon: <HeartPulse className="h-10 w-10 text-blue-600" />,
-      title: "Compassionate Care",
-      description:
-        "Empathetic staff dedicated to providing comfort and support throughout treatment.",
-    },
-  ];
-
+const Features: React.FC = async () => {
+  // const features = [
+  //   {
+  //     icon: <Shield className="h-10 w-10 text-blue-600" />,
+  //     title: "Advanced Technology",
+  //     description:
+  //       "State-of-the-art diagnostic and treatment equipment for accurate and efficient care.",
+  //   },
+  //   {
+  //     icon: <Award className="h-10 w-10 text-blue-600" />,
+  //     title: "Expert Specialists",
+  //     description:
+  //       "Highly qualified doctors with extensive training and experience in their fields.",
+  //   },
+  //   {
+  //     icon: <Clock className="h-10 w-10 text-blue-600" />,
+  //     title: "24/7 Emergency Care",
+  //     description:
+  //       "Round-the-clock emergency services with immediate response capabilities.",
+  //   },
+  //   {
+  //     icon: <Users className="h-10 w-10 text-blue-600" />,
+  //     title: "Patient-Centered Approach",
+  //     description:
+  //       "Personalized care plans focused on individual patient needs and preferences.",
+  //   },
+  //   {
+  //     icon: <ActivitySquare className="h-10 w-10 text-blue-600" />,
+  //     title: "Comprehensive Services",
+  //     description:
+  //       "Full range of medical services from preventive care to complex treatments.",
+  //   },
+  //   {
+  //     icon: <HeartPulse className="h-10 w-10 text-blue-600" />,
+  //     title: "Compassionate Care",
+  //     description:
+  //       "Empathetic staff dedicated to providing comfort and support throughout treatment.",
+  //   },
+  // ];
+  const features = await serverFetch<FeatureResponse>("features");
+  if (!features || features?.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <p className="text-red-600 font-medium">Error loading features</p>
+          <p className="text-gray-500 mt-2">Please try again later.</p>
+        </div>
+      </div>
+    );
+  }
   return (
-    <section id="features" className="py-32 bg-gray-50">
+    <section id="features" className="py-20 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
@@ -65,18 +77,26 @@ const Features: React.FC = () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
-            >
-              <div className="flex flex-col items-start">
-                <div className="bg-blue-100 p-3 rounded-lg mb-4">
-                  {feature.icon}
+            <div key={feature.id} className="h-full flex flex-col">
+              {/* Feature Image */}
+              <div className="h-48 overflow-hidden">
+                <img
+                  src={feature.image?.url || "/api/placeholder/400/300"}
+                  alt={feature.title}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+              </div>
+
+              {/* Feature Content */}
+              <div className="p-4 flex-1 flex flex-col justify-between">
+                <div className="space-y-2">
+                  <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                    {feature.title}
+                  </h3>
+                  <p className="text-sm text-gray-600 line-clamp-3 leading-relaxed">
+                    {feature.description}
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600">{feature.description}</p>
               </div>
             </div>
           ))}

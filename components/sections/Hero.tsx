@@ -4,6 +4,7 @@ import Link from "next/link";
 import React from "react";
 import { Button } from "../ui/button";
 import { Metadata } from "next";
+import { CompanyInfoResponse } from "@/app/types/company-type";
 
 
 
@@ -23,6 +24,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const Hero: React.FC = async () => {
   const homePageData = await serverFetch<HomePageData>("home-page");
+  const companyInfo = await serverFetch<CompanyInfoResponse>("company-info");
 
 
 
@@ -98,7 +100,7 @@ const Hero: React.FC = async () => {
               </div>
               <div>
                 <h3 className="font-medium text-gray-900">Emergency</h3>
-                <p className="text-blue-600 font-bold">(123) 456-7890</p>
+                <p className="text-blue-600 font-bold">{companyInfo?.emergencyPhone}</p>
               </div>
             </div>
 
@@ -122,7 +124,7 @@ const Hero: React.FC = async () => {
               </div>
               <div>
                 <h3 className="font-medium text-gray-900">Working Hours</h3>
-                <p className="text-gray-600">Mon-Fri: 8AM-6PM</p>
+                <p className="text-gray-600">{companyInfo?.workingHours}</p>
               </div>
             </div>
 
@@ -152,7 +154,7 @@ const Hero: React.FC = async () => {
               </div>
               <div>
                 <h3 className="font-medium text-gray-900">Location</h3>
-                <p className="text-gray-600">123 Medical Center Drive</p>
+                <p className="text-gray-600">{companyInfo?.address}</p>
               </div>
             </div>
           </div>

@@ -58,12 +58,12 @@ const Services: React.FC = async () => {
             </p>
 
             {/* Buttons */}
-            <div className="mt-8 flex flex-col justify-center sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
+            <div className="mt-8 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
               {services?.heroSection.cta.map((cta, index) => (
                 <Link key={index} href={cta.link}>
                   <Button
                     variant={cta.variant}
-                    className="inline-flex items-center justify-center px-6 py-4 border border-transparent text-base font-medium rounded-full transition-colors duration-300 cursor-pointer"
+                    className="inline-flex capitalize items-center justify-center px-6 py-4 border border-transparent text-base font-medium rounded-full transition-colors duration-300 cursor-pointer"
                   >
                     {cta.text}
                   </Button>
@@ -81,7 +81,12 @@ const Services: React.FC = async () => {
                 backgroundImage: `url(${services?.heroSection.image?.url})`,
                 backgroundPosition: "center 25%",
               }}
-            ></div>
+            >
+
+
+              {/* Overlay */}
+          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-800/60"></div>
+            </div>
           )}
         </div>
 
