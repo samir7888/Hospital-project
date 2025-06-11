@@ -11,12 +11,14 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import SanitizeBody from "../html-sanitize";
+import { CompanyInfoResponse } from "@/app/types/company-type";
 
 interface FAQClientProps {
   faqData: FaqResponse;
+  companyInfo?: CompanyInfoResponse | null;
 }
 
-export const FAQClient: React.FC<FAQClientProps> = ({ faqData }) => {
+export const FAQClient: React.FC<FAQClientProps> = ({ faqData, companyInfo }) => {
   const [activeCategory, setActiveCategory] = useState<string>("all");
 
   // All categories for the filter with icons
@@ -194,10 +196,10 @@ export const FAQClient: React.FC<FAQClientProps> = ({ faqData }) => {
                   <h4 className="font-bold text-xl text-gray-900 text-center mb-3">Call Us</h4>
                   <div className="flex items-center justify-center text-gray-600 mb-3">
                     <Clock className="w-4 h-4 mr-2" />
-                    <span>Monday to Friday, 8am - 6pm</span>
+                    <span>{companyInfo?.workingHours || "Monday to Friday, 8am - 6pm"}</span>
                   </div>
                   <p className="text-2xl font-bold text-blue-600 text-center">
-                    (555) 123-4567
+                    {companyInfo?.phone?.join(", ") || "(555) 123-4567"}
                   </p>
                 </div>
                 
@@ -211,7 +213,7 @@ export const FAQClient: React.FC<FAQClientProps> = ({ faqData }) => {
                     <span>We'll respond within 24 hours</span>
                   </div>
                   <p className="text-lg font-bold text-indigo-600 text-center break-all">
-                    support@medcarehospital.com
+                    {companyInfo?.email?.join(", ") || "support@medcarehospital.com"}
                   </p>
                 </div>
               </div>

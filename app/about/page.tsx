@@ -29,7 +29,6 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const About: React.FC = async () => {
   const aboutData = await serverFetch<AboutPageData>("about-page");
-
   return (
     <div className="pt-20">
       {/* Hero Section */}
@@ -40,10 +39,10 @@ const About: React.FC = async () => {
         )}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 capitalize">
             {aboutData?.heroSection?.title || "About GastroCare Hospital"}
           </h1>
-          <p className="text-xl text-blue-100 max-w-3xl">
+          <p className="text-xl text-blue-100 max-w-3xl capitalize">
             {aboutData?.heroSection?.subtitle ||
               "Leading the way in medical excellence, innovation, and patient care since 1988."}
           </p>
@@ -91,7 +90,7 @@ const About: React.FC = async () => {
                   <div className="text-3xl font-bold text-gray-900 mb-2">
                     {stat.count}
                   </div>
-                  <div className="text-gray-600">{stat.title}</div>
+                  <div className="text-gray-600 capitalize font-semibold">{stat.title}</div>
                 </div>
               );
             })}
@@ -140,14 +139,18 @@ const About: React.FC = async () => {
             Our Journey
           </h2>
           <div className="space-y-12">
-            {aboutData?.journey?.map((step, index) => (
-              <div key={index} className="border-l-4 border-blue-600 pl-6">
-                <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                  {step.title}
-                </h3>
-                <p className="text-gray-600">{step.description}</p>
-              </div>
-            ))}
+            {aboutData?.journey && aboutData?.journey?.length > 0 ? (
+              aboutData?.journey?.map((step, index) => (
+                <div key={index} className="border-l-4 border-blue-600 pl-6">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                    {step.title}
+                  </h3>
+                  <p className="text-gray-600">{step.description}</p>
+                </div>
+              ))
+            ) : (
+              <div className="text-center">No Journey Found</div>
+            )}
           </div>
         </div>
       </div>
@@ -159,14 +162,18 @@ const About: React.FC = async () => {
             Our Core Values
           </h2>
           <div className="flex justify-center gap-24 flex-wrap">
-            {aboutData?.coreValues?.map((value, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-md">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
-                  {value.title}
-                </h3>
-                <p className="text-gray-600">{value.description}</p>
-              </div>
-            ))}
+            {aboutData?.coreValues && aboutData?.coreValues?.length > 0 ? (
+              aboutData?.coreValues?.map((value, index) => (
+                <div key={index} className="bg-white p-6 rounded-lg shadow-md">
+                  <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                    {value.title}
+                  </h3>
+                  <p className="text-gray-600">{value.description}</p>
+                </div>
+              ))
+            ) : (
+              <div>No Core Values Found</div>
+            )}
           </div>
         </div>
       </div>

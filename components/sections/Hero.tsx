@@ -52,11 +52,11 @@ const Hero: React.FC = async () => {
         <div className="relative h-full">
           <div className="max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8 pt-20 w-full">
             <div className="container mx-auto mt-24 text-center">
-              <h1 className="text-4xl xl:text-5xl 2xl:text-8xl font-extrabold text-white  animate-fade-in text-center leading-[6rem] text-shadow-2xs">
+              <h1 className="text-4xl xl:text-5xl 2xl:text-8xl font-extrabold text-white  animate-fade-in text-center leading-[6rem] text-shadow-2xs capitalize">
                 {homePageData?.heroSection?.title ||
                   "Your Health Is Our Priority"}
               </h1>
-              <p className="mt-4 text-xl text-center text-blue-100 animate-fade-in-delay">
+              <p className="mt-4 text-xl text-center text-blue-100 animate-fade-in-delay capitalize">
                 {homePageData?.heroSection?.subtitle ||
                   "Delivering compassionate care and medical excellence to our community for over 35 years."}
               </p>
@@ -67,7 +67,7 @@ const Hero: React.FC = async () => {
                     href={cta.link}
                     
                   >
-                    <Button variant={cta.variant} className="inline-flex items-center justify-center px-6 py-4 border border-transparent text-base font-medium rounded-full transition-colors duration-300 cursor-pointer">{cta.text}</Button>
+                    <Button variant={cta.variant} className="inline-flex items-center justify-center px-6 py-4 border border-transparent text-base font-medium rounded-full transition-colors duration-300 cursor-pointer capitalize">{cta.text}</Button>
                   </Link>
                 ))}
               </div>

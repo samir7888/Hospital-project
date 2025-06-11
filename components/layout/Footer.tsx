@@ -126,22 +126,69 @@ const Footer: React.FC = async () => {
             <ul className="space-y-3">
               <li className="flex items-start">
                 <MapPin className="mr-2 h-5 w-5 text-blue-300 mt-0.5" />
-                <span>
+                <Link
+                  href={`https://maps.google.com/?q=${encodeURIComponent(
+                    `${companyInfo?.city || "123 Medical Center Drive"}, ${
+                      companyInfo?.address || "Anytown, ST 12345"
+                    }`
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-300 hover:text-blue-100 underline transition-colors"
+                >
                   {companyInfo?.city || "123 Medical Center Drive"},
                   {companyInfo?.address || "Anytown, ST 12345"}
-                </span>
+                </Link>
               </li>
               <li className="flex items-center">
                 <Phone className="mr-2 h-5 w-5 text-blue-300" />
-                <span>
-                  {companyInfo?.phone?.join(", ") || "(123) 456-7890"}
-                </span>
+                <div className="flex flex-wrap gap-2">
+                  {companyInfo?.phone && companyInfo?.phone?.length > 0 ? (
+                    companyInfo.phone.map((phoneNumber, index) => (
+                      <Link
+                        key={index}
+                        href={`tel:${phoneNumber}`}
+                        className="text-blue-300 hover:text-blue-100 underline transition-colors"
+                      >
+                        {phoneNumber}
+                      </Link>
+                    ))
+                  ) : (
+                    <Link
+                      href="tel:(123) 456-7890"
+                      className="text-blue-300 hover:text-blue-100 underline transition-colors"
+                    >
+                      (123) 456-7890
+                    </Link>
+                  )}
+                </div>
               </li>
               <li className="flex items-center">
                 <Mail className="mr-2 h-5 w-5 text-blue-300" />
-                <span>
-                  {companyInfo?.email?.join(", ") || "info@medcarehospital.com"}
-                </span>
+                <div className="flex flex-wrap gap-2">
+                  {companyInfo?.email && companyInfo?.email?.length > 0 ? (
+                    companyInfo.email.map((emailAddress, index) => (
+                      <Link
+                        key={index}
+                        href={`mailto:${emailAddress}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-300 hover:text-blue-100 underline transition-colors"
+                      >
+                        {emailAddress}
+                      </Link>
+                    ))
+                  ) : (
+                    <a
+                      href="mailto:info@medcarehospital.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-blue-300 hover:text-blue-100 underline transition-colors"
+                    >
+                      info@medcarehospital.com
+                    </a>
+                  )}
+                </div>
               </li>
             </ul>
           </div>
@@ -173,12 +220,27 @@ const Footer: React.FC = async () => {
           </div>
         </div>
 
-        <div className="border-t border-blue-800 mt-8 pt-8 text-center">
-          <p className="text-blue-200">
+        <footer className="border-t border-blue-800 mt-12 pt-8 pb-6 text-center">
+          <p className="text-sm text-blue-300 mb-4">
             &copy; {new Date().getFullYear()} {SiteSettings?.companyName}. All
-            Rights Reserved.
+            rights reserved.
           </p>
-        </div>
+
+          <div className="flex justify-center gap-6 flex-wrap">
+            <Link
+              href="/policy"
+              className="text-blue-300 hover:text-white transition-colors text-sm"
+            >
+              Privacy Policy
+            </Link>
+            <Link
+              href="/terms"
+              className="text-blue-300 hover:text-white transition-colors text-sm"
+            >
+              Terms & Conditions
+            </Link>
+          </div>
+        </footer>
       </div>
     </footer>
   );

@@ -10,6 +10,7 @@ export type Doctor = {
   availability: EWeekDays[];
   email: string;
   phone: string;
+  about:string;
   address: string;
   languagesKnown: ELanguages[];
   degree: string;

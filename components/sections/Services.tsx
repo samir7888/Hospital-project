@@ -37,7 +37,7 @@ const Services: React.FC = async () => {
           {servicesData.map((service) => (
             <div
               key={service.id}
-              className="bg-white p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg hover:border-blue-100 transition-all duration-300"
+              className="bg-white overflow-hidden p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg hover:border-blue-100 transition-all duration-300"
             >
               <div className="flex flex-col items-center text-center">
                 <div className="mb-4 bg-blue-50 p-4 rounded-full">

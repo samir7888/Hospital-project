@@ -15,6 +15,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import { serverFetch } from "@/lib/server-fetch";
 import { Doctor, DoctorsResponse } from "@/app/types/doctor-type";
+import SanitizeBody from "@/components/html-sanitize";
 
 export async function generateMetadata({
   params,
@@ -173,30 +174,34 @@ export default async function DoctorProfile({
         {/* Doctor Details */}
         <div className="py-12">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2">
-              <div className="bg-white rounded-lg shadow-md p-6 mb-6">
-                <h2 className="text-2xl font-semibold mb-4">
+            <div className="lg:col-span-2 flex rounded-lg shadow-md items-center bg-white">
+              <div className="p-6 mb-6">
+                <h2 className="text-2xl font-semibold mb-6">
                   About {doctor.name}
                 </h2>
+                <div>
+                  <h3 className="text-xl font-semibold mb-3">Education</h3>
+                  <p className="text-gray-700 mb-6 uppercase">
+                    {doctor.degree}
+                  </p>
 
-                <h3 className="text-xl font-semibold mb-3">Education</h3>
-                <p className="text-gray-700 mb-6 uppercase">{doctor.degree}</p>
-
-                {doctor.certifications.length > 0 && (
-                  <>
-                    <h1 className="text-xl font-semibold mb-3">
-                      Certifications
-                    </h1>
-                    <ul className="list-disc list-inside text-gray-700 mb-6">
-                      {doctor.certifications?.map((cert, index) => (
-                        <li key={index} className="mb-2 flex items-start">
-                          <Award className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-0.5" />
-                          <span>{cert}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                )}
+                  {doctor.certifications.length > 0 && (
+                    <>
+                      <h1 className="text-xl font-semibold mb-3 capitalize">
+                        Certifications
+                      </h1>
+                      <ul className="list-disc list-inside text-gray-700 mb-6">
+                        {doctor.certifications?.map((cert, index) => (
+                          <li key={index} className="mb-2 flex items-start">
+                            <Award className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-0.5" />
+                            <span>{cert}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                </div>
+                <SanitizeBody description={doctor.about} />
               </div>
             </div>
 

@@ -1,11 +1,13 @@
 import { FaqResponse } from "@/app/types/faqs-type";
 import { FAQClient } from "./FAQ";
+import { CompanyInfoResponse } from "@/app/types/company-type";
 
 // Server Component Wrapper
 const FAQ = async () => {
   const { serverFetch } = await import("@/lib/server-fetch");
   
   const filteredFaqs = await serverFetch<FaqResponse>("faqs");
+  const companyInfo = await serverFetch<CompanyInfoResponse>("company-info");
 
   if (!filteredFaqs) {
     return (
@@ -18,7 +20,7 @@ const FAQ = async () => {
     );
   }
 
-  return <FAQClient faqData={filteredFaqs} />;
+  return <FAQClient faqData={filteredFaqs} companyInfo={companyInfo} />;
 };
 
 export default FAQ;
