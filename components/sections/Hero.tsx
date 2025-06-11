@@ -6,28 +6,25 @@ import { Button } from "../ui/button";
 import { Metadata } from "next";
 import { CompanyInfoResponse } from "@/app/types/company-type";
 
-
-
-
 export async function generateMetadata(): Promise<Metadata> {
   const aboutData = await serverFetch<HomePageData>("home-page");
 
   return {
     title: aboutData?.metadata?.title || " GastroCare Hospital",
-    description: aboutData?.metadata?.description || "Learn more about our hospital and its values.",
-    keywords: aboutData?.metadata?.keywords || ["hospital", "healthcare", "about us"],
+    description:
+      aboutData?.metadata?.description ||
+      "Learn more about our hospital and its values.",
+    keywords: aboutData?.metadata?.keywords || [
+      "hospital",
+      "healthcare",
+      "about us",
+    ],
   };
 }
-
-
-
 
 const Hero: React.FC = async () => {
   const homePageData = await serverFetch<HomePageData>("home-page");
   const companyInfo = await serverFetch<CompanyInfoResponse>("company-info");
-
-
-
 
   return (
     <div className="relative flex flex-col">
@@ -62,12 +59,13 @@ const Hero: React.FC = async () => {
               </p>
               <div className="mt-8 flex flex-col justify-center sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
                 {homePageData?.heroSection.cta.map((cta, index) => (
-                  <Link
-                    key={index}
-                    href={cta.link}
-                    
-                  >
-                    <Button variant={cta.variant} className="inline-flex items-center justify-center px-6 py-4 border border-transparent text-base font-medium rounded-full transition-colors duration-300 cursor-pointer capitalize">{cta.text}</Button>
+                  <Link key={index} href={cta.link}>
+                    <Button
+                      variant={cta.variant}
+                      className="inline-flex items-center justify-center px-6 py-4 border border-transparent text-base font-medium rounded-full transition-colors duration-300 cursor-pointer capitalize"
+                    >
+                      {cta.text}
+                    </Button>
                   </Link>
                 ))}
               </div>
@@ -100,7 +98,9 @@ const Hero: React.FC = async () => {
               </div>
               <div>
                 <h3 className="font-medium text-gray-900">Emergency</h3>
-                <p className="text-blue-600 font-bold">{companyInfo?.emergencyPhone}</p>
+                <p className="text-blue-600 font-bold">
+                  {companyInfo?.emergencyPhone}
+                </p>
               </div>
             </div>
 
