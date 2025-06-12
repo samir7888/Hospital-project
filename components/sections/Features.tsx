@@ -9,46 +9,9 @@ import {
 } from "lucide-react";
 import { serverFetch } from "@/lib/server-fetch";
 import { FeatureResponse } from "@/app/types/feature-type";
+import Image from "next/image";
 
 const Features: React.FC = async () => {
-  // const features = [
-  //   {
-  //     icon: <Shield className="h-10 w-10 text-blue-600" />,
-  //     title: "Advanced Technology",
-  //     description:
-  //       "State-of-the-art diagnostic and treatment equipment for accurate and efficient care.",
-  //   },
-  //   {
-  //     icon: <Award className="h-10 w-10 text-blue-600" />,
-  //     title: "Expert Specialists",
-  //     description:
-  //       "Highly qualified doctors with extensive training and experience in their fields.",
-  //   },
-  //   {
-  //     icon: <Clock className="h-10 w-10 text-blue-600" />,
-  //     title: "24/7 Emergency Care",
-  //     description:
-  //       "Round-the-clock emergency services with immediate response capabilities.",
-  //   },
-  //   {
-  //     icon: <Users className="h-10 w-10 text-blue-600" />,
-  //     title: "Patient-Centered Approach",
-  //     description:
-  //       "Personalized care plans focused on individual patient needs and preferences.",
-  //   },
-  //   {
-  //     icon: <ActivitySquare className="h-10 w-10 text-blue-600" />,
-  //     title: "Comprehensive Services",
-  //     description:
-  //       "Full range of medical services from preventive care to complex treatments.",
-  //   },
-  //   {
-  //     icon: <HeartPulse className="h-10 w-10 text-blue-600" />,
-  //     title: "Compassionate Care",
-  //     description:
-  //       "Empathetic staff dedicated to providing comfort and support throughout treatment.",
-  //   },
-  // ];
   const features = await serverFetch<FeatureResponse>("features");
   if (!features || features?.length === 0) {
     return (
@@ -80,8 +43,10 @@ const Features: React.FC = async () => {
             <div key={feature.id} className="h-full flex flex-col">
               {/* Feature Image */}
               <div className="h-48 overflow-hidden">
-                <img
-                  src={feature.image?.url || "/api/placeholder/400/300"}
+                <Image
+                  width={400}
+                  height={300}
+                  src={feature.image?.url || "https://placehold.co/400x300.png"}
                   alt={feature.title}
                   className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
                 />

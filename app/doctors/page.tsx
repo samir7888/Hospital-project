@@ -8,6 +8,7 @@ import { HomePageData } from "../types/heropage-type";
 import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export type DoctorsPageProps = {
   searchParams: {
@@ -134,8 +135,10 @@ async function DoctorsGrid({ queryString }: { queryString: string }) {
               className="bg-white rounded-lg shadow-md overflow-hidden"
             >
               <div className="h-64 overflow-hidden">
-                <img
-                  src={doctor?.profileImage?.url ?? ""}
+                <Image
+                  width={600}
+                  height={400}
+                  src={doctor?.profileImage?.url || "https://placehold.co/600x400.png"}
                   alt={doctor.name}
                   className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
                 />

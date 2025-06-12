@@ -82,10 +82,8 @@ const Services: React.FC = async () => {
                 backgroundPosition: "center 25%",
               }}
             >
-
-
               {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-800/60"></div>
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-800/60"></div>
             </div>
           )}
         </div>
@@ -151,12 +149,12 @@ const Services: React.FC = async () => {
                     We're currently updating our services. Please check back
                     later or contact us for more information.
                   </p>
-                  <a
+                  <Link
                     href="/contact"
                     className="inline-flex items-center justify-center px-6 py-3 border border-blue-600 text-base font-medium rounded-md text-blue-600 hover:bg-blue-50 transition-colors duration-300"
                   >
                     Contact Us
-                  </a>
+                  </Link>
                 </div>
               </div>
             )}
@@ -175,18 +173,18 @@ const Services: React.FC = async () => {
                   Our team of medical professionals is here to help you 24/7.
                 </p>
                 <div className="flex flex-col sm:flex-row justify-center gap-4">
-                  <a
+                  <Link
                     href="/#appointment"
                     className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
                   >
                     Book an Appointment
-                  </a>
-                  <a
+                  </Link>
+                  <Link
                     href="/contact"
                     className="inline-flex items-center justify-center px-6 py-3 border border-blue-600 text-base font-medium rounded-md text-blue-600 hover:bg-blue-50 transition-colors duration-300"
                   >
                     Contact Us
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -247,12 +245,12 @@ const Services: React.FC = async () => {
                   >
                     Try Again
                   </button>
-                  <a
+                  <Link
                     href="/contact"
                     className="inline-flex items-center justify-center px-6 py-3 border border-blue-600 text-base font-medium rounded-md text-blue-600 hover:bg-blue-50 transition-colors duration-300"
                   >
                     Contact Us
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>

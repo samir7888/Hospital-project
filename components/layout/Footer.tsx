@@ -40,7 +40,7 @@ const Footer: React.FC = async () => {
               />
             ) : (
               <h3 className="text-xl font-bold mb-4">
-                {SiteSettings?.companyName }
+                {SiteSettings?.companyName}
               </h3>
             )}
             {footerDescription?.footerDescription && (
@@ -184,14 +184,14 @@ const Footer: React.FC = async () => {
                       </Link>
                     ))
                   ) : (
-                    <a
+                    <Link
                       href="mailto:info@medcarehospital.com"
                       target="_blank"
                       rel="noopener noreferrer"
                       className="text-blue-300 hover:text-blue-100 underline transition-colors"
                     >
                       info@medcarehospital.com
-                    </a>
+                    </Link>
                   )}
                 </div>
               </li>

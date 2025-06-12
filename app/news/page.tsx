@@ -11,6 +11,7 @@ import { HomePageData } from "../types/heropage-type";
 import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export type NewsEventsPageProps = {
   searchParams: {
@@ -151,14 +152,16 @@ async function NewsEventsGrid({ queryString }: { queryString: string }) {
             className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
           >
             <div className="relative">
-              <img
-                src={item.coverImage?.url ?? ""}
+              <Image
+                width={600}
+                height={400}
+                src={item.featuredImage?.url || "https://placehold.co/600x400.png"}
                 alt={item.title}
                 className="w-full h-48 object-cover"
               />
-              {/* <div className="absolute top-4 right-4 bg-blue-700 text-white text-xs font-bold px-3 py-1 rounded-full">
-              {item.category}
-              </div> */}
+              <div className="absolute top-4 right-4 bg-blue-700 text-white text-xs font-bold px-3 py-1 rounded-full">
+              {item?.category?.name}
+              </div>
             </div>
 
             <div className="p-6">

@@ -165,7 +165,7 @@ export default async function Page({
                 >
                   <div className="relative h-40">
                     <Image
-                      src={article.coverImage?.url || "/placeholder-image.jpg"}
+                      src={article.featuredImage?.url || "/placeholder-image.jpg"}
                       alt={article.title}
                       fill
                       className="object-cover"

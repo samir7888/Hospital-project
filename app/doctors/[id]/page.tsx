@@ -16,6 +16,7 @@ import { Metadata } from "next";
 import { serverFetch } from "@/lib/server-fetch";
 import { Doctor, DoctorsResponse } from "@/app/types/doctor-type";
 import SanitizeBody from "@/components/html-sanitize";
+import Link from "next/link";
 
 export async function generateMetadata({
   params,
@@ -106,23 +107,23 @@ export default async function DoctorProfile({
                     {doctor.email && (
                       <div className="flex items-center">
                         <Mail className="h-5 w-5 text-blue-600 mr-2" />
-                        <a
+                        <Link
                           href={`mailto:${doctor.email}`}
                           className="text-blue-600 hover:underline"
                         >
                           {doctor.email}
-                        </a>
+                        </Link>
                       </div>
                     )}
                     {doctor.phone && (
                       <div className="flex items-center">
                         <Phone className="h-5 w-5 text-blue-600 mr-2" />
-                        <a
+                        <Link
                           href={`tel:${doctor.phone}`}
                           className="text-blue-600 hover:underline"
                         >
                           {doctor.phone}
-                        </a>
+                        </Link>
                       </div>
                     )}
                   </div>
