@@ -15,9 +15,12 @@ import { CompanyInfoResponse } from "@/app/types/company-type";
 import { SiteSettings } from "@/app/types/sitesetting-type";
 import Image from "next/image";
 
+interface footerProps {
+  footerDescription:string
+}
 const Footer: React.FC = async () => {
   const companyInfo = await serverFetch<CompanyInfoResponse>("company-info");
-  const footerDescription = await serverFetch<string>(
+  const footerDescription = await serverFetch<footerProps>(
     "general-setting/footer-description"
   );
   const SiteSettings = await serverFetch<SiteSettings>("general-setting");
@@ -41,7 +44,7 @@ const Footer: React.FC = async () => {
               </h3>
             )}
             <p className="text-blue-100 mt-4">
-              {SiteSettings?.siteDescription || footerDescription}
+              {footerDescription?.footerDescription || SiteSettings?.siteDescription}
             </p>
 
             <div className="flex space-x-4 mt-4">
