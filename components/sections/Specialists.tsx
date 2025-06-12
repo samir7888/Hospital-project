@@ -36,7 +36,7 @@ const Specialists: React.FC = async() => {
             >
               <div className="h-64 overflow-hidden">
                 <img 
-                  src={doctor.profileImage?.url}
+                  src={doctor.profileImage?.url || 'https://placehold.co/600x400'}
                   alt={doctor.name} 
                   className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500"
                 />

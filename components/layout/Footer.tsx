@@ -16,7 +16,7 @@ import { SiteSettings } from "@/app/types/sitesetting-type";
 import Image from "next/image";
 
 interface footerProps {
-  footerDescription:string
+  footerDescription: string;
 }
 const Footer: React.FC = async () => {
   const companyInfo = await serverFetch<CompanyInfoResponse>("company-info");
@@ -40,12 +40,14 @@ const Footer: React.FC = async () => {
               />
             ) : (
               <h3 className="text-xl font-bold mb-4">
-                {SiteSettings?.companyName || "GastroCare Hospital"}
+                {SiteSettings?.companyName }
               </h3>
             )}
-            <p className="text-blue-100 mt-4">
-              {footerDescription?.footerDescription || SiteSettings?.siteDescription}
-            </p>
+            {footerDescription?.footerDescription && (
+              <p className="text-blue-100 mt-4">
+                {footerDescription?.footerDescription}
+              </p>
+            )}
 
             <div className="flex space-x-4 mt-4">
               {companyInfo?.socialProfiles?.map((profile) => {

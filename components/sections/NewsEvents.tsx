@@ -86,7 +86,7 @@ const NewsEvents: React.FC<NewsEventProps> = ({
               >
                 <div className="h-48 overflow-hidden">
                   <img
-                    src={item.featuredImage.url}
+                    src={item.featuredImage.url  || 'https://placehold.co/600x400'}
                     alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
