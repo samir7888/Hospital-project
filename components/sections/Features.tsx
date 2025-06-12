@@ -1,17 +1,13 @@
 import React from "react";
-import {
-  Shield,
-  Award,
-  Clock,
-  Users,
-  ActivitySquare,
-  HeartPulse,
-} from "lucide-react";
+
 import { serverFetch } from "@/lib/server-fetch";
 import { FeatureResponse } from "@/app/types/feature-type";
 import Image from "next/image";
+import { SiteSettings } from "@/app/types/sitesetting-type";
 
 const Features: React.FC = async () => {
+    const SiteSettings = await serverFetch<SiteSettings>("general-setting");
+  
   const features = await serverFetch<FeatureResponse>("features");
   if (!features || features?.length === 0) {
     return (
@@ -28,7 +24,7 @@ const Features: React.FC = async () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-            Why Choose GastroCare Hospital
+            Why Choose {SiteSettings?.companyName}
           </h2>
           <div className="mt-4 max-w-3xl mx-auto">
             <p className="text-xl text-gray-600">
