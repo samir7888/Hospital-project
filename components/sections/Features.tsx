@@ -40,7 +40,7 @@ const Features: React.FC = async () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div key={feature.id} className="h-full flex flex-col">
+            <div key={feature.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
               {/* Feature Image */}
               <div className="h-48 overflow-hidden">
                 <Image
@@ -48,7 +48,7 @@ const Features: React.FC = async () => {
                   height={300}
                   src={feature.image?.url || "https://placehold.co/400x300.png"}
                   alt={feature.title}
-                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                 />
               </div>
 
