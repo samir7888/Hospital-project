@@ -44,12 +44,12 @@ const Services: React.FC = async () => {
         {/* Hero Section */}
         <div
           className={cn(
-            "relative  text-white py-20",
+            "relative   py-20",
             !services?.heroSection.image?.url && "bg-blue-900"
           )}
         >
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h1 className="text-4xl md:text-5xl font-bold mb-6">
+            <h1 className="text-4xl text-white md:text-5xl font-bold mb-6">
               {services?.heroSection?.title || "Our Medical Services"}
             </h1>
             <p className="text-xl text-blue-100 max-w-3xl">
@@ -58,7 +58,7 @@ const Services: React.FC = async () => {
             </p>
 
             {/* Buttons */}
-            <div className="mt-8 flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
+            <div className="mt-8  flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4 animate-fade-in-delay-2">
               {services?.heroSection.cta.map((cta, index) => (
                 <Link key={index} href={cta.link}>
                   <Button

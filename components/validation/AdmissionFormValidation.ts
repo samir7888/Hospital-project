@@ -1,3 +1,4 @@
+import { NAME_REGEX, NAME_WITH_SPACE_REGEX } from "@/lib/utils";
 import { z } from "zod";
 
 // Define the valid departments as an enum
@@ -14,10 +15,11 @@ const DepartmentEnum = z.enum([
   "orthodontics",
 ]);
 
-
-
 // Function to validate date is in the future
 const validateFutureDate = (dateStr: string) => {
+  if (isNaN(Date.parse(dateStr))) {
+    return false;
+  }
   const selectedDate = new Date(dateStr);
   const today = new Date();
   today.setHours(0, 0, 0, 0); // Reset time part for accurate date comparison
@@ -35,17 +37,14 @@ export const appointmentSchema = z.object({
   firstName: z
     .string()
     .min(1, "First name is required")
-    .regex(
-      /^[a-zA-Z\s-]+$/,
-      "First name should only contain letters, spaces, and hyphens"
-    ),
+    .regex(NAME_REGEX, "First name should only contain letters"),
 
   lastName: z
     .string()
     .min(1, "Last name is required")
     .regex(
-      /^[a-zA-Z\s-]+$/,
-      "Last name should only contain letters, spaces, and hyphens"
+      NAME_WITH_SPACE_REGEX,
+      "Last name should only contain letters and spaces"
     ),
 
   email: z
@@ -77,8 +76,8 @@ export const appointmentSchema = z.object({
 
   message: z
     .string()
-    .min(50, "Please provide more details (at least 50 characters)")
-    .max(1000, "Message is too long (maximum 1000 characters)"),
+    .min(10, "Please provide more details (at least 10 characters)")
+    .max(500, "Message is too long (maximum 500 characters)"),
 });
 
 export type zodFormDataSchema = z.infer<typeof appointmentSchema>;

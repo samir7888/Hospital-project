@@ -22,7 +22,7 @@ const AppointmentForm = () => {
     useState<Partial<zodFormDataSchema>>(defaultValues);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState<Record<string, string[]>>({});
+  const [errors, setErrors] = useState<Partial<Record<keyof zodFormDataSchema, string[]>>>({});
   const [submitError, setSubmitError] = useState<string>("");
 
   const handleChange = (
@@ -37,10 +37,10 @@ const AppointmentForm = () => {
     }));
 
     // Clear field-specific error when user starts typing
-    if (errors[name]) {
+    if (errors[name as keyof  zodFormDataSchema]) {
       setErrors((prev) => {
         const newErrors = { ...prev };
-        delete newErrors[name];
+        delete newErrors[name as keyof  zodFormDataSchema];
         return newErrors;
       });
     }
@@ -53,7 +53,6 @@ const AppointmentForm = () => {
     // Validate form data
     setErrors({});
     const { success, data, error } = appointmentSchema.safeParse(formData);
-
     if (!success) {
       const fieldErrors = error.flatten().fieldErrors;
       setErrors(fieldErrors);
@@ -81,32 +80,11 @@ const AppointmentForm = () => {
       setIsLoading(false);
     }
   };
-
   return (
     <div className="lg:w-1/2 ">
       <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-100">
         <form onSubmit={handleSubmit} className="space-y-6">
-          {/* Display submission error if any */}
-          {submitError && (
-            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
-              <div className="flex items-center">
-                <svg
-                  className="h-5 w-5 text-red-400 mr-2"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-                <p className="text-red-700 text-sm">{submitError}</p>
-              </div>
-            </div>
-          )}
+         
 
           <div className="mb-4">
             <h3 className="text-lg font-medium text-gray-900">
@@ -260,11 +238,11 @@ const AppointmentForm = () => {
               onChange={handleChange}
               min={new Date().toISOString().split("T")[0]} // Prevent past dates
               className={`w-full px-4 py-2.5 rounded-lg border  ${
-                errors.date ? "border-red-500" : "border-gray-300"
+                errors.preferredDate ? "border-red-500" : "border-gray-300"
               } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50`}
             />
-            {errors.date && (
-              <p className="text-red-500 text-sm mt-1">{errors.date[0]}</p>
+            {errors.preferredDate && (
+              <p className="text-red-500 text-sm mt-1">{errors.preferredDate[0]}</p>
             )}
           </div>
 
@@ -342,7 +320,27 @@ const AppointmentForm = () => {
               <p className="text-red-500 text-sm mt-1">{errors.message[0]}</p>
             )}
           </div>
-
+ {/* Display submission error if any */}
+          {submitError && (
+            <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+              <div className="flex items-center">
+                <svg
+                  className="h-5 w-5 text-red-400 mr-2"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+                <p className="text-red-700 text-sm">{submitError}</p>
+              </div>
+            </div>
+          )}
           <div className="pt-2">
             <button
               type="submit"
