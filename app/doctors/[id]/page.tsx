@@ -17,6 +17,7 @@ import { serverFetch } from "@/lib/server-fetch";
 import { Doctor, DoctorsResponse } from "@/app/types/doctor-type";
 import SanitizeBody from "@/components/html-sanitize";
 import Link from "next/link";
+import Image from "next/image";
 
 export async function generateMetadata({
   params,
@@ -69,8 +70,10 @@ export default async function DoctorProfile({
               <div className="w-full flex flex-col md:flex-row gap-8 items-start mb-6">
                 <div className="w-full md:w-1/3 lg:w-1/4">
                   <div className="rounded-lg overflow-hidden shadow-lg">
-                    <img
-                      src={doctor?.profileImage?.url ?? ""}
+                    <Image
+                      width={600}
+                      height={400}
+                      src={doctor?.profileImage?.url ||  "https://placehold.co/600x400.png"}
                       alt={doctor.name}
                       className="w-full h-60 object-cover object-center"
                     />

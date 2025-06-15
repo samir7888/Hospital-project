@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ServicesResponse } from "@/app/types/services-type";
 import { serverFetch } from "@/lib/server-fetch";
 import { ChevronRightIcon } from "lucide-react";
+import Image from "next/image";
 
 const Services: React.FC = async () => {
   const ServicesResponse = await serverFetch<ServicesResponse>("services");
@@ -33,7 +34,11 @@ const Services: React.FC = async () => {
           </p>
         </div>
 
-        <div  className={`grid grid-cols-1 md:grid-cols-2  ${servicesData.length >= 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"} gap-8`}>
+        <div
+          className={`grid grid-cols-1 md:grid-cols-2  ${
+            servicesData.length >= 3 ? "lg:grid-cols-3" : "lg:grid-cols-2"
+          } gap-8`}
+        >
           {servicesData.map((service) => (
             <div
               key={service.id}
@@ -41,7 +46,9 @@ const Services: React.FC = async () => {
             >
               <div className="flex flex-col items-center text-center">
                 <div className="mb-4 bg-blue-50 p-4 rounded-full">
-                  <img
+                  <Image
+                    width={60}
+                    height={60}
                     src={service.coverImage?.url}
                     alt={service.title}
                     className="h-12 w-12 text-blue-600"
@@ -50,7 +57,7 @@ const Services: React.FC = async () => {
                 <h3 className="text-xl font-semibold text-gray-900 mb-3">
                   {service.title}
                 </h3>
-                <p className="text-gray-600">{service.summary}</p>
+                <p className="text-gray-600 line-clamp-4">{service.summary}</p>
                 <Link
                   href={`/services/${service.id}`}
                   className="mt-4 text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"

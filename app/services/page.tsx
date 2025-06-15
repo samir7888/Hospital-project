@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export async function generateMetadata(): Promise<Metadata> {
   const aboutData = await serverFetch<HomePageData>("services-page");
@@ -100,8 +101,13 @@ const Services: React.FC = async () => {
                   >
                     <div className="mb-4">
                       {service.coverImage && (
-                        <img
-                          src={service.coverImage.url}
+                        <Image
+                          width={600}
+                          height={400}
+                          src={
+                            service.coverImage.url ||
+                            "https://placehold.co/600x400.png"
+                          }
                           alt={service.title}
                           className="w-full h-48 object-cover rounded-lg mb-4"
                         />

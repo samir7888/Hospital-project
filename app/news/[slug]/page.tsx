@@ -8,6 +8,8 @@ import {
   NewsAndEventsResponse,
 } from "@/app/types/blogs-type";
 import SanitizeBody from "@/components/html-sanitize";
+import { Share } from "next/font/google";
+import ShareButtons from "@/components/ShareButtons";
 
 export async function generateMetadata({
   params,
@@ -98,20 +100,22 @@ export default async function Page({
         {/* Left column - Takes up 2/3 or full width depending on related articles */}
         <section className={hasRelatedArticles ? "lg:col-span-2" : ""}>
           <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-            <div className="relative w-full h-56 md:h-72 lg:h-96">
-              <Image
-                src={newsItem?.coverImage?.url || "/placeholder-image.jpg"}
-                alt={newsItem?.title || "News article"}
-                fill
-                className="object-cover"
-                priority
-              />
-              {newsItem?.category?.name && (
-                <div className="absolute top-4 right-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm">
-                  {newsItem?.category.name}
-                </div>
-              )}
-            </div>
+            {newsItem?.coverImage?.url && (
+              <div className="relative w-full h-56 md:h-72 lg:h-96">
+                <Image
+                  src={newsItem?.coverImage?.url}
+                  alt={newsItem?.title || "News article"}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+                {newsItem?.category?.name && (
+                  <div className="absolute top-4 right-4 bg-blue-500 text-white px-3 py-1 rounded-full text-sm">
+                    {newsItem?.category.name}
+                  </div>
+                )}
+              </div>
+            )}
 
             <div className="p-4 md:p-6 lg:p-8">
               <p className="text-gray-500 mb-2">
@@ -126,22 +130,10 @@ export default async function Page({
                 <SanitizeBody description={newsItem?.content} />
               </div>
 
-              <div className="mt-8 pt-6 border-t border-gray-200">
-                <h3 className="text-lg font-semibold mb-4">
-                  Share this article
-                </h3>
-                <div className="flex flex-wrap gap-3">
-                  <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors">
-                    Facebook
-                  </button>
-                  <button className="bg-sky-500 text-white px-4 py-2 rounded hover:bg-sky-600 transition-colors">
-                    Twitter
-                  </button>
-                  <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors">
-                    Email
-                  </button>
-                </div>
-              </div>
+              <ShareButtons
+                articleUrl={`${process.env.SITE_URL}news/${newsItem?.slug}`}
+                title={newsItem?.title}
+              />
             </div>
           </div>
         </section>
@@ -165,7 +157,9 @@ export default async function Page({
                 >
                   <div className="relative h-40">
                     <Image
-                      src={article.featuredImage?.url || "/placeholder-image.jpg"}
+                      src={
+                        article.featuredImage?.url || "/placeholder-image.jpg"
+                      }
                       alt={article.title}
                       fill
                       className="object-cover"

@@ -3,6 +3,8 @@ import {
   CategoryResponse,
   NewsAndEventsResponse,
 } from "@/app/types/blogs-type";
+import { ChevronRight } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 
@@ -85,8 +87,12 @@ const NewsEvents: React.FC<NewsEventProps> = ({
                 className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
               >
                 <div className="h-48 overflow-hidden">
-                  <img
-                    src={item.featuredImage.url  || 'https://placehold.co/600x400'}
+                  <Image
+                    width={600}
+                    height={400}
+                    src={
+                      item.featuredImage.url || "https://placehold.co/600x400"
+                    }
                     alt={item.title}
                     className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
                   />
@@ -109,18 +115,7 @@ const NewsEvents: React.FC<NewsEventProps> = ({
                     className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
                   >
                     Read More
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      className="h-5 w-5 ml-1"
-                      viewBox="0 0 20 20"
-                      fill="currentColor"
-                    >
-                      <path
-                        fillRule="evenodd"
-                        d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-                        clipRule="evenodd"
-                      />
-                    </svg>
+                    <ChevronRight />
                   </Link>
                 </div>
               </div>
