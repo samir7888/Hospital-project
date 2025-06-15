@@ -41,30 +41,31 @@ const Specialists: React.FC = async () => {
             <Link key={doctor.id} href={`doctors/${doctor.id}`}>
               <div
                 key={doctor.id}
-                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+                className="relative group aspect-square bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
               >
-                <div className="h-64 overflow-hidden">
-                  <Image
-                    width={600}
-                    height={400}
-                    src={
-                      doctor.profileImage?.url ||
-                      "https://placehold.co/600x400.png"
-                    }
-                    alt={doctor.name}
-                    className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-semibold text-gray-900 capitalize">
-                    {doctor.name}
-                  </h3>
-                  <p className="text-blue-600 font-medium capitalize">
+                <Image
+                  fill
+                  quality={100}
+                  src={
+                    doctor.profileImage?.url ||
+                    "https://placehold.co/600x400.png"
+                  }
+                  alt={doctor.name}
+                  className=" absolute top-0  object-cover object-center transform group-hover:scale-110 transition-transform duration-500"
+                />
+                <div className="absolute left-0 right-0  px-6 py-3 bottom-0">
+                  <div className="h-8 group-hover:h-20 duration-500">
+                    <h3 className="text-xl font-semibold text-yellow-500 capitalize">
+                      {doctor.name}
+                    </h3>
+                    <p className="opacity-0 invisible group-hover:opacity-100 flex-col group-hover:visible  text-gray-200 text-medium duration-300">
+                      <span className=" block ">{doctor.degree}</span>
+                      {doctor.experience} Years Experience
+                    </p>
+                  </div>
+                  <p className="text-base capitalize text-white transition-all">
                     {doctor.specialization}
                   </p>
-                  <div className="mt-2 text-gray-600 text-sm">
-                    <p className="mt-1">{doctor.experience} Years Experience</p>
-                  </div>
                 </div>
               </div>
             </Link>
