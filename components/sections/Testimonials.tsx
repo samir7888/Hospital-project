@@ -9,36 +9,43 @@ import { serverFetch } from "@/lib/server-fetch";
 import { set } from "zod";
 import Image from "next/image";
 
-
-
 // Star Rating Component with half star support
-function StarRating({ rating, maxStars = 5 }: { rating: number; maxStars?: number }) {
+function StarRating({
+  rating,
+  maxStars = 5,
+}: {
+  rating: number;
+  maxStars?: number;
+}) {
   const stars = [];
-  
+
   for (let i = 1; i <= maxStars; i++) {
     const filled = rating >= i;
     const halfFilled = rating >= i - 0.5 && rating < i;
-    
+
     stars.push(
       <div key={i} className="relative inline-block">
         {/* Background star (empty) */}
         <Star className="h-4 w-4 text-gray-300" />
-        
+
         {/* Filled star overlay */}
         {filled && (
           <Star className="absolute top-0 left-0 h-4 w-4 text-yellow-400 fill-yellow-400" />
         )}
-        
+
         {/* Half-filled star overlay */}
         {halfFilled && (
-          <div className="absolute top-0 left-0 overflow-hidden" style={{ width: '50%' }}>
+          <div
+            className="absolute top-0 left-0 overflow-hidden"
+            style={{ width: "50%" }}
+          >
             <Star className="h-4 w-4 text-yellow-400 fill-yellow-400" />
           </div>
         )}
       </div>
     );
   }
-  
+
   return <div className="flex">{stars}</div>;
 }
 const Testimonials: React.FC = () => {
@@ -51,21 +58,13 @@ const Testimonials: React.FC = () => {
   // Fetch testimonials from backend
   useEffect(() => {
     const fetchTestimonials = async () => {
-      try {
-        setLoading(true);
-        const data = await serverFetch<TestimonialResponse>("testimonials"); // Adjust API endpoint as needed
-        if (!data) {
-          setError("Failed to load testimonials");
-          return;
-        }
-        setTestimonials(data);
-      } catch (err) {
-        setError(
-          err instanceof Error ? err.message : "Failed to load testimonials"
-        );
-      } finally {
-        setLoading(false);
+      setLoading(true);
+      const data = await serverFetch<TestimonialResponse>("testimonials"); // Adjust API endpoint as needed
+      if (!data) {
+        setError("Failed to load testimonials");
+        return;
       }
+      setTestimonials(data);
     };
 
     fetchTestimonials();
@@ -98,17 +97,6 @@ const Testimonials: React.FC = () => {
     setActiveIndex(index);
     setIsPaused(true);
   };
-
-  // const renderStars = (rating: number) => {
-  //   return Array.from({ length: 5 }).map((_, index) => (
-  //     <Star
-  //       key={index}
-  //       className={`h-5 w-5 ${
-  //         index < rating ? "text-yellow-400 fill-current" : "text-gray-300"
-  //       }`}
-  //     />
-  //   ));
-  // };
 
   // Loading state
   if (loading) {
