@@ -49,7 +49,7 @@ const Hero: React.FC = async () => {
         <div className="relative h-full">
           <div className="max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8 pt-20 w-full">
             <div className="container mx-auto mt-24 text-center">
-              <h1 className="text-4xl xl:text-5xl 2xl:text-8xl font-extrabold text-white  animate-fade-in text-center leading-[6rem] text-shadow-2xs capitalize">
+              <h1 className="text-4xl xl:text-5xl 2xl:text-8xl font-extrabold text-white  animate-fade-in text-center leading-[3rem] md:leading-[6rem] text-shadow-2xs capitalize">
                 {homePageData?.heroSection?.title ||
                   "Your Health Is Our Priority"}
               </h1>
