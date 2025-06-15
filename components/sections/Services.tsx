@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { ServicesResponse } from "@/app/types/services-type";
 import { serverFetch } from "@/lib/server-fetch";
-import { ChevronRightIcon } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 
 const Services: React.FC = async () => {
@@ -60,10 +60,10 @@ const Services: React.FC = async () => {
                 <p className="text-gray-600 line-clamp-4">{service.summary}</p>
                 <Link
                   href={`/services/${service.id}`}
-                  className="mt-4 text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
+                  className="mt-4 group text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
                 >
                   Learn More
-                  <ChevronRightIcon />
+                  <ChevronRight className="group-hover:transform group-hover:translate-x-3 duration-500" />
                 </Link>
               </div>
             </div>

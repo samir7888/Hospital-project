@@ -82,43 +82,39 @@ const NewsEvents: React.FC<NewsEventProps> = ({
         >
           {filteredItems.length > 0 ? (
             filteredItems.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
-              >
-                <div className="h-48 overflow-hidden">
-                  <Image
-                    width={600}
-                    height={400}
-                    src={
-                      item.featuredImage.url || "https://placehold.co/600x400"
-                    }
-                    alt={item.title}
-                    className="w-full h-full object-cover transition-transform duration-500 hover:scale-105"
-                  />
-                </div>
-                <div className="p-6">
-                  <div className="flex justify-between items-center mb-3">
-                    <span className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800">
-                      {item.category.name}
-                    </span>
-                    <span className="text-sm text-gray-500">
-                      {new Date(item.createdAt).toLocaleDateString()}
-                    </span>
+              <Link key={item.id} href={`/news/${item.slug}`}>
+                <div
+                  key={item.id}
+                  className="group h-96  bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
+                >
+                  <div className="h-64 relative overflow-hidden group-hover:h-36 duration-400">
+                    <Image
+                      fill
+                      src={
+                        item.featuredImage.url || "https://placehold.co/600x400"
+                      }
+                      alt={item.title}
+                      className="w-full absolute top-0 h-full object-cover transition-transform duration-400 group-hover:scale-105"
+                    />
                   </div>
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                    {item.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4">{item.summary}</p>
-                  <Link
-                    href={`/news/${item.slug}`}
-                    className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
-                  >
-                    Read More
-                    <ChevronRight />
-                  </Link>
+                  <div className="p-6">
+                    <div className="flex justify-between items-center mb-3">
+                      <span className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800">
+                        {item.category.name}
+                      </span>
+                      <span className="text-sm text-gray-500">
+                        {new Date(item.createdAt).toLocaleDateString()}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                      {item.title}
+                    </h3>
+                    <p className="opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:line-clamp-4 text-gray-600 mb-4 duration-300">
+                      {item.summary}
+                    </p>
+                  </div>
                 </div>
-              </div>
+              </Link>
             ))
           ) : (
             <div className="col-span-3 text-center py-12">

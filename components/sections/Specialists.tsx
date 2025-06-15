@@ -38,44 +38,36 @@ const Specialists: React.FC = async () => {
           } gap-8`}
         >
           {doctorsData.map((doctor) => (
-            <div
-              key={doctor.id}
-              className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
-            >
-              <div className="h-64 overflow-hidden">
-                <Image
-                  width={600}
-                  height={400}
-                  src={
-                    doctor.profileImage?.url ||
-                    "https://placehold.co/600x400.png"
-                  }
-                  alt={doctor.name}
-                  className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-semibold text-gray-900 capitalize">
-                  {doctor.name}
-                </h3>
-                <p className="text-blue-600 font-medium capitalize">
-                  {doctor.specialization}
-                </p>
-                <div className="mt-2 text-gray-600 text-sm">
-                  <p className="uppercase">{doctor.degree}</p>
-                  <p className="mt-1">{doctor.experience} Years Experience</p>
+            <Link key={doctor.id} href={`doctors/${doctor.id}`}>
+              <div
+                key={doctor.id}
+                className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+              >
+                <div className="h-64 overflow-hidden">
+                  <Image
+                    width={600}
+                    height={400}
+                    src={
+                      doctor.profileImage?.url ||
+                      "https://placehold.co/600x400.png"
+                    }
+                    alt={doctor.name}
+                    className="w-full h-full object-cover object-center transform hover:scale-105 transition-transform duration-500"
+                  />
                 </div>
-                <div className="mt-4 flex justify-between items-center">
-                  <Link
-                    href={`doctors/${doctor.id}`}
-                    className="text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
-                  >
-                    View Profile
-                    <ChevronRight />
-                  </Link>
+                <div className="p-6">
+                  <h3 className="text-xl font-semibold text-gray-900 capitalize">
+                    {doctor.name}
+                  </h3>
+                  <p className="text-blue-600 font-medium capitalize">
+                    {doctor.specialization}
+                  </p>
+                  <div className="mt-2 text-gray-600 text-sm">
+                    <p className="mt-1">{doctor.experience} Years Experience</p>
+                  </div>
                 </div>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
