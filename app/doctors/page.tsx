@@ -9,6 +9,7 @@ import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import { ChevronRight } from "lucide-react";
 
 export type DoctorsPageProps = {
   searchParams: {
@@ -180,15 +181,14 @@ async function DoctorsGrid({ queryString }: { queryString: string }) {
                     ))}
                   </div>
                 </div>
-                <div className="mt-6 flex justify-between items-center">
+                <div className="mt-6">
                   <Link href={`doctors/${doctor.id}`}>
-                    <button className="text-blue-600 font-medium cursor-pointer hover:text-blue-800 transition-colors duration-300">
-                      View Profile
+                    <button className="group flex text-blue-600 font-medium cursor-pointer hover:text-blue-800 transition-colors duration-300">
+                      View Profile 
+                      <ChevronRight className="group-hover:transform group-hover:translate-x-3 duration-500" />
                     </button>
                   </Link>
-                  <button className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300">
-                    Book Appointment
-                  </button>
+                  
                 </div>
               </div>
             </div>
