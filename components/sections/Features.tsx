@@ -56,7 +56,7 @@ const Features: React.FC = async () => {
                   <h3 className="text-lg font-semibold text-gray-900 ">
                     {feature.title}
                   </h3>
-                  <p className="opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:line-clamp-4 text-sm text-gray-600 transition-all duration-300">
+                  <p className="opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:line-clamp-4 text-sm text-gray-600 transition-all duration-300 tracking-wide">
                     {feature.description}
                   </p>
                 </div>

@@ -46,6 +46,7 @@ const Specialists: React.FC = async () => {
                 <Image
                   fill
                   quality={100}
+                  priority={true}
                   src={
                     doctor.profileImage?.url ||
                     "https://placehold.co/600x400.png"

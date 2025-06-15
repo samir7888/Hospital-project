@@ -40,33 +40,29 @@ const Services: React.FC = async () => {
           } gap-8`}
         >
           {servicesData.map((service) => (
-            <div
-              key={service.id}
-              className="bg-white overflow-hidden p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg hover:border-blue-100 transition-all duration-300"
-            >
-              <div className="flex flex-col items-center text-center">
-                <div className="mb-4 bg-blue-50 p-4 rounded-full">
-                  <Image
-                    width={60}
-                    height={60}
-                    src={service.coverImage?.url}
-                    alt={service.title}
-                    className="h-12 w-12 text-blue-600"
-                  />
+            <Link key={service.id} href={`/services/${service.id}`}>
+              <div
+                key={service.id}
+                className="group bg-white overflow-hidden p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg hover:border-blue-100 transition-all duration-300"
+              >
+                <div className="flex flex-col items-center text-center">
+                  <div className="mb-4 w-full h-44 rounded-2xl bg-blue-50 p-4 relative">
+                    <Image
+                      fill
+                      src={service.coverImage?.url}
+                      alt={service.title}
+                      className=" absolute rounded-2xl group-hover:scale-110 transition-transform duration-400"
+                    />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 mb-3">
+                    {service.title}
+                  </h3>
+                  <p className="text-gray-600 line-clamp-4">
+                    {service.summary}
+                  </p>
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">
-                  {service.title}
-                </h3>
-                <p className="text-gray-600 line-clamp-4">{service.summary}</p>
-                <Link
-                  href={`/services/${service.id}`}
-                  className="mt-4 group text-blue-600 hover:text-blue-800 font-medium inline-flex items-center"
-                >
-                  Learn More
-                  <ChevronRight className="group-hover:transform group-hover:translate-x-3 duration-500" />
-                </Link>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
 
