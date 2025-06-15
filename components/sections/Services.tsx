@@ -46,7 +46,7 @@ const Services: React.FC = async () => {
                 className="group bg-white overflow-hidden p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg hover:border-blue-100 transition-all duration-300"
               >
                 <div className="flex flex-col items-center text-center">
-                  <div className="mb-4 w-full h-44 rounded-2xl bg-blue-50 p-4 relative">
+                  <div className="mb-4 w-full h-48 rounded-2xl bg-blue-50  relative">
                     <Image
                       fill
                       src={service.coverImage?.url}
