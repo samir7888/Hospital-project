@@ -6,8 +6,8 @@ import Image from "next/image";
 import { SiteSettings } from "@/app/types/sitesetting-type";
 
 const Features: React.FC = async () => {
-    const SiteSettings = await serverFetch<SiteSettings>("general-setting");
-  
+  const SiteSettings = await serverFetch<SiteSettings>("general-setting");
+
   const features = await serverFetch<FeatureResponse>("features");
   if (!features || features?.length === 0) {
     return (
@@ -36,25 +36,27 @@ const Features: React.FC = async () => {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
-            <div key={feature.id} className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+            <div
+              key={feature.id}
+              className="group h-72 bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+            >
               {/* Feature Image */}
-              <div className="h-48 overflow-hidden">
+              <div className="h-56 relative overflow-hidden group-hover:h-34 duration-500">
                 <Image
-                  width={400}
-                  height={300}
+                  fill
                   src={feature.image?.url || "https://placehold.co/400x300.png"}
                   alt={feature.title}
-                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  className="w-full absolute top-0 h-full object-cover transition-transform duration-300 "
                 />
               </div>
 
               {/* Feature Content */}
               <div className="p-4 flex-1 flex flex-col justify-between">
                 <div className="space-y-2">
-                  <h3 className="text-lg font-semibold text-gray-900 line-clamp-2 group-hover:text-blue-600 transition-colors">
+                  <h3 className="text-lg font-semibold text-gray-900 ">
                     {feature.title}
                   </h3>
-                  <p className="text-sm text-gray-600 line-clamp-3 leading-relaxed">
+                  <p className="opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:line-clamp-4 text-sm text-gray-600 transition-all duration-300">
                     {feature.description}
                   </p>
                 </div>
