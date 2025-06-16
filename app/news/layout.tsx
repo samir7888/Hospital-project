@@ -1,7 +1,4 @@
 
-import type { Metadata } from "next";
-import { HomePageData } from "../types/heropage-type";
-import { serverFetch } from "@/lib/server-fetch";
 
 
 

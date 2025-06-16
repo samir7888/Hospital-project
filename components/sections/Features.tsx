@@ -6,9 +6,11 @@ import Image from "next/image";
 import { SiteSettings } from "@/app/types/sitesetting-type";
 
 const Features: React.FC = async () => {
-  const SiteSettings = await serverFetch<SiteSettings>("general-setting");
-
-  const features = await serverFetch<FeatureResponse>("features");
+  const [ features, SiteSettings] = await Promise.all([
+    serverFetch<FeatureResponse>("features"),
+    serverFetch<SiteSettings>("general-setting"),
+  ]);
+  
   if (!features || features?.length === 0) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">

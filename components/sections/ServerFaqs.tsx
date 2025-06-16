@@ -6,8 +6,10 @@ import { CompanyInfoResponse } from "@/app/types/company-type";
 const FAQ = async () => {
   const { serverFetch } = await import("@/lib/server-fetch");
   
-  const filteredFaqs = await serverFetch<FaqResponse>("faqs");
-  const companyInfo = await serverFetch<CompanyInfoResponse>("company-info");
+  const [filteredFaqs, companyInfo] = await Promise.all([
+    serverFetch<FaqResponse>("faqs"),
+    serverFetch<CompanyInfoResponse>("company-info"),
+  ]);
 
   if (!filteredFaqs) {
     return (

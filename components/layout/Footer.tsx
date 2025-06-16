@@ -19,11 +19,12 @@ interface footerProps {
   footerDescription: string;
 }
 const Footer: React.FC = async () => {
-  const companyInfo = await serverFetch<CompanyInfoResponse>("company-info");
-  const footerDescription = await serverFetch<footerProps>(
-    "general-setting/footer-description"
-  );
-  const SiteSettings = await serverFetch<SiteSettings>("general-setting");
+  const [companyInfo, footerDescription, SiteSettings] = await Promise.all([
+    serverFetch<CompanyInfoResponse>("company-info"),
+    serverFetch<footerProps>("general-setting/footer-description"),
+    serverFetch<SiteSettings>("general-setting"),
+  ]);
+
   return (
     <footer className="bg-blue-900 text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">

@@ -23,8 +23,10 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 const Hero: React.FC = async () => {
-  const homePageData = await serverFetch<HomePageData>("home-page");
-  const companyInfo = await serverFetch<CompanyInfoResponse>("company-info");
+  const [homePageData, companyInfo] = await Promise.all([
+    serverFetch<HomePageData>("home-page"),
+    serverFetch<CompanyInfoResponse>("company-info"),
+  ]);
 
   return (
     <div className="relative flex flex-col">

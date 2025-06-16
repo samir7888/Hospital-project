@@ -6,7 +6,6 @@ import {
   TestimonialResponse,
 } from "@/app/types/testimonial-type";
 import { serverFetch } from "@/lib/server-fetch";
-import { set } from "zod";
 import Image from "next/image";
 
 // Star Rating Component with half star support
