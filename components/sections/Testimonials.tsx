@@ -62,9 +62,11 @@ const Testimonials: React.FC = () => {
       const data = await serverFetch<TestimonialResponse>("testimonials"); // Adjust API endpoint as needed
       if (!data) {
         setError("Failed to load testimonials");
+        setLoading(false);
         return;
       }
       setTestimonials(data);
+      setLoading(false);
     };
 
     fetchTestimonials();
