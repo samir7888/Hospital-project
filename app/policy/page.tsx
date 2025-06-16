@@ -12,7 +12,7 @@ export default async function PrivacyPolicyPage() {
   }
   return (
     <main className="min-h-screen px-1 py-24 mx-auto flex flex-col justify-center items-center">
-      <h1 className="text-2xl md:text-5xl font-bold p-18">Privacy Policy</h1>
+      <h1 className="text-2xl md:text-5xl font-bold p-8 md:p-12">Privacy Policy</h1>
         <SanitizeBody description={privacyPolicy.privacyPolicy} />
     </main>
   );

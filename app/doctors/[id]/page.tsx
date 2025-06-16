@@ -73,7 +73,10 @@ export default async function DoctorProfile({
                     <Image
                       width={600}
                       height={400}
-                      src={doctor?.profileImage?.url ||  "https://placehold.co/600x400.png"}
+                      src={
+                        doctor?.profileImage?.url ||
+                        "https://placehold.co/600x400.png"
+                      }
                       alt={doctor.name}
                       className="w-full h-60 object-cover object-center"
                     />
@@ -137,12 +140,6 @@ export default async function DoctorProfile({
                       <span className="capitalize">{doctor.address}</span>
                     </div>
                   )}
-
-                  <div className="mt-4 md:mt-10">
-                    <button className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300 font-medium cursor-pointer">
-                      Book Appointment
-                    </button>
-                  </div>
                 </div>
               </div>
               {/* right side */}
@@ -177,53 +174,31 @@ export default async function DoctorProfile({
 
         {/* Doctor Details */}
         <div className="py-12">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 flex rounded-lg shadow-md items-center bg-white">
-              <div className="p-6 mb-6">
-                <h2 className="text-2xl font-semibold mb-6">
-                  About {doctor.name}
-                </h2>
-                <div>
-                  <h3 className="text-xl font-semibold mb-3">Education</h3>
-                  <p className="text-gray-700 mb-6 uppercase">
-                    {doctor.degree}
-                  </p>
+          
+          <div className=" flex flex-col md:flex-row rounded-lg shadow-md bg-white   justify-between gap-7 p-6 mb-6">
+            <div>
+             
+              <h3 className="text-xl font-semibold mb-3">Education</h3>
+              <p className="text-gray-700 mb-6 uppercase">{doctor.degree}</p>
 
-                  {doctor.certifications.length > 0 && (
-                    <>
-                      <h1 className="text-xl font-semibold mb-3 capitalize">
-                        Certifications
-                      </h1>
-                      <ul className="list-disc list-inside text-gray-700 mb-6">
-                        {doctor.certifications?.map((cert, index) => (
-                          <li key={index} className="mb-2 flex items-start">
-                            <Award className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-0.5" />
-                            <span>{cert}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
-                </div>
-                <SanitizeBody description={doctor.about} />
-              </div>
+              {doctor.certifications.length > 0 && (
+                <>
+                  <h1 className="text-xl font-semibold mb-3 capitalize">
+                    Certifications
+                  </h1>
+                  <ul className="list-disc list-inside text-gray-700 mb-6">
+                    {doctor.certifications?.map((cert, index) => (
+                      <li key={index} className="mb-2 flex items-start">
+                        <Award className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-0.5" />
+                        <span>{cert}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </>
+              )}
             </div>
-
-            <div className="lg:col-span-1">
-              <div className="bg-white rounded-lg shadow-md p-6">
-                <h2 className="text-2xl font-semibold mb-4">Quick Actions</h2>
-                <div className="space-y-3">
-                  <button className="w-full px-4 cursor-pointer  py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors duration-300">
-                    Book Appointment
-                  </button>
-                  <button className="w-full px-4 py-2 border border-blue-600 text-blue-600 rounded-md hover:bg-blue-50 transition-colors duration-300">
-                    Virtual Consultation
-                  </button>
-                  <button className="w-full px-4 py-2 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 transition-colors duration-300">
-                    Share Profile
-                  </button>
-                </div>
-              </div>
+            <div className="w-1/2 ">
+              <SanitizeBody description={doctor.about} />
             </div>
           </div>
         </div>

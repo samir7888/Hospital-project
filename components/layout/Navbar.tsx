@@ -103,7 +103,9 @@ const Navbar = ({ siteSetting }: { siteSetting: SiteSettings }) => {
           ></div>
 
           <div className="lg:hidden flex items-center">
-            <button onClick={toggleMenu} className={textColor}>
+            <button onClick={()=> {
+              toggleMenu()
+            }} className={textColor}>
               {isMenuOpen ? (
                 <X className="h-6 w-6" />
               ) : (
