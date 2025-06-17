@@ -45,22 +45,20 @@ const Specialists: React.FC = async () => {
               >
                 <Image
                   fill
-                  quality={100}
-                  priority={true}
                   src={
                     doctor.profileImage?.url ||
                     "https://placehold.co/600x400.png"
                   }
                   alt={doctor.name}
-                  className=" absolute top-0  object-cover object-center transform group-hover:scale-110 transition-transform duration-500"
+                  className="absolute top-0  object-top object-cover  transform group-hover:scale-110 transition-transform duration-500"
                 />
+                <div className="absolute top-0 left-0 right-0 bottom-0 flex items-center justify-center bg-gradient-to-b from-transparent to-black opacity-75 transition-opacity duration-500"></div>
                 <div className="absolute left-0 right-0  px-6 py-3 bottom-0">
-                  <div className="h-8 group-hover:h-20 duration-500">
+                  <div className="h-8 group-hover:h-16 duration-500">
                     <h3 className="text-xl font-semibold text-yellow-500 capitalize">
                       {doctor.name}
                     </h3>
                     <p className="opacity-0 invisible group-hover:opacity-100 flex-col group-hover:visible  text-gray-200 text-medium duration-300">
-                      <span className=" block ">{doctor.degree}</span>
                       {doctor.experience} Years Experience
                     </p>
                   </div>

@@ -85,16 +85,16 @@ const NewsEvents: React.FC<NewsEventProps> = ({
               <Link key={item.id} href={`/news/${item.slug}`}>
                 <div
                   key={item.id}
-                  className="group h-96  bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-300"
+                  className="group h-96  bg-white rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-shadow duration-500"
                 >
-                  <div className="h-64 relative overflow-hidden group-hover:h-36 duration-400">
+                  <div className="h-64 relative overflow-hidden group-hover:h-36 duration-500">
                     <Image
                       fill
                       src={
                         item.featuredImage.url || "https://placehold.co/600x400"
                       }
                       alt={item.title}
-                      className="w-full absolute top-0 h-full object-cover transition-transform duration-400 group-hover:scale-105"
+                      className="w-full absolute top-0 h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
                   <div className="p-6">
@@ -109,7 +109,7 @@ const NewsEvents: React.FC<NewsEventProps> = ({
                     <h3 className="text-xl font-semibold text-gray-900 mb-2">
                       {item.title}
                     </h3>
-                    <p className="opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:line-clamp-4 text-gray-600 mb-4 duration-300">
+                    <p className="opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:line-clamp-4 text-gray-600 mb-4 duration-500">
                       {item.summary}
                     </p>
                   </div>
@@ -128,7 +128,7 @@ const NewsEvents: React.FC<NewsEventProps> = ({
         <div className="mt-12 text-center">
           <Link
             href="/news"
-            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-300"
+            className="inline-flex items-center justify-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors duration-500"
           >
             View All News & Events
           </Link>
