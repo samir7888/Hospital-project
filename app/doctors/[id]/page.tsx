@@ -85,61 +85,100 @@ export default async function DoctorProfile({
             </div>
           </div>
           
-          {/* Doctor Info Section */}
-          <div className="w-full lg:w-1/2 xl:w-3/5">
-            <div className="flex flex-col justify-between items-start mb-4">
-              <div className="w-full">
-                <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">
-                  {doctor.name}
-                </h1>
-                <p className="text-lg text-blue-600 font-medium mt-1 capitalize">
-                  {doctor.specialization}
-                </p>
-              </div>
-            </div>
+         {/* Doctor Info Section */}
+<div className="w-full lg:w-1/2 xl:w-3/5">
+ {/* Header Section */}
+ <div className="mb-6">
+   <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-900 leading-tight">
+     {doctor.name}
+   </h1>
+   <div className="flex items-center mt-2">
+     <div className="w-1 h-6 bg-blue-600 rounded-full mr-3"></div>
+     <p className="text-lg sm:text-xl text-blue-600 font-semibold capitalize">
+       {doctor.specialization}
+     </p>
+   </div>
+ </div>
 
-            {/* Experience */}
-            {doctor.experience && (
-              <div className="flex items-center mb-4">
-                <Clock className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0" />
-                <span className="text-sm sm:text-base">{doctor.experience} Years Experience</span>
-              </div>
-            )}
+ {/* Quick Info Cards */}
+ <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
+   {/* Experience Card */}
+   {doctor.experience && (
+     <div className="border border-gray-200 rounded-lg p-4">
+       <div className="flex items-center">
+         <Clock className="h-5 w-5 text-blue-600 mr-3" />
+         <div>
+           <p className=" text-gray-500 font-medium uppercase tracking-wide">
+             Experience
+           </p>
+           <p className="text-lg font-bold text-gray-900">
+             {doctor.experience} Years
+           </p>
+         </div>
+       </div>
+     </div>
+   )}
 
-            {/* Address - Full width */}
-            {doctor.address && (
-              <div className="flex items-start mb-4 w-full">
-                <MapPin className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-0.5" />
-                <span className="capitalize text-sm sm:text-base break-words">{doctor.address}</span>
-              </div>
-            )}
+   {/* Location Card */}
+   {doctor.address && (
+     <div className="border border-gray-200 rounded-lg p-4">
+       <div className="flex items-start">
+         <MapPin className="h-5 w-5 text-blue-600 mr-3 mt-0.5" />
+         <div>
+           <p className=" text-gray-500 font-medium uppercase tracking-wide">
+             Location
+           </p>
+           <p className="text-lg font-semibold text-gray-900 capitalize leading-tight">
+             {doctor.address}
+           </p>
+         </div>
+       </div>
+     </div>
+   )}
+ </div>
 
-            {/* Contact Info - Full width and stacked */}
-            <div className="flex flex-col gap-3 w-full">
-              {doctor.email && (
-                <div className="flex items-start w-full">
-                  <Mail className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0 mt-0.5" />
-                  <Link
-                    href={`mailto:${doctor.email}`}
-                    className="text-blue-600 hover:underline text-sm sm:text-base break-all"
-                  >
-                    {doctor.email}
-                  </Link>
-                </div>
-              )}
-              {doctor.phone && (
-                <div className="flex items-center w-full">
-                  <Phone className="h-5 w-5 text-blue-600 mr-2 flex-shrink-0" />
-                  <Link
-                    href={`tel:${doctor.phone}`}
-                    className="text-blue-600 hover:underline text-sm sm:text-base"
-                  >
-                    {doctor.phone}
-                  </Link>
-                </div>
-              )}
-            </div>
-          </div>
+ {/* Contact Information */}
+ <div className="border border-gray-200 rounded-lg p-5">
+   <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+     <div className="w-1 h-5 bg-gray-600 rounded-full mr-3"></div>
+     Contact Information
+   </h3>
+   <div className="space-y-3">
+     {doctor.email && (
+       <div className="flex items-center">
+         <Mail className="h-5 w-5 text-blue-600 mr-3" />
+         <div>
+           <p className=" text-gray-500 font-medium uppercase tracking-wide">
+             Email
+           </p>
+           <Link
+             href={`mailto:${doctor.email}`}
+             className="text-blue-600 hover:text-blue-700 font-medium text-base hover:underline transition-colors"
+           >
+             {doctor.email}
+           </Link>
+         </div>
+       </div>
+     )}
+     {doctor.phone && (
+       <div className="flex items-center">
+         <Phone className="h-5 w-5 text-blue-600 mr-3" />
+         <div>
+           <p className=" text-gray-500 font-medium uppercase tracking-wide">
+             Phone
+           </p>
+           <Link
+             href={`tel:${doctor.phone}`}
+             className="text-blue-600 hover:text-blue-700 font-medium text-base hover:underline transition-colors"
+           >
+             {doctor.phone}
+           </Link>
+         </div>
+       </div>
+     )}
+   </div>
+ </div>
+</div>
         </div>
         
         {/* Education Section */}
