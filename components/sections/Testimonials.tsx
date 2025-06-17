@@ -161,11 +161,10 @@ const Testimonials: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
-            Patient Testimonials
+            Our Testimonials
           </h2>
           <p className="mt-4 text-xl text-gray-600 max-w-3xl mx-auto">
-            Hear what our patients have to say about their experience at
-            GastroCare Hospital.
+            Hear what people have to say about our services
           </p>
         </div>
 
