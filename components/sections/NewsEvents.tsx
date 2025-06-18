@@ -97,7 +97,7 @@ const NewsEvents: React.FC<NewsEventProps> = ({
                       className="w-full absolute top-0 h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
                   </div>
-                  <div className="p-6">
+                  <div className="px-4 py-3 ">
                     <div className="flex justify-between items-center mb-3">
                       <span className="px-2 py-1 text-xs font-semibold rounded bg-blue-100 text-blue-800">
                         {item.category.name}

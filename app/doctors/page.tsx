@@ -141,7 +141,7 @@ async function DoctorsGrid({ queryString }: { queryString: string }) {
                   height={400}
                   src={doctor?.profileImage?.url || "https://placehold.co/600x400.png"}
                   alt={doctor.name}
-                  className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover object-top transform hover:scale-105 transition-transform duration-500"
                 />
               </div>
               <div className="p-6">
