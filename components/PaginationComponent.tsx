@@ -1,8 +1,6 @@
 "use client";
 
-// import type { Meta } from "@/schema/Doctors";
 import { useSearchParams, useRouter, usePathname } from "next/navigation";
-// import { Button } from "../ui/button";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Meta } from "@/app/types/doctor-type";
 import { Button } from "./ui/button";

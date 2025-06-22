@@ -25,6 +25,10 @@ export enum ESpecialization {
   Dermatology = "dermatology",
   Ophthalmology = "ophthalmology",
   Orthodontics = "orthodontics",
+  Gastroenterology = "gastroenterology",
+  Hepatology = "hepatology",
+  Radiologist = "radiologist",
+  Rehumatologist = "rehumatologist",
 }
 
 export enum EWeekDays {
