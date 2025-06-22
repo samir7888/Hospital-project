@@ -22,7 +22,9 @@ const AppointmentForm = () => {
     useState<Partial<zodFormDataSchema>>(defaultValues);
 
   const [isLoading, setIsLoading] = useState(false);
-  const [errors, setErrors] = useState<Partial<Record<keyof zodFormDataSchema, string[]>>>({});
+  const [errors, setErrors] = useState<
+    Partial<Record<keyof zodFormDataSchema, string[]>>
+  >({});
   const [submitError, setSubmitError] = useState<string>("");
 
   const handleChange = (
@@ -37,10 +39,10 @@ const AppointmentForm = () => {
     }));
 
     // Clear field-specific error when user starts typing
-    if (errors[name as keyof  zodFormDataSchema]) {
+    if (errors[name as keyof zodFormDataSchema]) {
       setErrors((prev) => {
         const newErrors = { ...prev };
-        delete newErrors[name as keyof  zodFormDataSchema];
+        delete newErrors[name as keyof zodFormDataSchema];
         return newErrors;
       });
     }
@@ -84,8 +86,6 @@ const AppointmentForm = () => {
     <div className="lg:w-1/2 ">
       <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 border border-gray-100">
         <form onSubmit={handleSubmit} className="space-y-6">
-         
-
           <div className="mb-4">
             <h3 className="text-lg font-medium text-gray-900">
               Personal Information
@@ -242,7 +242,9 @@ const AppointmentForm = () => {
               } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 bg-gray-50`}
             />
             {errors.preferredDate && (
-              <p className="text-red-500 text-sm mt-1">{errors.preferredDate[0]}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors.preferredDate[0]}
+              </p>
             )}
           </div>
 
@@ -273,6 +275,10 @@ const AppointmentForm = () => {
                 <option value="dermatology">Dermatology</option>
                 <option value="orthodontics">Orthodontics</option>
                 <option value="general_medicine">General Medicine</option>
+                <option value="gastroenterology">Gastroenterology</option>
+                <option value="hepatology">Hepatology</option>
+                <option value="radiologist">Radiologist</option>
+                <option value="rehumatologist">Rehumatologist</option>
               </select>
               <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-3 text-gray-700">
                 <svg
@@ -320,7 +326,7 @@ const AppointmentForm = () => {
               <p className="text-red-500 text-sm mt-1">{errors.message[0]}</p>
             )}
           </div>
- {/* Display submission error if any */}
+          {/* Display submission error if any */}
           {submitError && (
             <div className="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
               <div className="flex items-center">
