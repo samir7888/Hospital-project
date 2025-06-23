@@ -43,11 +43,11 @@ const Navbar = ({ siteSetting }: { siteSetting: SiteSettings }) => {
         <div className="flex justify-between h-20">
           <div className="flex items-center">
             <Link href="/">
-              {siteSetting?.logo?.url ? (
+              {siteSetting?.primaryLogo?.url ? (
                 <Image
                   width={460}
                   height={160}
-                  src={siteSetting?.logo?.url}
+                  src={siteSetting?.primaryLogo?.url}
                   alt={siteSetting?.companyName}
                   className="w-fit h-16 object-cover object-center"
                 />

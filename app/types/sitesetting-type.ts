@@ -1,9 +1,14 @@
 export interface SiteSettings {
   id: string;
   companyName: string;
-  
-  logo: {
+
+  primaryLogo: {
     id: string;
     url: string;
-  };
+  } | null;
+
+  secondaryLogo: {
+    id: string;
+    url: string;
+  } | null;
 }

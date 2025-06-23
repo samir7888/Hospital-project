@@ -31,11 +31,11 @@ const Footer: React.FC = async () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Column 1: About */}
           <div>
-            {SiteSettings?.logo?.url ? (
+            {SiteSettings?.secondaryLogo?.url ? (
               <Image
                 width={160}
                 height={160}
-                src={SiteSettings?.logo?.url}
+                src={SiteSettings?.secondaryLogo?.url}
                 alt={SiteSettings?.companyName || "GastroCare Hospital"}
                 className="w-fit h-16 object-cover object-center"
               />

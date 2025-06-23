@@ -11,7 +11,7 @@ import NewsEventsPage from "@/components/sections/ServerNewsAndEvents";
 
 const Home: React.FC = () => {
   return (
-    <div>
+    <div className="">
       <Hero />
       <Specialists />
       <Features />
