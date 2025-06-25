@@ -49,7 +49,7 @@ const Navbar = ({ siteSetting }: { siteSetting: SiteSettings }) => {
                   height={160}
                   src={siteSetting?.primaryLogo?.url}
                   alt={siteSetting?.companyName}
-                  className="w-fit h-16 object-cover object-center"
+                  className="max-w-40 h-auto object-cover object-center"
                 />
               ) : (
                 <h3 className={`text-2xl font-bold ${textColor}`}>

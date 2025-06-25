@@ -37,7 +37,7 @@ const Footer: React.FC = async () => {
                 height={160}
                 src={SiteSettings?.secondaryLogo?.url}
                 alt={SiteSettings?.companyName || "GastroCare Hospital"}
-                className="w-fit h-16 object-cover object-center"
+                className="max-w-40 h-auto object-cover object-center"
               />
             ) : (
               <h3 className="text-xl font-bold mb-4">

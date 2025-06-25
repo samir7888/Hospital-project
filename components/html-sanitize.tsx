@@ -6,7 +6,7 @@ import DOMPurify from "isomorphic-dompurify";
 const SanitizeBody = ({ description }: { description: string }) => {
   return (
     <div
-      className="mx-auto prose lg:prose-xl"
+      className="min-w-full prose lg:prose-xl"
       dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(description) }}
     />
   );

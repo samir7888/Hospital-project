@@ -5,7 +5,7 @@ export type Doctor = {
   id: string;
   createdAt: string;
   name: string;
-  specialization: ESpecialization;
+  specializations: ESpecialization[];
   experience: number;
   availability: EWeekDays[];
   email: string;
