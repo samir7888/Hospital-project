@@ -15,7 +15,6 @@ export type Doctor = {
   languagesKnown: ELanguages[];
   degree: string;
   certifications: string[];
-  consulation: number;
   profileImage: ImageResponse | null;
 };
 

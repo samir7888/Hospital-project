@@ -25,7 +25,7 @@ const NewsEvents: React.FC<NewsEventProps> = ({
       ? blogsData.data
       : blogsData.data.filter(
           (item) => item.category.name.toLowerCase() === activeTab.toLowerCase()
-        );
+        ).slice(0, 8);
 
   return (
     <section id="news" className="py-20">

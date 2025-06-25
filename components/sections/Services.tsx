@@ -19,7 +19,7 @@ const Services: React.FC = async () => {
       </div>
     );
   }
-  const servicesData = ServicesResponse.data;
+  const servicesData = ServicesResponse.data.slice(0, 6);
 
   return (
     <section id="services" className="py-20">
@@ -46,12 +46,12 @@ const Services: React.FC = async () => {
                 className="group bg-white overflow-hidden p-6 rounded-lg shadow-md border border-gray-100 hover:shadow-lg hover:border-blue-100 transition-all duration-300"
               >
                 <div className="flex flex-col items-center text-center">
-                  <div className="mb-4 w-full h-48 rounded-2xl bg-blue-50  relative">
+                  <div className="mb-4 w-full h-64 rounded-2xl bg-blue-50  relative">
                     <Image
                       fill
                       src={service.coverImage?.url}
                       alt={service.title}
-                      className=" absolute rounded-2xl group-hover:scale-110 transition-transform duration-400"
+                      className="object-cover absolute rounded-2xl group-hover:scale-110 transition-transform duration-400"
                     />
                   </div>
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">

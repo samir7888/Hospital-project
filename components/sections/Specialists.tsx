@@ -18,7 +18,7 @@ const Specialists: React.FC = async () => {
       </div>
     );
   }
-  const doctorsData = DoctorsResponse.data;
+  const doctorsData = DoctorsResponse.data.slice(0, 6);
   return (
     <section id="doctors" className="pst-34 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -63,7 +63,9 @@ const Specialists: React.FC = async () => {
                     </p>
                   </div>
                   <p className="text-base capitalize text-white transition-all">
-                    {doctor.specializations.join(", ")}
+                    {Array.isArray(doctor.specializations)
+                      ? doctor.specializations.join(", "):
+                        doctor.specializations}
                   </p>
                 </div>
               </div>
