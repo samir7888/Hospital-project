@@ -23,16 +23,9 @@ const PaginationComponent = ({ meta }: Props) => {
   return (
     <nav
       aria-label="Pagination Navigation"
-      className="flex justify-between pt-8"
+      className="flex  pt-8"
     >
-      <div className="text-muted-foreground">
-        <p>
-          Showing page {meta.page} of {meta.pageCount} pages{" "}
-        </p>
-        <p>Total items {meta.itemCount}</p>
-      </div>
-
-      <ul className="flex items-center space-x-1">
+      <ul className=" w-full flex justify-end space-x-1">
         <li>
           <Button
             onClick={() => updatePage(meta.page - 1)}

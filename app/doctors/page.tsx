@@ -149,7 +149,9 @@ async function DoctorsGrid({ queryString }: { queryString: string }) {
                   {doctor.name}
                 </h3>
                 <p className="text-blue-600 font-medium capitalize">
-                  {doctor.specializations.join(", ")} 
+                  {Array.isArray(doctor.specializations)
+                    ? doctor.specializations.join(", "):
+                      doctor.specializations}
                 </p>
                 <div className="mt-4 space-y-2 text-gray-600">
                   <p className="uppercase">{doctor.degree}</p>

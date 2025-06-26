@@ -49,6 +49,7 @@ const Services: React.FC = async () => {
                   <div className="mb-4 w-full h-64 rounded-2xl bg-blue-50  relative">
                     <Image
                       fill
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       src={service.coverImage?.url}
                       alt={service.title}
                       className="object-cover absolute rounded-2xl group-hover:scale-110 transition-transform duration-400"
@@ -57,7 +58,7 @@ const Services: React.FC = async () => {
                   <h3 className="text-xl font-semibold text-gray-900 mb-3">
                     {service.title}
                   </h3>
-                  <p className="text-gray-600 line-clamp-4">
+                  <p className="text-gray-600 line-clamp-3">
                     {service.summary}
                   </p>
                 </div>

@@ -15,6 +15,7 @@ import Image from "next/image";
 
 export type NewsEventsPageProps = {
   searchParams: {
+    page?:string;
     search?: string;
     category?: string;
   };
@@ -102,23 +103,6 @@ const Page = async (props: {
 
         {/* News and Events Grid */}
         <NewsEventsGrid queryString={queryString} />
-
-        {/*todo: Newsletter Signup */}
-        {/* <div className="mt-20 bg-blue-50 rounded-lg p-8">
-          <div className="text-center mb-6">
-            <h3 className="text-2xl font-bold text-gray-900 mb-2">
-              Stay Updated
-            </h3>
-            <p className="text-gray-600">
-              Subscribe to our newsletter to receive the latest news and events.
-            </p>
-          </div>
-
-          <SubscribeForm />
-        </div> */}
-
-
-
       </div>
     </div>
   );
@@ -155,12 +139,14 @@ async function NewsEventsGrid({ queryString }: { queryString: string }) {
               <Image
                 width={600}
                 height={400}
-                src={item.featuredImage?.url || "https://placehold.co/600x400.png"}
+                src={
+                  item.featuredImage?.url || "https://placehold.co/600x400.png"
+                }
                 alt={item.title}
                 className="w-full h-48 object-cover"
               />
               <div className="absolute top-4 right-4 bg-blue-700 text-white text-xs font-bold px-3 py-1 rounded-full">
-              {item?.category?.name}
+                {item?.category?.name}
               </div>
             </div>
 

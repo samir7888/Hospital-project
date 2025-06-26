@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { CategoryResponse } from "@/app/types/blogs-type";
 import { serverFetch } from "@/lib/server-fetch";
+import { Spinner } from "./spinner";
 
 const CategoryTabs = () => {
   const router = useRouter();
@@ -42,9 +43,10 @@ const CategoryTabs = () => {
   }, [category, searchParams, pathname, router]);
 
   if (!categories) {
-    return <div>Loading <span className="animate-pulse">...</span></div>;
+    return (
+      <div className=" animate-pulse bg-gray-200 h-8 w-8 rounded-md"></div>
+    );
   }
-
   return (
     <Tabs
       value={category}

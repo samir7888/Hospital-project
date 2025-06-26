@@ -7,7 +7,13 @@ import { Metadata } from "next";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import PaginationComponent from "@/components/PaginationComponent";
 
+export type ServicesPageProps = {
+  searchParams: {
+    page?: string;
+  };
+};
 export async function generateMetadata(): Promise<Metadata> {
   const aboutData = await serverFetch<HomePageData>("services-page");
 
@@ -23,11 +29,20 @@ export async function generateMetadata(): Promise<Metadata> {
     ],
   };
 }
-const Services: React.FC = async () => {
+const Services = async (props: {
+  searchParams: Promise<ServicesPageProps["searchParams"]>;
+}) => {
+  const pageParam = await props.searchParams;
+  const queryParams = new URLSearchParams({
+    ...pageParam,
+    take: "20",
+  });
+  const queryString = queryParams.toString();
+  const url = `services${queryString ? `?${queryString}` : ""}`;
   try {
     const [servicesResult, servicesDataResult] = await Promise.allSettled([
       serverFetch<HomePageData>("services-page"),
-      serverFetch<ServicesResponse>("services"),
+      serverFetch<ServicesResponse>(url),
     ]);
 
     const services =
@@ -162,6 +177,13 @@ const Services: React.FC = async () => {
                     Contact Us
                   </Link>
                 </div>
+              </div>
+            )}
+
+            {/* Pagination Component */}
+            {servicesResponse?.meta && (
+              <div className="mt-8">
+                <PaginationComponent meta={servicesResponse.meta} />
               </div>
             )}
           </div>

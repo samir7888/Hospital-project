@@ -46,6 +46,7 @@ const Features: React.FC = async () => {
               <div className="h-56 relative overflow-hidden group-hover:h-34 duration-500">
                 <Image
                   fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   src={feature.image?.url || "https://placehold.co/400x300.png"}
                   alt={feature.title}
                   className="w-full absolute top-0 h-full object-cover transition-transform duration-300 "
