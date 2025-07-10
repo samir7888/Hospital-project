@@ -1,6 +1,5 @@
 import { DoctorsResponse } from "@/app/types/doctor-type";
 import { serverFetch } from "@/lib/server-fetch";
-import { ChevronRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -8,7 +7,7 @@ import React from "react";
 const Specialists: React.FC = async () => {
   const DoctorsResponse = await serverFetch<DoctorsResponse>("doctors");
 
-  if (!DoctorsResponse || DoctorsResponse?.data?.length === 0) {
+  if (!DoctorsResponse) {
     return (
       <div className="flex items-center justify-center min-h-[400px]">
         <div className="text-center">
@@ -18,9 +17,19 @@ const Specialists: React.FC = async () => {
       </div>
     );
   }
+  if ( DoctorsResponse?.data?.length === 0) {
+    return (
+      <div className="flex items-center justify-center min-h-[400px]">
+        <div className="text-center">
+          <p className="text-red-600 font-medium">No doctors found</p>
+          <p className="text-gray-500 mt-2">Please try again later.</p>
+        </div>
+      </div>
+    );
+  }
   const doctorsData = DoctorsResponse.data.slice(0, 6);
   return (
-    <section id="doctors" className="pst-34 bg-gray-50">
+    <section id="doctors" className="pt-34 bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900">
