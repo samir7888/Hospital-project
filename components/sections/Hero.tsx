@@ -44,18 +44,18 @@ const Hero: React.FC = async () => {
           }}
         >
           {/* Overlay */}
-          <div className="absolute inset-0 bg-gradient-to-r from-blue-900/80 to-blue-800/60"></div>
+          <div className="absolute inset-0 bg-gradient-to-r from-gray-900/80 to-gray-800/70"></div>
         </div>
 
         {/* Hero Content */}
         <div className="absolute inset-0 z-10 flex items-center justify-center">
           <div className="max-w-7xl  mx-auto px-4 sm:px-6 lg:px-8  w-full">
             <div className="container mx-auto  text-center">
-              <h1 className="text-4xl xl:text-5xl 2xl:text-8xl font-extrabold text-white  animate-fade-in text-center leading-[3rem] md:leading-[6rem] text-shadow-2xs capitalize">
+              <h1 className="text-4xl xl:text-5xl 2xl:text-8xl font-extrabold text-white text-balance  animate-fade-in text-center leading-[3rem] md:leading-[6rem] text-shadow-2xs capitalize">
                 {homePageData?.heroSection?.title ||
                   "Your Health Is Our Priority"}
               </h1>
-              <p className="mt-4 text-xl text-center text-blue-100 animate-fade-in-delay capitalize">
+              <p className="mt-4 text-xl text-balance text-center text-blue-100 animate-fade-in-delay capitalize">
                 {homePageData?.heroSection?.subtitle ||
                   "Delivering compassionate care and medical excellence to our community for over 35 years."}
               </p>
